@@ -86,7 +86,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                ca.bcit.comp2522.termproject.capy/ca.bcit.comp2522.termproject.capy.HelloApplication
+                                ca.bcit.comp2522.termproject.capy/ca.bcit.comp2522.termproject.capy.CapyApplication
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
