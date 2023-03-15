@@ -1,5 +1,6 @@
 package ca.bcit.comp2522.termproject.capy.models;
 
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class Player extends Character {
@@ -9,11 +10,11 @@ public class Player extends Character {
     // private Armour armour;
     private Level currentLevel;
 
-    Player(final ImageView sprite, final Level firstLevel) {
+    public Player(final Image sprite) {
         super(sprite);
 
         this.points = 0;
-        this.currentLevel = firstLevel;
+        this.currentLevel = null;
     }
 
     public int getPoints() {
