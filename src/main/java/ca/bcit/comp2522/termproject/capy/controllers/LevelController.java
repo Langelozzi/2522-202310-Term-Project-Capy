@@ -13,8 +13,8 @@ public class LevelController implements Initializable {
     @FXML
     private Pane pane;
 
-    private final int BACKGROUND_WIDTH = 865;
-    private final int BACKGROUND_HEIGHT = 645;
+    public static final int BACKGROUND_WIDTH = 865;
+    public static final int BACKGROUND_HEIGHT = 645;
 
     // public ImageView player;
     // public ArrayList<ImageView> enemies;
@@ -36,7 +36,10 @@ public class LevelController implements Initializable {
         this.pane.setBackground(background);
     }
 
-    public void renderSprite(final ImageView sprite) {
+    public void renderSprite(final ImageView sprite, final int initialXPosition, final int initialYPosition) {
         this.pane.getChildren().add(sprite);
+
+        sprite.setLayoutX(initialXPosition);
+        sprite.setLayoutY(initialYPosition);
     }
 }
