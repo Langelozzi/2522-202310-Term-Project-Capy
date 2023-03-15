@@ -2,6 +2,7 @@ package ca.bcit.comp2522.termproject.capy.models;
 
 import ca.bcit.comp2522.termproject.capy.CapyApplication;
 import ca.bcit.comp2522.termproject.capy.controllers.LevelController;
+import ca.bcit.comp2522.termproject.capy.controllers.InputMovementController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -28,15 +29,15 @@ public class Level {
 
         try {
             Parent root = (Parent) loader.load();
-            this.controller =  loader.getController();
-
-            controller.loadSprite(enemies.get(0).getSprite());
-            controller.loadSprite(this.player.getSprite());
-
             this.scene = new Scene(root);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        this.controller =  loader.getController();
+        controller.loadSprite(enemies.get(0).getSprite());
+
+        setUpPlayer();
     }
 
     public Scene getScene() {
@@ -49,5 +50,12 @@ public class Level {
             newEnemies.add(new Enemy(1));
         }
         return newEnemies;
+    }
+
+    private void setUpPlayer() {
+        controller.loadSprite(this.player.getSprite());
+
+        InputMovementController movementController = new InputMovementController();
+        movementController.makeMovable(this.player, this.scene);
     }
 }

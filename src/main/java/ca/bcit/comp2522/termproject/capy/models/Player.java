@@ -1,7 +1,6 @@
 package ca.bcit.comp2522.termproject.capy.models;
 
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 public class Player extends Character {
     private int points;
@@ -36,7 +35,17 @@ public class Player extends Character {
     public void shoot() {};
 
     @Override
-    public void move() {
+    public void move(final Direction direction) {
+        final int movementVariable = 3;
 
+        switch (direction) {
+            case UP -> this.getSprite().setLayoutY(this.getSprite().getLayoutY() - movementVariable);
+            case DOWN -> this.getSprite().setLayoutY(this.getSprite().getLayoutY() + movementVariable);
+            case LEFT -> this.getSprite().setLayoutX(this.getSprite().getLayoutX() - movementVariable);
+            case RIGHT -> this.getSprite().setLayoutX(this.getSprite().getLayoutX() + movementVariable);
+            default -> {
+                return;
+            }
+        }
     }
 }

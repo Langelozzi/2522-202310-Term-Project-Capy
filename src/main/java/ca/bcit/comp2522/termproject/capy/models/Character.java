@@ -29,5 +29,5 @@ public abstract class Character {
         return hitPoints > 0;
     }
 
-    public abstract void move();
+    public abstract void move(final Direction direction);
 }

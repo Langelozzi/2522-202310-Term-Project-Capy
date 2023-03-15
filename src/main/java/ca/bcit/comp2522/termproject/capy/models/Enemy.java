@@ -15,7 +15,7 @@ public class Enemy extends Character {
     }
 
     @Override
-    public void move() {
+    public void move(final Direction direction) {
 
     }
 }
