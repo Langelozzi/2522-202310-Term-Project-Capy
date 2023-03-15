@@ -8,7 +8,7 @@ public class Enemy extends Character {
     private final int attackDamage;
     // private SugarCane sugarCane;
 
-    Enemy(final int difficulty) {
+    public Enemy(final int difficulty) {
         super(new Image("file:src/main/resources/ca/bcit/comp2522/termproject/capy/sprites/crocodile.png"));
         this.difficulty = difficulty;
         this.attackDamage = ATTACK_MULTIPLIER * difficulty;

@@ -1,11 +1,15 @@
 package ca.bcit.comp2522.termproject.capy.controllers;
 
+import ca.bcit.comp2522.termproject.capy.models.Enemy;
+import ca.bcit.comp2522.termproject.capy.models.Player;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class LevelController implements Initializable {
@@ -14,6 +18,9 @@ public class LevelController implements Initializable {
 
     private final int BACKGROUND_WIDTH = 865;
     private final int BACKGROUND_HEIGHT = 645;
+
+    // public ImageView player;
+    // public ArrayList<ImageView> enemies;
 
     // initialize method gives access to FXML elements whereas constructor doesn't
     @Override
@@ -30,5 +37,9 @@ public class LevelController implements Initializable {
         this.pane.setMinWidth(BACKGROUND_WIDTH);
         this.pane.setMinHeight(BACKGROUND_HEIGHT);
         this.pane.setBackground(background);
+    }
+
+    public void loadSprite(ImageView sprite) {
+        this.pane.getChildren().add(sprite);
     }
 }

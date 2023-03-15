@@ -1,5 +1,6 @@
 package ca.bcit.comp2522.termproject.capy;
 
+import ca.bcit.comp2522.termproject.capy.controllers.LevelController;
 import ca.bcit.comp2522.termproject.capy.models.Level;
 import ca.bcit.comp2522.termproject.capy.models.Player;
 import javafx.application.Application;
