@@ -8,4 +8,6 @@ module ca.bcit.comp2522.termproject.capy {
 
     opens ca.bcit.comp2522.termproject.capy to javafx.fxml;
     exports ca.bcit.comp2522.termproject.capy;
+    exports ca.bcit.comp2522.termproject.capy.models;
+    opens ca.bcit.comp2522.termproject.capy.models to javafx.fxml;
 }

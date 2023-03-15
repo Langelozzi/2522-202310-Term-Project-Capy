@@ -14,7 +14,8 @@ public class CapyApplication extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(CapyApplication.class.getResource("level-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
 
-        stage.setTitle("Hello!");
+        stage.setTitle("Capy Pulls Up!");
+        // stage.getIcons().add(capy gun image)
 
         stage.setScene(scene);
         stage.show();
