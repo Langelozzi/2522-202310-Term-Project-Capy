@@ -1,7 +1,5 @@
 package ca.bcit.comp2522.termproject.capy.controllers;
 
-import ca.bcit.comp2522.termproject.capy.models.Enemy;
-import ca.bcit.comp2522.termproject.capy.models.Player;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
@@ -9,7 +7,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class LevelController implements Initializable {
@@ -39,7 +36,7 @@ public class LevelController implements Initializable {
         this.pane.setBackground(background);
     }
 
-    public void loadSprite(ImageView sprite) {
+    public void renderSprite(final ImageView sprite) {
         this.pane.getChildren().add(sprite);
     }
 }

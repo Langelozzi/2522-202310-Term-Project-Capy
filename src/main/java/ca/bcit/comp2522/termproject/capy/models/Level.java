@@ -35,9 +35,9 @@ public class Level {
         }
 
         this.controller =  loader.getController();
-        controller.loadSprite(enemies.get(0).getSprite());
 
         setUpPlayer();
+        controller.renderSprite(enemies.get(0).getSprite());
     }
 
     public Scene getScene() {
@@ -53,7 +53,7 @@ public class Level {
     }
 
     private void setUpPlayer() {
-        controller.loadSprite(this.player.getSprite());
+        controller.renderSprite(this.player.getSprite());
 
         InputMovementController movementController = new InputMovementController();
         movementController.makeMovable(this.player, this.scene);
