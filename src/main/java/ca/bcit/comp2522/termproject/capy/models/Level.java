@@ -1,11 +1,14 @@
 package ca.bcit.comp2522.termproject.capy.models;
 
 import ca.bcit.comp2522.termproject.capy.CapyApplication;
+import ca.bcit.comp2522.termproject.capy.controllers.InputRotationController;
 import ca.bcit.comp2522.termproject.capy.controllers.LevelController;
 import ca.bcit.comp2522.termproject.capy.controllers.InputMovementController;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 import java.net.URL;
@@ -60,5 +63,8 @@ public class Level {
 
         InputMovementController movementController = new InputMovementController();
         movementController.makeMovable(this.player, this.scene);
+
+        InputRotationController rotationController = new InputRotationController();
+        rotationController.makeRotatable(this.player, this.scene);
     }
 }
