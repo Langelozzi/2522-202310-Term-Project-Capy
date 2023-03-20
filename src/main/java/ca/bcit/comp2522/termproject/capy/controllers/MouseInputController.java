@@ -5,7 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 
-public class InputRotationController {
+public class MouseInputController {
 
     @FXML
     private Character character;
@@ -13,7 +13,7 @@ public class InputRotationController {
     @FXML
     private Scene scene;
 
-    public void makeRotatable(final Character character, final Scene scene) {
+    public void makeCursorRotatable(final Character character, final Scene scene) {
         this.character = character;
         this.scene = scene;
 
