@@ -34,6 +34,7 @@ public class InputRotationController {
         double playerY = this.character.getSprite().getLayoutY();
 
         // subtract or add value to the atan2 return value to change which point of player follows cursor
+        // atan2 returns theta based on rectangular coordinates, aka the circular angle between two rectangular coords
         double angle = Math.toDegrees(Math.atan2(mouseY - playerY, mouseX - playerX)); // - Math.PI / 2);
 
         this.character.getSprite().setRotate(angle);
