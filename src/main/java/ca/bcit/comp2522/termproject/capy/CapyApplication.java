@@ -6,15 +6,25 @@ import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-
+/**
+ * Application class. Sets the stage and starts the application.
+ *
+ * @author COMP2522 Group 13
+ * @version 1.0.0
+ */
 public class CapyApplication extends Application {
+
+    /**
+     * Start the application with the provided stage, effectively starting the game with default settings.
+     * @param stage the Stage that will be launched in the application window
+     */
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(final Stage stage) {
         Player player = new Player(
                 new Image("file:src/main/resources/ca/bcit/comp2522/termproject/capy/sprites/test_player.png")
         );
-        Level levelOne = new Level(player, 3);
+        final int numberOfEnemies = 3;
+        Level levelOne = new Level(player, numberOfEnemies);
 
         stage.setTitle("Capy Pulls Up!");
         stage.getIcons().add(new Image("file:src/main/resources/ca/bcit/comp2522/termproject/capy/imgs/icon"));
@@ -23,7 +33,11 @@ public class CapyApplication extends Application {
         stage.show();
     }
 
-    public static void main(String[] args) {
+    /**
+     * Main method. Launch the application.
+     * @param args array of arguments to pass to the main method
+     */
+    public static void main(final String[] args) {
         launch(args);
     }
 }
