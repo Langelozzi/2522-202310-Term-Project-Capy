@@ -21,7 +21,7 @@ public class CapyApplication extends Application {
         Level levelOne = new Level(player, 3);
 
         stage.setTitle("Capy Pulls Up!");
-        // stage.getIcons().add(capy gun image)
+        stage.getIcons().add(new Image("file:src/main/resources/ca/bcit/comp2522/termproject/capy/imgs/icon"));
 
         stage.setScene(levelOne.getScene());
         stage.show();
