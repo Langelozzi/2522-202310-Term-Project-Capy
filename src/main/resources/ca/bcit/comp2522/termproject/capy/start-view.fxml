@@ -1,23 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="anchorPane" minHeight="645.0" minWidth="845.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.bcit.comp2522.termproject.capy.controllers.StartViewController">
-   <Button fx:id="startBtn" layoutX="160.0" layoutY="458.0" mnemonicParsing="false" onMouseClicked="#onClick" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" text="New Game">
-      <font>
-         <Font name="Bangla MN" size="24.0" />
-      </font></Button>
-   <Button fx:id="startBtn1" layoutX="539.0" layoutY="458.0" mnemonicParsing="false" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" text="Continue">
-      <font>
-         <Font name="Bangla MN" size="24.0" />
-      </font>
-   </Button>
-   <ImageView fitHeight="200.0" fitWidth="250.0" layoutX="341.0" layoutY="123.0" pickOnBounds="true" preserveRatio="true">
+<AnchorPane fx:id="anchorPane" minHeight="645.0" minWidth="845.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.bcit.comp2522.termproject.capy.controllers.StartViewController">
+   <ImageView fitHeight="692.0" fitWidth="995.0" layoutX="-92.0" layoutY="-14.0" opacity="0.93" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@imgs/start_menu_background.png" />
+      </image>
+   </ImageView>
+   <ImageView fitHeight="333.0" fitWidth="291.0" layoutX="351.0" layoutY="304.0" pickOnBounds="true" preserveRatio="true">
       <image>
          <Image url="@imgs/medium_pixel_capy.png" />
       </image>
    </ImageView>
+   <VBox layoutX="-5.0" layoutY="152.0" prefHeight="347.0" prefWidth="321.0">
+      <children>
+         <Button fx:id="startBtn" mnemonicParsing="false" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" prefHeight="116.0" prefWidth="319.0" style="-fx-background-color: rgba(234, 249, 235, 0.6);" text="Continue" textAlignment="CENTER">
+            <font>
+               <Font name="Luminari" size="49.0" />
+            </font>
+         </Button>
+         <Button mnemonicParsing="false" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" prefHeight="82.0" prefWidth="234.0" style="-fx-background-color: rgba(234, 249, 235, 0.6);" text="New Game">
+            <font>
+               <Font name="Luminari" size="26.0" />
+            </font>
+         </Button>
+         <Button mnemonicParsing="false" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" prefHeight="82.0" prefWidth="234.0" style="-fx-background-color: rgba(234, 249, 235, 0.6);" text="Upgrades">
+            <font>
+               <Font name="Luminari" size="26.0" />
+            </font>
+         </Button>
+         <Button mnemonicParsing="false" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" prefHeight="82.0" prefWidth="234.0" style="-fx-background-color: rgba(234, 249, 235, 0.6);" text="Settings">
+            <font>
+               <Font name="Luminari" size="26.0" />
+            </font>
+         </Button>
+      </children></VBox>
+   <Text fill="WHITE" layoutX="412.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Capy Pulls Up" textAlignment="CENTER" wrappingWidth="377.6212158203125">
+      <font>
+         <Font name="Luminari" size="80.0" />
+      </font>
+   </Text>
 </AnchorPane>

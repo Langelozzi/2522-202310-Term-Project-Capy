@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -21,8 +22,8 @@ public class StartViewController implements Initializable, SceneController {
     private AnchorPane anchorPane;
     @FXML
     private Button startBtn;
-    private final String startBtnBackgroundColor = "#16F342FF";
-    private final String startBtnBackgroundColorHover = "#ABFFB2FF";
+    private final String startBtnBackgroundColor = "rgba(234, 249, 235, 0.6)";
+    private final String startBtnBackgroundColorHover = " rgba(234, 249, 235, 0.85)";
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -36,12 +37,14 @@ public class StartViewController implements Initializable, SceneController {
         this.stage = stage;
     }
 
-    public void onMouseEntered() {
-        startBtn.setStyle("-fx-background-color:" + this.startBtnBackgroundColorHover);
+    public void onMouseEntered(final MouseEvent event) {
+        Button button = (Button) event.getTarget();
+        button.setStyle("-fx-background-color:" + this.startBtnBackgroundColorHover);
     }
 
-    public void onMouseExited() {
-        startBtn.setStyle("-fx-background-color:" + this.startBtnBackgroundColor);
+    public void onMouseExited(final MouseEvent event) {
+        Button button = (Button) event.getTarget();
+        button.setStyle("-fx-background-color:" + this.startBtnBackgroundColor);
     }
 
     public void onClick() {
