@@ -1,15 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="anchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.bcit.comp2522.termproject.capy.controllers.StartViewController">
-   <Button fx:id="startBtn" layoutX="100.0" layoutY="275.0" mnemonicParsing="false" onMouseEntered="#onMouseEntered"
-           onMouseExited="#onMouseExited"
-           onMouseClicked="#onClick"
-           style="-fx-background-color: green;" text="New Game">
+<AnchorPane fx:id="anchorPane" minHeight="645.0" minWidth="845.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.bcit.comp2522.termproject.capy.controllers.StartViewController">
+   <Button fx:id="startBtn" layoutX="160.0" layoutY="458.0" mnemonicParsing="false" onMouseClicked="#onClick" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" text="New Game">
       <font>
          <Font name="Bangla MN" size="24.0" />
       </font></Button>
+   <Button fx:id="startBtn1" layoutX="539.0" layoutY="458.0" mnemonicParsing="false" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" text="Continue">
+      <font>
+         <Font name="Bangla MN" size="24.0" />
+      </font>
+   </Button>
+   <ImageView fitHeight="200.0" fitWidth="250.0" layoutX="341.0" layoutY="123.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@imgs/medium_pixel_capy.png" />
+      </image>
+   </ImageView>
 </AnchorPane>

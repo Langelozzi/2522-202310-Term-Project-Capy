@@ -30,6 +30,8 @@ public class CapyApplication extends Application {
         );
 
         stage.setScene(startViewController.getScene());
+        stage.setMinHeight(Game.BACKGROUND_HEIGHT);
+        stage.setMinWidth(Game.BACKGROUND_WIDTH);
         stage.show();
     }
 
