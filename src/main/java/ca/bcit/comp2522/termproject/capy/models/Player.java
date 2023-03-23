@@ -8,8 +8,8 @@ public class Player extends Character {
     private int points;
     private Level currentLevel;
 
-    // private Weapon weapon;
-    // private Armour armour;
+    private Weapon weapon;
+    private Armour armour;
 
     private int movementSpeed;
 
