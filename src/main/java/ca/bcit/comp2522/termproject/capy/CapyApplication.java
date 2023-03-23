@@ -1,5 +1,6 @@
 package ca.bcit.comp2522.termproject.capy;
 
+import ca.bcit.comp2522.termproject.capy.controllers.StartViewController;
 import ca.bcit.comp2522.termproject.capy.models.Level;
 import ca.bcit.comp2522.termproject.capy.models.Player;
 import javafx.application.Application;
@@ -20,18 +21,15 @@ public class CapyApplication extends Application {
      */
     @Override
     public void start(final Stage stage) {
-        Player player = new Player(
-                new Image("file:src/main/resources/ca/bcit/comp2522/termproject/capy/sprites/test_player.png")
-        );
-        final int numberOfEnemies = 3;
-        Level levelOne = new Level(player, numberOfEnemies);
+        StartViewController startViewController = (StartViewController) Helpers.getFxmlController("start-view.fxml");
+        startViewController.setStage(stage);
 
         stage.setTitle("Capy Pulls Up!");
         stage.getIcons().add(
                 new Image("file:src/main/resources/ca/bcit/comp2522/termproject/capy/imgs/medium_pixel_capy.png")
         );
 
-        stage.setScene(levelOne.getScene());
+        stage.setScene(startViewController.getScene());
         stage.show();
     }
 

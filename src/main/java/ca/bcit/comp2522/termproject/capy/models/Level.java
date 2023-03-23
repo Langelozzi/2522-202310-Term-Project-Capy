@@ -1,6 +1,7 @@
 package ca.bcit.comp2522.termproject.capy.models;
 
 import ca.bcit.comp2522.termproject.capy.CapyApplication;
+import ca.bcit.comp2522.termproject.capy.Game;
 import ca.bcit.comp2522.termproject.capy.Helpers;
 import ca.bcit.comp2522.termproject.capy.controllers.MouseInputController;
 import ca.bcit.comp2522.termproject.capy.controllers.LevelController;
@@ -21,7 +22,7 @@ public class Level {
     private final ArrayList<Enemy> enemies;
 
     public Level(final Player player, final int numEnemies) {
-        this.controller = Helpers.getFxmlController("level-view.fxml");
+        this.controller = (LevelController) Helpers.getFxmlController("level-view.fxml");
         this.scene = this.controller.getScene();
 
         this.player = player;
@@ -44,8 +45,8 @@ public class Level {
     }
 
     private void setUpPlayer() {
-        final int startingX = (LevelController.BACKGROUND_WIDTH / 2) - 20;
-        final int startingY = (LevelController.BACKGROUND_HEIGHT / 2) - 20;
+        final int startingX = (Game.BACKGROUND_WIDTH / 2) - 20;
+        final int startingY = (Game.BACKGROUND_HEIGHT / 2) - 20;
 
         controller.renderSprite(this.player.getSprite(), startingX, startingY);
 

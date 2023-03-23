@@ -1,5 +1,6 @@
 package ca.bcit.comp2522.termproject.capy.controllers;
 
+import ca.bcit.comp2522.termproject.capy.Game;
 import ca.bcit.comp2522.termproject.capy.models.SceneController;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -15,9 +16,6 @@ public class LevelController implements Initializable, SceneController {
     @FXML
     private Pane pane;
 
-    public static final int BACKGROUND_WIDTH = 865;
-    public static final int BACKGROUND_HEIGHT = 645;
-
     // initialize method gives access to FXML elements whereas constructor doesn't
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -30,8 +28,8 @@ public class LevelController implements Initializable, SceneController {
         );
         Background background = new Background(backgroundImage);
 
-        this.pane.setMinWidth(BACKGROUND_WIDTH);
-        this.pane.setMinHeight(BACKGROUND_HEIGHT);
+        this.pane.setMinWidth(Game.BACKGROUND_WIDTH);
+        this.pane.setMinHeight(Game.BACKGROUND_HEIGHT);
         this.pane.setBackground(background);
     }
 
