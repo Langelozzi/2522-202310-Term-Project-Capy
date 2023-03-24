@@ -2,13 +2,17 @@ package ca.bcit.comp2522.termproject.capy.models;
 
 import ca.bcit.comp2522.termproject.capy.Game;
 import ca.bcit.comp2522.termproject.capy.Helpers;
-import ca.bcit.comp2522.termproject.capy.controllers.MouseInputController;
 import ca.bcit.comp2522.termproject.capy.controllers.LevelController;
-import ca.bcit.comp2522.termproject.capy.controllers.KeyboardInputController;
 import javafx.scene.Scene;
 
 import java.util.ArrayList;
 
+/**
+ * Level class stores data related to a level of the game, including control over the LevelController.
+ *
+ * @author COMP2522 Group 13
+ * @version 1.0.0
+ */
 public class Level {
     private final Scene scene;
     private final LevelController controller;
@@ -16,6 +20,11 @@ public class Level {
     private final Player player;
     private final ArrayList<Enemy> enemies;
 
+    /**
+     * Instantiate a new Level.
+     * @param player the Player object that will be playing in the level
+     * @param numEnemies the amount of enemies that will be rendered in the level
+     */
     public Level(final Player player, final int numEnemies) {
         this.controller = (LevelController) Helpers.getFxmlController("level-view.fxml");
         this.scene = this.controller.getScene();
@@ -27,10 +36,17 @@ public class Level {
         controller.renderSprite(enemies.get(0).getSprite(), 0, 0);
     }
 
+    /**
+     * Return the scene object of the level.
+     * @return the scene object of the level
+     */
     public Scene getScene() {
         return this.scene;
     }
 
+    /*
+    Generate an ArrayList of enemies and populate it with amount number of enemies.
+     */
     private ArrayList<Enemy> generateEnemies(final int amount) {
         ArrayList<Enemy> newEnemies = new ArrayList<>();
         for (int count = 0; count < amount; count++) {
@@ -39,6 +55,9 @@ public class Level {
         return newEnemies;
     }
 
+    /*
+    Initialize the position and properties of the player on the Level.
+     */
     private void setUpPlayer() {
         final int startingX = (Game.BACKGROUND_WIDTH / 2) - 20;
         final int startingY = (Game.BACKGROUND_HEIGHT / 2) - 20;

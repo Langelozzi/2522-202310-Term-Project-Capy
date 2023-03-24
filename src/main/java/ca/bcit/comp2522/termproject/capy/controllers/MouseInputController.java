@@ -5,6 +5,12 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 
+/**
+ * MouseInputController handles the logic for the mouse movement of the Player.
+ *
+ * @author COMP2522 Group 13
+ * @version 1.0.0
+ */
 public class MouseInputController {
 
     @FXML
@@ -13,19 +19,30 @@ public class MouseInputController {
     @FXML
     private Scene scene;
 
-    public void makeCursorRotatable(final Character character, final Scene scene) {
-        this.character = character;
-        this.scene = scene;
+    /**
+     * Enable cursor rotation functionality on the character for the scene.
+     * @param player the player that will get the rotation functionality
+     * @param newScene the scene that the rotation applies to
+     */
+    public void makeCursorRotatable(final Character player, final Scene newScene) {
+        this.character = player;
+        this.scene = newScene;
 
         rotationSetup();
     }
 
+    /*
+    Set the rotation for both mouse move event and mouse drag event so that user can click and rotate at the same time.
+     */
     private void rotationSetup() {
         this.scene.setOnMouseMoved(this::handleMouseRotation);
         // need the drag event too so that the rotation occurs even when clicking mouse button (for shooting)
         this.scene.setOnMouseDragged(this::handleMouseRotation);
     }
 
+    /*
+    Logic for rotating character toward the mouse cursor.
+     */
     private void handleMouseRotation(final MouseEvent mouseEvent) {
         double mouseX = mouseEvent.getSceneX();
         double mouseY = mouseEvent.getSceneY();

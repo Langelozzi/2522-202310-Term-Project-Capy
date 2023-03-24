@@ -10,17 +10,22 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
-import javafx.stage.Stage;
 
+/**
+ * KeyboardInputController handles the keyboard input functionality.
+ *
+ * @author COMP2522 Group 13
+ * @version 1.0.0
+ */
 public class KeyboardInputController {
 
-    private BooleanProperty wPressed = new SimpleBooleanProperty();
-    private BooleanProperty aPressed = new SimpleBooleanProperty();
-    private BooleanProperty sPressed = new SimpleBooleanProperty();
-    private BooleanProperty dPressed = new SimpleBooleanProperty();
+    private final BooleanProperty wPressed = new SimpleBooleanProperty();
+    private final BooleanProperty aPressed = new SimpleBooleanProperty();
+    private final BooleanProperty sPressed = new SimpleBooleanProperty();
+    private final BooleanProperty dPressed = new SimpleBooleanProperty();
 
     // using BooleanProperty allows us to use BooleanBinding which can have a listener attached to it
-    private BooleanBinding keyPressed = wPressed.or(aPressed).or(sPressed).or(dPressed);
+    private final BooleanBinding keyPressed = wPressed.or(aPressed).or(sPressed).or(dPressed);
 
     @FXML
     private Character character;
@@ -28,9 +33,12 @@ public class KeyboardInputController {
     @FXML
     private Scene scene;
 
+    /**
+     * Move the character when specific key is pressed.
+     */
     AnimationTimer timer = new AnimationTimer() {
         @Override
-        public void handle(long l) {
+        public void handle(final long l) {
             if (wPressed.get()) {
                 character.move(Direction.UP);
             }
@@ -46,9 +54,15 @@ public class KeyboardInputController {
         }
     };
 
-    public void assignKeyboardInput(final Character character, final Scene scene) {
-        this.character = character;
-        this.scene = scene;
+    /**
+     * Set all the keyboard input listeners. Set the movement controls for the Player and Game Menu button.
+     *
+     * @param player the character to set the movement on
+     * @param newScene the scene to which the listeners are attached
+     */
+    public void assignKeyboardInput(final Character player, final Scene newScene) {
+        this.character = player;
+        this.scene = newScene;
 
         setListeners();
 
@@ -61,8 +75,11 @@ public class KeyboardInputController {
         }));
     }
 
+    /*
+    Attach the key event listeners to the scene.
+     */
     private void setListeners() {
-        scene.setOnKeyPressed(e -> {
+        this.scene.setOnKeyPressed(e -> {
             if (e.getCode() == KeyCode.ESCAPE) {
                 Helpers.openGameMenu();
             }
