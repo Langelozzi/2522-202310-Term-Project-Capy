@@ -14,6 +14,8 @@ public class Game {
     public static final int BACKGROUND_WIDTH = 865;
     public static final int BACKGROUND_HEIGHT = 645;
 
+    private static boolean hasSavedGame = true;
+
     public Game(final Stage stage) {
         Player player = new Player(
                 new Image("file:src/main/resources/ca/bcit/comp2522/termproject/capy/sprites/test_player.png")
@@ -22,6 +24,14 @@ public class Game {
         Level levelOne = new Level(player, numberOfEnemies);
         this.currentScene = levelOne.getScene();
         this.stage = stage;
+    }
+
+    public static boolean hasSavedGame() {
+        return hasSavedGame;
+    }
+
+    public static void setHasSavedGame(final boolean savedGame) {
+        hasSavedGame = savedGame;
     }
 
     public void start() {
