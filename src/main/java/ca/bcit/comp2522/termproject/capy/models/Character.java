@@ -10,12 +10,30 @@ import javafx.scene.image.ImageView;
  * @version 1.0.0
  */
 public abstract class Character {
+    /**
+     * The default movement speed of a character.
+     */
+    public static final int DEFAULT_MOVEMENT_SPEED = 2;
+
     private final ImageView sprite;
     private int hitPoints;
+    private int movementSpeed;
+    private double previousXCoordinate;
+    private double previousYCoordinate;
 
     Character(final Image spriteImage) {
         this.hitPoints = 0;
+        this.movementSpeed = DEFAULT_MOVEMENT_SPEED;
+        this.sprite = new ImageView(spriteImage);
+    }
 
+    Character(final Image spriteImage, final int movementSpeed) {
+        if (movementSpeed < 0) {
+            throw new IllegalArgumentException("Speed must be a positive integer");
+        }
+
+        this.hitPoints = 0;
+        this.movementSpeed = movementSpeed;
         this.sprite = new ImageView(spriteImage);
     }
 
@@ -41,6 +59,56 @@ public abstract class Character {
      */
     public void setHitPoints(final int newHitPoints) {
         this.hitPoints = newHitPoints;
+    }
+
+    /**
+     * Get the current movement speed of the character.
+     * @return the current movement speed of the character
+     */
+    public int getMovementSpeed() {
+        return movementSpeed;
+    }
+
+    /**
+     * Change the movementSpeed of the character.
+     * @param newSpeed the updated speed
+     * @throws IllegalArgumentException if the speed is less than 0
+     */
+    public void setMovementSpeed(final int newSpeed) {
+        if (newSpeed < 0) {
+            throw new IllegalArgumentException("Speed must be a positive integer");
+        }
+        this.movementSpeed = newSpeed;
+    }
+
+    /**
+     * Get the most previously saved x coordinate of the character.
+     * @return the most previously saved x coordinate of the character
+     */
+    public double getPreviousXCoordinate() {
+        return previousXCoordinate;
+    }
+
+    /**
+     * Set the previous x coordinate of the character to the current x coordinate.
+     */
+    public void setPreviousXCoordinate() {
+        this.previousXCoordinate = this.getSprite().getLayoutX();
+    }
+
+    /**
+     * Get the most previously saved y coordinate of the character.
+     * @return the most previously saved y coordinate of the character
+     */
+    public double getPreviousYCoordinate() {
+        return previousYCoordinate;
+    }
+
+    /**
+     * Set the previous y coordinate to the current y coordinate.
+     */
+    public void setPreviousYCoordinate() {
+        this.previousYCoordinate = this.getSprite().getLayoutY();
     }
 
     /**

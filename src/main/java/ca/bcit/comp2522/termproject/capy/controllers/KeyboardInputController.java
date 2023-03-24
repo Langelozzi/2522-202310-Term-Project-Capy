@@ -81,6 +81,8 @@ public class KeyboardInputController {
     private void setListeners() {
         this.scene.setOnKeyPressed(e -> {
             if (e.getCode() == KeyCode.ESCAPE) {
+                this.character.setPreviousXCoordinate();
+                this.character.setPreviousYCoordinate();
                 Helpers.openGameMenu();
             }
             if (e.getCode() == KeyCode.W) {

@@ -14,9 +14,22 @@ import javafx.stage.Stage;
 public class CapyApplication extends Application {
 
     private static Stage stage;
+    private static Game game;
 
+    /**
+     * Get the stage/window of the application.
+     * @return the stage/window of the application
+     */
     public static Stage getStage() {
         return stage;
+    }
+
+    /**
+     * Return the Game object that runs the game.
+     * @return the Game object
+     */
+    public static Game getGame() {
+        return game;
     }
 
     /**
@@ -26,6 +39,7 @@ public class CapyApplication extends Application {
     @Override
     public void start(final Stage stage) {
         CapyApplication.stage = stage;
+        CapyApplication.game = new Game();
 
         GameMenuController startViewController = (GameMenuController) Helpers.getFxmlController("game-menu-view.fxml");
 

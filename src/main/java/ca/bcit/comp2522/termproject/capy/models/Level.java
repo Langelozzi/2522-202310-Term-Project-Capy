@@ -59,8 +59,8 @@ public class Level {
     Initialize the position and properties of the player on the Level.
      */
     private void setUpPlayer() {
-        final int startingX = (Game.BACKGROUND_WIDTH / 2) - 20;
-        final int startingY = (Game.BACKGROUND_HEIGHT / 2) - 20;
+        final double startingX = (Game.BACKGROUND_WIDTH / 2.0) + 20;
+        final double startingY = (Game.BACKGROUND_HEIGHT / 2.0) + 20;
 
         controller.renderSprite(this.player.getSprite(), startingX, startingY);
     }

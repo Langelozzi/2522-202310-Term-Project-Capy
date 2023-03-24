@@ -1,5 +1,6 @@
 package ca.bcit.comp2522.termproject.capy.controllers;
 
+import ca.bcit.comp2522.termproject.capy.CapyApplication;
 import ca.bcit.comp2522.termproject.capy.Game;
 import ca.bcit.comp2522.termproject.capy.Helpers;
 import ca.bcit.comp2522.termproject.capy.models.SceneController;
@@ -36,8 +37,6 @@ public class GameMenuController implements Initializable, SceneController {
     @FXML
     private Button quitBtn;
 
-    private Game game;
-
     /*
     Default font of buttons
      */
@@ -56,8 +55,6 @@ public class GameMenuController implements Initializable, SceneController {
     public void initialize(final URL url, final ResourceBundle resourceBundle) {
         anchorPane.setMinHeight(Game.BACKGROUND_HEIGHT);
         anchorPane.setMinWidth(Game.BACKGROUND_WIDTH);
-
-        this.game = new Game();
 
         if (!Game.hasSavedGame()) {
             continueBtn.setVisible(false);
@@ -105,14 +102,14 @@ public class GameMenuController implements Initializable, SceneController {
      * Start a new game when "New Game" button is clicked.
      */
     public void onNewGameClick() {
-        this.game.startNew();
+        CapyApplication.getGame().startNew();
     }
 
     /**
-     * Return back to the current level and it's state when "Continue" button is clicked.
+     * Return back to the current level, and it's state when "Continue" button is clicked.
      */
     public void onContinueClick() {
-        Helpers.changeScene(this.game.getCurrentLevel().getScene());
+        Helpers.changeScene(CapyApplication.getGame().getCurrentLevel().getScene());
     }
 
     /**

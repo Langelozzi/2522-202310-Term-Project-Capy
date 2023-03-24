@@ -9,17 +9,11 @@ import javafx.scene.image.Image;
  * @version 1.0.0
  */
 public class Player extends Character {
-    /**
-     * The default movement speed of the player.
-     */
-    public static final int DEFAULT_MOVEMENT_SPEED = 2;
 
     private int points;
 
     private Weapon weapon;
     private Armour armour;
-
-    private int movementSpeed;
 
     /**
      * Instantiate a Player object.
@@ -29,24 +23,17 @@ public class Player extends Character {
         super(sprite);
 
         this.points = 0;
-        this.movementSpeed = DEFAULT_MOVEMENT_SPEED;
     }
 
     /**
      * Instantiate a player object with a custom player speed.
      * @param sprite the Image to use as the player's ImageView sprite
      * @param playerSpeed the custom speed of the player
-     * @throws IllegalArgumentException if the custom player speed is less than 0
      */
     public Player(final Image sprite, final int playerSpeed) {
-        super(sprite);
-
-        if (playerSpeed < 0) {
-            throw new IllegalArgumentException("Speed must be a positive integer");
-        }
+        super(sprite, playerSpeed);
 
         this.points = 0;
-        this.movementSpeed = playerSpeed;
     }
 
     /**
@@ -66,26 +53,6 @@ public class Player extends Character {
     }
 
     /**
-     * Get the current movement speed of the character.
-     * @return the current movement speed of the character
-     */
-    public int getMovementSpeed() {
-        return movementSpeed;
-    }
-
-    /**
-     * Change the movementSpeed of the character.
-     * @param newSpeed the updated speed
-     * @throws IllegalArgumentException if the speed is less than 0
-     */
-    public void setMovementSpeed(final int newSpeed) {
-        if (newSpeed < 0) {
-            throw new IllegalArgumentException("Speed must be a positive integer");
-        }
-        this.movementSpeed = newSpeed;
-    }
-
-    /**
      * Shoot the weapon that the player is holding.
      */
     public void shoot() {
@@ -99,10 +66,10 @@ public class Player extends Character {
     @Override
     public void move(final Direction direction) {
         switch (direction) {
-            case UP -> this.getSprite().setLayoutY(this.getSprite().getLayoutY() - this.movementSpeed);
-            case DOWN -> this.getSprite().setLayoutY(this.getSprite().getLayoutY() + this.movementSpeed);
-            case LEFT -> this.getSprite().setLayoutX(this.getSprite().getLayoutX() - this.movementSpeed);
-            case RIGHT -> this.getSprite().setLayoutX(this.getSprite().getLayoutX() + this.movementSpeed);
+            case UP -> this.getSprite().setLayoutY(this.getSprite().getLayoutY() - this.getMovementSpeed());
+            case DOWN -> this.getSprite().setLayoutY(this.getSprite().getLayoutY() + this.getMovementSpeed());
+            case LEFT -> this.getSprite().setLayoutX(this.getSprite().getLayoutX() - this.getMovementSpeed());
+            case RIGHT -> this.getSprite().setLayoutX(this.getSprite().getLayoutX() + this.getMovementSpeed());
             default -> {
                 return;
             }
