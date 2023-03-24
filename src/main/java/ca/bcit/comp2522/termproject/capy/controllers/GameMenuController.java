@@ -3,6 +3,7 @@ package ca.bcit.comp2522.termproject.capy.controllers;
 import ca.bcit.comp2522.termproject.capy.Game;
 import ca.bcit.comp2522.termproject.capy.Helpers;
 import ca.bcit.comp2522.termproject.capy.models.SceneController;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -27,6 +28,8 @@ public class GameMenuController implements Initializable, SceneController {
     private Button saveBtn;
     @FXML
     private Button upgradesBtn;
+    @FXML
+    private Button quitBtn;
 
     private Game game;
 
@@ -76,6 +79,10 @@ public class GameMenuController implements Initializable, SceneController {
 
     public void onContinueClick() {
         Helpers.changeScene(this.game.getCurrentLevel().getScene());
+    }
+
+    public void onQuitClick() {
+        Platform.exit();
     }
 
     @Override

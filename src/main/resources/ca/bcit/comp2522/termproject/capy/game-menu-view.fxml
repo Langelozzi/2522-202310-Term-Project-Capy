@@ -20,31 +20,30 @@
          <Image url="@imgs/medium_pixel_capy.png" />
       </image>
    </ImageView>
-   <VBox layoutX="-5.0" layoutY="152.0" prefHeight="347.0" prefWidth="321.0">
+   <VBox layoutX="-5.0" layoutY="152.0" prefHeight="449.0" prefWidth="321.0">
       <children>
-         <Button fx:id="continueBtn" mnemonicParsing="false" onMouseEntered="#onMouseEntered"
-                 onMouseExited="#onMouseExited" prefHeight="81.0" prefWidth="234.0"
-                 style="-fx-background-color: rgba(234, 249, 235, 0.6);" text="Continue" textAlignment="CENTER"
-                 onMouseClicked="#onContinueClick">
+         <Button fx:id="continueBtn" mnemonicParsing="false" onAction="#onContinueClick" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" prefHeight="81.0" prefWidth="234.0" style="-fx-background-color: rgba(234, 249, 235, 0.6);" text="Continue" textAlignment="CENTER">
             <font>
                <Font name="Luminari" size="26.0" />
             </font>
          </Button>
-         <Button fx:id="newGameBtn" mnemonicParsing="false" onMouseClicked="#onNewGameClick" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" prefHeight="82.0" prefWidth="234.0" style="-fx-background-color: rgba(234, 249, 235, 0.6);" text="New Game">
+         <Button fx:id="saveBtn" mnemonicParsing="false" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" prefHeight="82.0" prefWidth="234.0" style="-fx-background-color: rgba(234, 249, 235, 0.6);" text="Save Game">
             <font>
                <Font name="Luminari" size="26.0" />
             </font>
          </Button>
-         <Button fx:id="upgradesBtn" mnemonicParsing="false" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited"
-                 prefHeight="82.0" prefWidth="234.0" style="-fx-background-color: rgba(234, 249, 235, 0.6);"
-                 text="Upgrades">
+         <Button fx:id="newGameBtn" mnemonicParsing="false" onAction="#onNewGameClick" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" prefHeight="82.0" prefWidth="234.0" style="-fx-background-color: rgba(234, 249, 235, 0.6);" text="New Game">
             <font>
                <Font name="Luminari" size="26.0" />
             </font>
          </Button>
-         <Button fx:id="saveBtn" mnemonicParsing="false" onMouseEntered="#onMouseEntered"
-                 onMouseExited="#onMouseExited" prefHeight="82.0" prefWidth="234.0"
-                 style="-fx-background-color: rgba(234, 249, 235, 0.6);" text="Save Game">
+         <Button fx:id="upgradesBtn" mnemonicParsing="false" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" prefHeight="82.0" prefWidth="234.0" style="-fx-background-color: rgba(234, 249, 235, 0.6);" text="Upgrades">
+            <font>
+               <Font name="Luminari" size="26.0" />
+            </font>
+         </Button>
+         <Button fx:id="quitBtn" mnemonicParsing="false" onAction="#onQuitClick" onMouseEntered="#onMouseEntered"
+                 onMouseExited="#onMouseExited" prefHeight="82.0" prefWidth="234.0" style="-fx-background-color: rgba(234, 249, 235, 0.6);" text="Quit Game">
             <font>
                <Font name="Luminari" size="26.0" />
             </font>
