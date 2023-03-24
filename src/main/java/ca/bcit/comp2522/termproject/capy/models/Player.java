@@ -1,5 +1,6 @@
 package ca.bcit.comp2522.termproject.capy.models;
 
+import ca.bcit.comp2522.termproject.capy.Game;
 import javafx.scene.image.Image;
 
 /**
@@ -66,10 +67,34 @@ public class Player extends Character {
     @Override
     public void move(final Direction direction) {
         switch (direction) {
-            case UP -> this.getSprite().setLayoutY(this.getSprite().getLayoutY() - this.getMovementSpeed());
-            case DOWN -> this.getSprite().setLayoutY(this.getSprite().getLayoutY() + this.getMovementSpeed());
-            case LEFT -> this.getSprite().setLayoutX(this.getSprite().getLayoutX() - this.getMovementSpeed());
-            case RIGHT -> this.getSprite().setLayoutX(this.getSprite().getLayoutX() + this.getMovementSpeed());
+            case UP -> {
+                this.getSprite().setLayoutY(this.getSprite().getLayoutY() - this.getMovementSpeed());
+                if (this.getSprite().getLayoutY() < 0) {
+                    this.getSprite().setLayoutY(0);
+                }
+            }
+            case DOWN -> {
+                this.getSprite().setLayoutY(this.getSprite().getLayoutY() + this.getMovementSpeed());
+
+                final double calculatedDownLimit = Game.BACKGROUND_HEIGHT - this.getSprite().getImage().getHeight();
+                if (this.getSprite().getLayoutY() > calculatedDownLimit) {
+                    this.getSprite().setLayoutY(calculatedDownLimit);
+                }
+            }
+            case LEFT -> {
+                this.getSprite().setLayoutX(this.getSprite().getLayoutX() - this.getMovementSpeed());
+                if (this.getSprite().getLayoutX() < 0) {
+                    this.getSprite().setLayoutX(0);
+                }
+            }
+            case RIGHT -> {
+                this.getSprite().setLayoutX(this.getSprite().getLayoutX() + this.getMovementSpeed());
+
+                final double calculatedRightLimit = Game.BACKGROUND_WIDTH - this.getSprite().getImage().getWidth();
+                if (this.getSprite().getLayoutX() > calculatedRightLimit) {
+                    this.getSprite().setLayoutX(calculatedRightLimit);
+                }
+            }
             default -> {
                 return;
             }
