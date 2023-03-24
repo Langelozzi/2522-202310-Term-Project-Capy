@@ -94,6 +94,7 @@ public class Game {
      */
     public void startNew() {
         Level level1 = this.levels.get(1);
+        level1.resetLevel();
         CapyApplication.getStage().setScene(level1.getScene());
         CapyApplication.getStage().show();
     }

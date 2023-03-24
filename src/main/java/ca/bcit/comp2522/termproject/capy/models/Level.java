@@ -20,6 +20,9 @@ public class Level {
     private final Player player;
     private final ArrayList<Enemy> enemies;
 
+    private final double playerStartingXPosition = (Game.BACKGROUND_WIDTH / 2.0) - 20;
+    private final double playerStartingYPosition = (Game.BACKGROUND_HEIGHT / 2.0) - 20;
+
     /**
      * Instantiate a new Level.
      * @param player the Player object that will be playing in the level
@@ -44,6 +47,20 @@ public class Level {
         return this.scene;
     }
 
+    public void resetLevel() {
+        this.resetPlayer();
+        this.resetEnemies();
+    }
+
+    private void resetPlayer() {
+        this.player.getSprite().setLayoutX(this.playerStartingXPosition);
+        this.player.getSprite().setLayoutY(this.playerStartingYPosition);
+    }
+
+    private void resetEnemies() {
+        // TODO: Logic to reset the enemies to default state
+    }
+
     /*
     Generate an ArrayList of enemies and populate it with amount number of enemies.
      */
@@ -59,9 +76,6 @@ public class Level {
     Initialize the position and properties of the player on the Level.
      */
     private void setUpPlayer() {
-        final double startingX = (Game.BACKGROUND_WIDTH / 2.0) - 20;
-        final double startingY = (Game.BACKGROUND_HEIGHT / 2.0) - 20;
-
-        controller.renderSprite(this.player.getSprite(), startingX, startingY);
+        controller.renderSprite(this.player.getSprite(), this.playerStartingXPosition, this.playerStartingYPosition);
     }
 }
