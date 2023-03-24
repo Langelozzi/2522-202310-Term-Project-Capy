@@ -14,7 +14,7 @@ public class Player extends Character {
     /**
      * The default amount of sugar cane points a player starts with.
      */
-    public static final int DEFAULT_SUGAR_CANE_POINTS = 1000;
+    public static final int DEFAULT_SUGAR_CANE_POINTS = 0;
 
     private int points;
 
