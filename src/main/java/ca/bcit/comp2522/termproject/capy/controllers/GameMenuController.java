@@ -9,16 +9,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class StartViewController implements Initializable, SceneController {
+public class GameMenuController implements Initializable, SceneController {
 
-    private Stage stage;
     @FXML
     private AnchorPane anchorPane;
     @FXML
@@ -26,9 +24,11 @@ public class StartViewController implements Initializable, SceneController {
     @FXML
     private Button newGameBtn;
     @FXML
-    private Button upgradesBtn;
+    private Button saveBtn;
     @FXML
-    private Button settingsBtn;
+    private Button upgradesBtn;
+
+    private Game game;
 
     private final String btnBackgroundColor = "rgba(234, 249, 235, 0.6)";
     private final String btnBackgroundColorHover = " rgba(234, 249, 235, 0.85)";
@@ -41,13 +41,12 @@ public class StartViewController implements Initializable, SceneController {
         anchorPane.setMinHeight(Game.BACKGROUND_HEIGHT);
         anchorPane.setMinWidth(Game.BACKGROUND_WIDTH);
 
-        if (!Game.hasSavedGame()) {
-            continueBtn.setOpacity(0);
-        }
-    }
+        this.game = new Game();
 
-    public void setStage(final Stage stage) {
-        this.stage = stage;
+        if (!Game.hasSavedGame()) {
+            continueBtn.setVisible(false);
+            saveBtn.setVisible(false);
+        }
     }
 
     public void onMouseEntered(final MouseEvent event) {
@@ -72,8 +71,11 @@ public class StartViewController implements Initializable, SceneController {
     }
 
     public void onNewGameClick() {
-        Game game = new Game(this.stage);
-        game.start();
+        this.game.start();
+    }
+
+    public void onContinueClick() {
+        Helpers.changeScene(this.game.getCurrentLevel().getScene());
     }
 
     @Override

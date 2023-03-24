@@ -1,5 +1,6 @@
 package ca.bcit.comp2522.termproject.capy.controllers;
 
+import ca.bcit.comp2522.termproject.capy.Helpers;
 import ca.bcit.comp2522.termproject.capy.models.Character;
 import ca.bcit.comp2522.termproject.capy.models.Direction;
 import javafx.animation.AnimationTimer;
@@ -9,6 +10,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
+import javafx.stage.Stage;
 
 public class KeyboardInputController {
 
@@ -44,11 +46,11 @@ public class KeyboardInputController {
         }
     };
 
-    public void makeMovable(Character character, Scene scene) {
+    public void assignKeyboardInput(final Character character, final Scene scene) {
         this.character = character;
         this.scene = scene;
 
-        movementSetup();
+        setListeners();
 
         keyPressed.addListener(((observableValue, bool, t1) -> {
             if (!bool) {
@@ -59,8 +61,11 @@ public class KeyboardInputController {
         }));
     }
 
-    private void movementSetup() {
+    private void setListeners() {
         scene.setOnKeyPressed(e -> {
+            if (e.getCode() == KeyCode.ESCAPE) {
+                Helpers.openGameMenu();
+            }
             if (e.getCode() == KeyCode.W) {
                 wPressed.set(true);
             }

@@ -1,17 +1,12 @@
 package ca.bcit.comp2522.termproject.capy.models;
 
-import ca.bcit.comp2522.termproject.capy.CapyApplication;
 import ca.bcit.comp2522.termproject.capy.Game;
 import ca.bcit.comp2522.termproject.capy.Helpers;
 import ca.bcit.comp2522.termproject.capy.controllers.MouseInputController;
 import ca.bcit.comp2522.termproject.capy.controllers.LevelController;
 import ca.bcit.comp2522.termproject.capy.controllers.KeyboardInputController;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 
-import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 
 public class Level {
@@ -49,11 +44,5 @@ public class Level {
         final int startingY = (Game.BACKGROUND_HEIGHT / 2) - 20;
 
         controller.renderSprite(this.player.getSprite(), startingX, startingY);
-
-        KeyboardInputController movementController = new KeyboardInputController();
-        movementController.makeMovable(this.player, this.scene);
-
-        MouseInputController rotationController = new MouseInputController();
-        rotationController.makeCursorRotatable(this.player, this.scene);
     }
 }

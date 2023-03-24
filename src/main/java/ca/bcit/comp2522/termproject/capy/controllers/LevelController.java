@@ -1,12 +1,14 @@
 package ca.bcit.comp2522.termproject.capy.controllers;
 
 import ca.bcit.comp2522.termproject.capy.Game;
+import ca.bcit.comp2522.termproject.capy.Helpers;
 import ca.bcit.comp2522.termproject.capy.models.SceneController;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 
 import java.net.URL;
@@ -43,4 +45,6 @@ public class LevelController implements Initializable, SceneController {
     public Scene getScene() {
         return new Scene(pane);
     }
+
+
 }

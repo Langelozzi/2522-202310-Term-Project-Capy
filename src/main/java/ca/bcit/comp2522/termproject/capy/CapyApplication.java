@@ -1,8 +1,6 @@
 package ca.bcit.comp2522.termproject.capy;
 
-import ca.bcit.comp2522.termproject.capy.controllers.StartViewController;
-import ca.bcit.comp2522.termproject.capy.models.Level;
-import ca.bcit.comp2522.termproject.capy.models.Player;
+import ca.bcit.comp2522.termproject.capy.controllers.GameMenuController;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
@@ -15,14 +13,21 @@ import javafx.stage.Stage;
  */
 public class CapyApplication extends Application {
 
+    private static Stage stage;
+
+    public static Stage getStage() {
+        return stage;
+    }
+
     /**
      * Start the application with the provided stage, effectively starting the game with default settings.
      * @param stage the Stage that will be launched in the application window
      */
     @Override
     public void start(final Stage stage) {
-        StartViewController startViewController = (StartViewController) Helpers.getFxmlController("start-view.fxml");
-        startViewController.setStage(stage);
+        CapyApplication.stage = stage;
+
+        GameMenuController startViewController = (GameMenuController) Helpers.getFxmlController("game-menu-view.fxml");
 
         stage.setTitle("Capy Pulls Up!");
         stage.getIcons().add(
