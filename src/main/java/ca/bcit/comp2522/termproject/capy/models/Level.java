@@ -47,6 +47,9 @@ public class Level {
         return this.scene;
     }
 
+    /**
+     * Reset the state of the level back to default (beginning).
+     */
     public void resetLevel() {
         this.resetPlayer();
         this.resetEnemies();
