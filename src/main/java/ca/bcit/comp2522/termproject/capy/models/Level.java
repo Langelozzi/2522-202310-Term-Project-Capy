@@ -55,11 +55,25 @@ public class Level {
         this.resetEnemies();
     }
 
+    /*
+    Set the player health bar and sugar can information for the level overlay.
+     */
+    private void setPlayerOverlayInformation() {
+        this.controller.getHealthBar().setProgress(this.player.getHitPoints());
+        this.controller.getSugarCanePoints().setText(String.valueOf(this.player.getPoints()));
+    }
+
+    /*
+    Reset the player back to its default state and position.
+     */
     private void resetPlayer() {
         this.player.getSprite().setLayoutX(this.playerStartingXPosition);
         this.player.getSprite().setLayoutY(this.playerStartingYPosition);
     }
 
+    /*
+    Reset all the enemies back to their default spawn locations and states.
+     */
     private void resetEnemies() {
         // TODO: Logic to reset the enemies to default state
     }

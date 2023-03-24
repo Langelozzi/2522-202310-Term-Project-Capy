@@ -14,6 +14,10 @@ public abstract class Character {
      * The default movement speed of a character.
      */
     public static final int DEFAULT_MOVEMENT_SPEED = 2;
+    /**
+     * The default amount of hit points the character starts with
+     */
+    public static final int DEFAULT_HIT_POINTS = 100;
 
     private final ImageView sprite;
     private int hitPoints;
@@ -22,7 +26,7 @@ public abstract class Character {
     private double previousYCoordinate;
 
     Character(final Image spriteImage) {
-        this.hitPoints = 0;
+        this.hitPoints = DEFAULT_HIT_POINTS;
         this.movementSpeed = DEFAULT_MOVEMENT_SPEED;
         this.sprite = new ImageView(spriteImage);
     }
@@ -32,7 +36,17 @@ public abstract class Character {
             throw new IllegalArgumentException("Speed must be a positive integer");
         }
 
-        this.hitPoints = 0;
+        this.hitPoints = DEFAULT_HIT_POINTS;
+        this.movementSpeed = movementSpeed;
+        this.sprite = new ImageView(spriteImage);
+    }
+
+    Character(final Image spriteImage, final int movementSpeed, final int hitPoints) {
+        if (movementSpeed < 0) {
+            throw new IllegalArgumentException("Speed must be a positive integer");
+        }
+
+        this.hitPoints = hitPoints;
         this.movementSpeed = movementSpeed;
         this.sprite = new ImageView(spriteImage);
     }
