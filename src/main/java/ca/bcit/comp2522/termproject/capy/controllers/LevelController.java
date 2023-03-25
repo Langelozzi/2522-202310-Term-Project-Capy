@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.shape.Ellipse;
 import javafx.scene.text.Text;
 
 import java.net.URL;
@@ -25,6 +26,8 @@ public class LevelController implements Initializable, SceneController {
     private ProgressBar healthBar;
     @FXML
     private Text sugarCanePoints;
+    @FXML
+    private Ellipse swampBorder;
 
     /**
      * Initialize the Level scene with its initial properties.
@@ -59,7 +62,7 @@ public class LevelController implements Initializable, SceneController {
      * @param initialYPosition the initial y coordinate of the sprite on the scene
      */
     public void renderSprite(final ImageView sprite, final double initialXPosition, final double initialYPosition) {
-        this.pane.getChildren().add(sprite);
+        // this.pane.getChildren().add(sprite);
 
         sprite.setLayoutX(initialXPosition);
         sprite.setLayoutY(initialYPosition);

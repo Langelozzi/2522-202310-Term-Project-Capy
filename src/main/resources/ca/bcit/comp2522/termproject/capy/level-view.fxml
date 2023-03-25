@@ -8,6 +8,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Ellipse?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -57,5 +58,6 @@
             </Text>
          </bottom>
       </BorderPane>
+      <Ellipse fx:id="swampBorder" fill="#1f93ff00" layoutX="448.0" layoutY="339.0" radiusX="362.0" radiusY="256.0" stroke="BLACK" strokeType="INSIDE" />
    </children>
 </Pane>
