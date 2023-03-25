@@ -15,17 +15,18 @@ public abstract class Character {
      */
     public static final int DEFAULT_MOVEMENT_SPEED = 2;
     /**
-     * The default amount of hit points the character starts with
+     * The default amount of hit points the character starts with.
      */
     public static final int DEFAULT_HIT_POINTS = 100;
-
+    /**
+     * The speed of the object.
+     */
+    protected double speed;
     private final ImageView sprite;
     private int hitPoints;
     private int movementSpeed;
     private double previousXCoordinate;
     private double previousYCoordinate;
-
-    protected double speed;
 
     Character(final Image spriteImage) {
         this.hitPoints = DEFAULT_HIT_POINTS;

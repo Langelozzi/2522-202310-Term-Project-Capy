@@ -63,7 +63,7 @@ public class Player extends Character {
      */
     public void shoot() {
 
-    };
+    }
 
     /**
      * Move the character in any of the 4 directions.
@@ -80,7 +80,6 @@ public class Player extends Character {
             }
             case DOWN -> {
                 this.getSprite().setLayoutY(this.getSprite().getLayoutY() + this.getMovementSpeed());
-
                 final double calculatedDownLimit = Game.BACKGROUND_HEIGHT - this.getSprite().getImage().getHeight();
                 if (this.getSprite().getLayoutY() > calculatedDownLimit) {
                     this.getSprite().setLayoutY(calculatedDownLimit);
@@ -94,15 +93,12 @@ public class Player extends Character {
             }
             case RIGHT -> {
                 this.getSprite().setLayoutX(this.getSprite().getLayoutX() + this.getMovementSpeed());
-
                 final double calculatedRightLimit = Game.BACKGROUND_WIDTH - this.getSprite().getImage().getWidth();
                 if (this.getSprite().getLayoutX() > calculatedRightLimit) {
                     this.getSprite().setLayoutX(calculatedRightLimit);
                 }
             }
-            default -> {
-                return;
-            }
+            default -> { }
         }
     }
 }

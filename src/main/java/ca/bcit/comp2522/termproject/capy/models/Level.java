@@ -47,7 +47,9 @@ public class Level {
     private void initializeGameObjects() {
         setUpPlayer();
         for (Enemy enemy : enemies) {
-            controller.renderSprite(enemy.getSprite(), Math.random() * Game.BACKGROUND_WIDTH, Math.random() * Game.BACKGROUND_HEIGHT);
+            controller.renderSprite(enemy.getSprite(),
+                    Math.random() * Game.BACKGROUND_WIDTH,
+                    Math.random() * Game.BACKGROUND_HEIGHT);
         }
     }
 
@@ -107,8 +109,8 @@ public class Level {
         int gridRows = (int) Math.sqrt(amount);
         int gridCols = amount / gridRows;
 
-        double cellWidth = Game.BACKGROUND_WIDTH / gridCols;
-        double cellHeight = Game.BACKGROUND_HEIGHT / gridRows;
+        double cellWidth = (double) Game.BACKGROUND_WIDTH / gridCols;
+        double cellHeight = (double) Game.BACKGROUND_HEIGHT / gridRows;
 
         double safeDistance = 300; // Set a safe distance around the player
 
@@ -124,7 +126,8 @@ public class Level {
 
                 Enemy enemy = new Enemy(speed, difficulty);
 
-                double enemyX, enemyY;
+                double enemyX;
+                double enemyY;
 
                 do {
                     enemyX = col * cellWidth + Math.random() * cellWidth;
@@ -141,27 +144,31 @@ public class Level {
         }
         return newEnemies;
     }
-
-
-    private boolean isSpawnLocationSafe(double x, double y, Player player, double safeDistance) {
-        double deltaX = player.getSprite().getLayoutX() - x;
-        double deltaY = player.getSprite().getLayoutY() - y;
+    private boolean isSpawnLocationSafe(
+            final double x,
+            final double y,
+            final Player playerSprite,
+            final double safeDistance) {
+        double deltaX = playerSprite.getSprite().getLayoutX() - x;
+        double deltaY = playerSprite.getSprite().getLayoutY() - y;
         double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
         return distance >= safeDistance;
     }
-
-
     /*
     Initialize the position and properties of the player on the Level.
      */
     private void setUpPlayer() {
         controller.renderSprite(this.player.getSprite(), this.playerStartingXPosition, this.playerStartingYPosition);
     }
-
+    /**
+     * Starts the game loop to continuously update the enemies in the game.
+     * The game loop uses an AnimationTimer to call the updateEnemies method in each frame.
+     * The handle method of the AnimationTimer is implemented as an anonymous inner class.
+     */
     public void startGameLoop() {
         AnimationTimer gameLoop = new AnimationTimer() {
             @Override
-            public void handle(long now) {
+            public void handle(final long now) {
                 updateEnemies();
             }
         };
