@@ -102,13 +102,6 @@ public class Level {
     /*
     Generate an ArrayList of enemies and populate it with amount number of enemies.
      */
-//    private ArrayList<Enemy> generateEnemies(final int amount) {
-//        ArrayList<Enemy> newEnemies = new ArrayList<>();
-//        for (int count = 0; count < amount; count++) {
-//            newEnemies.add(new Enemy(1, 1));
-//        }
-//        return newEnemies;
-//    }
     private ArrayList<Enemy> generateEnemies(final int amount) {
         ArrayList<Enemy> newEnemies = new ArrayList<>();
         int gridRows = (int) Math.sqrt(amount);
@@ -117,7 +110,7 @@ public class Level {
         double cellWidth = Game.BACKGROUND_WIDTH / gridCols;
         double cellHeight = Game.BACKGROUND_HEIGHT / gridRows;
 
-        double safeDistance = 100; // Set a safe distance around the player
+        double safeDistance = 300; // Set a safe distance around the player
 
         int count = 0;
         for (int row = 0; row < gridRows; row++) {
@@ -132,18 +125,11 @@ public class Level {
                 Enemy enemy = new Enemy(speed, difficulty);
 
                 double enemyX, enemyY;
-                boolean isInSafeArea;
 
                 do {
                     enemyX = col * cellWidth + Math.random() * cellWidth;
                     enemyY = row * cellHeight + Math.random() * cellHeight;
-
-                    double deltaX = enemyX - playerStartingXPosition;
-                    double deltaY = enemyY - playerStartingYPosition;
-                    double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-
-                    isInSafeArea = distance < safeDistance;
-                } while (isInSafeArea);
+                } while (!isSpawnLocationSafe(enemyX, enemyY, player, safeDistance));
 
                 enemy.getSprite().setLayoutX(enemyX);
                 enemy.getSprite().setLayoutY(enemyY);
@@ -154,6 +140,14 @@ public class Level {
             }
         }
         return newEnemies;
+    }
+
+
+    private boolean isSpawnLocationSafe(double x, double y, Player player, double safeDistance) {
+        double deltaX = player.getSprite().getLayoutX() - x;
+        double deltaY = player.getSprite().getLayoutY() - y;
+        double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+        return distance >= safeDistance;
     }
 
 
