@@ -164,10 +164,8 @@ public class Level {
         controller.renderSprite(this.player.getSprite(), this.playerStartingXPosition, this.playerStartingYPosition);
     }
 
-    private AnimationTimer gameLoop;
-
     public void startGameLoop() {
-        gameLoop = new AnimationTimer() {
+        AnimationTimer gameLoop = new AnimationTimer() {
             @Override
             public void handle(long now) {
                 updateEnemies();

@@ -1,7 +1,6 @@
 package ca.bcit.comp2522.termproject.capy.models;
 
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 /**
  * Enemy class represents an enemy in the game. Subclass of Character.
@@ -10,6 +9,8 @@ import javafx.scene.image.ImageView;
  * @version 1.0.0
  */
 public class Enemy extends Character {
+
+    private static final double ENEMY_SPEED = 1.0;
     private static final int ATTACK_MULTIPLIER = 3;
     private final int difficulty;
     private final int attackDamage;
@@ -31,6 +32,19 @@ public class Enemy extends Character {
         animationCounter = 0;
     }
 
+    public static void moveTowardsPlayer(Enemy enemy, Player player) {
+        double deltaX = player.getSprite().getLayoutX() - enemy.getSprite().getLayoutX();
+        double deltaY = player.getSprite().getLayoutY() - enemy.getSprite().getLayoutY();
+        double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+        double moveX = ENEMY_SPEED * deltaX / distance;
+        double moveY = ENEMY_SPEED * deltaY / distance;
+
+        enemy.getSprite().setLayoutX(enemy.getSprite().getLayoutX() + moveX);
+        enemy.getSprite().setLayoutY(enemy.getSprite().getLayoutY() + moveY);
+
+        enemy.updateSprite();
+    }
 
     public void updateSprite() {
         animationCounter++;
@@ -55,7 +69,7 @@ public class Enemy extends Character {
         this.getSprite().setRotate(angle + 90); // Add 90 degrees to make the top of the image (head) face the player
 
         // Move the enemy towards the player
-        EnemyAI.moveTowardsPlayer(this, player);
+        Enemy.moveTowardsPlayer(this, player);
     }
 
 
