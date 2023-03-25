@@ -2,6 +2,8 @@ package ca.bcit.comp2522.termproject.capy.models;
 
 import javafx.scene.image.Image;
 
+import java.util.List;
+
 /**
  * Enemy class represents an enemy in the game. Subclass of Character.
  *
@@ -32,7 +34,7 @@ public class Enemy extends Character {
         animationCounter = 0;
     }
 
-    public static void moveTowardsPlayer(Enemy enemy, Player player) {
+    public static void moveTowardsPlayer(Enemy enemy, Player player, List<Enemy> enemies) {
         double deltaX = player.getSprite().getLayoutX() - enemy.getSprite().getLayoutX();
         double deltaY = player.getSprite().getLayoutY() - enemy.getSprite().getLayoutY();
         double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
@@ -40,11 +42,18 @@ public class Enemy extends Character {
         double moveX = ENEMY_SPEED * deltaX / distance;
         double moveY = ENEMY_SPEED * deltaY / distance;
 
-        enemy.getSprite().setLayoutX(enemy.getSprite().getLayoutX() + moveX);
-        enemy.getSprite().setLayoutY(enemy.getSprite().getLayoutY() + moveY);
+        double newX = enemy.getSprite().getLayoutX() + moveX;
+        double newY = enemy.getSprite().getLayoutY() + moveY;
+
+        // Check for collision with other enemies before updating the position
+        if (!isEnemyCollision(enemy, enemies, newX, newY)) {
+            enemy.getSprite().setLayoutX(newX);
+            enemy.getSprite().setLayoutY(newY);
+        }
 
         enemy.updateSprite();
     }
+
 
     public void updateSprite() {
         animationCounter++;
@@ -59,7 +68,7 @@ public class Enemy extends Character {
         this.getSprite().setImage(updatedImage);
     }
 
-    public void update(Player player) {
+    public void update(Player player, List<Enemy> enemies) {
         // Calculate the angle between the enemy and the player
         double deltaX = player.getSprite().getLayoutX() - this.getSprite().getLayoutX();
         double deltaY = player.getSprite().getLayoutY() - this.getSprite().getLayoutY();
@@ -69,8 +78,26 @@ public class Enemy extends Character {
         this.getSprite().setRotate(angle + 90); // Add 90 degrees to make the top of the image (head) face the player
 
         // Move the enemy towards the player
-        Enemy.moveTowardsPlayer(this, player);
+        Enemy.moveTowardsPlayer(this, player, enemies);
     }
+
+
+    private static boolean isEnemyCollision(Enemy currentEnemy, List<Enemy> enemies, double newX, double newY) {
+        for (Enemy enemy : enemies) {
+            if (enemy == currentEnemy) continue;
+
+            double deltaX = newX - enemy.getSprite().getLayoutX();
+            double deltaY = newY - enemy.getSprite().getLayoutY();
+            double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+            double minDistance = 50; // Adjust this value for the minimum distance between enemies
+
+            if (distance < minDistance) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
 
     /**

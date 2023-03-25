@@ -170,7 +170,7 @@ public class Level {
 
     private void updateEnemies() {
         for (Enemy enemy : enemies) {
-            enemy.update(player);
+            enemy.update(player, enemies);
         }
     }
 }
