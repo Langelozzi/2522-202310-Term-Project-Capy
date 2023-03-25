@@ -40,6 +40,8 @@ public class Level {
 
         setUpPlayer();
         controller.renderSprite(enemies.get(0).getSprite(), 0, 0);
+
+        updatePlayerOverlayInformation();
     }
 
     private void initializeGameObjects() {
@@ -66,11 +68,33 @@ public class Level {
         this.resetEnemies();
     }
 
+    /**
+    Set the player health bar and sugar can information for the level overlay.
+     */
+    public void updatePlayerOverlayInformation() {
+        this.controller.getSugarCanePoints().setText(String.valueOf(this.player.getPoints()));
+
+        if (this.player.getHitPoints() <= 20) {
+            this.controller.getHealthBar().setStyle("-fx-accent: red");
+        } else if (this.player.getHitPoints() <= 50) {
+            this.controller.getHealthBar().setStyle("-fx-accent: #f8e407");
+        }
+
+        final double progressAmount = this.player.getHitPoints() / 100.0;
+        this.controller.getHealthBar().setProgress(progressAmount);
+    }
+
+    /*
+    Reset the player back to its default state and position.
+     */
     private void resetPlayer() {
         this.player.getSprite().setLayoutX(this.playerStartingXPosition);
         this.player.getSprite().setLayoutY(this.playerStartingYPosition);
     }
 
+    /*
+    Reset all the enemies back to their default spawn locations and states.
+     */
     private void resetEnemies() {
         // TODO: Logic to reset the enemies to default state
     }

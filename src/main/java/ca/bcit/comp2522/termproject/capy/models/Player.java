@@ -11,6 +11,11 @@ import javafx.scene.image.Image;
  */
 public class Player extends Character {
 
+    /**
+     * The default amount of sugar cane points a player starts with.
+     */
+    public static final int DEFAULT_SUGAR_CANE_POINTS = 0;
+
     private int points;
 
     private Weapon weapon;
@@ -23,7 +28,7 @@ public class Player extends Character {
     public Player(final Image sprite) {
         super(sprite);
 
-        this.points = 0;
+        this.points = DEFAULT_SUGAR_CANE_POINTS;
     }
 
     /**
@@ -34,7 +39,7 @@ public class Player extends Character {
     public Player(final Image sprite, final int playerSpeed) {
         super(sprite, playerSpeed);
 
-        this.points = 0;
+        this.points = DEFAULT_SUGAR_CANE_POINTS;
     }
 
     /**
