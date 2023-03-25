@@ -5,6 +5,7 @@ import ca.bcit.comp2522.termproject.capy.Helpers;
 import ca.bcit.comp2522.termproject.capy.controllers.LevelController;
 import javafx.scene.Scene;
 
+import javafx.animation.AnimationTimer;
 import java.util.ArrayList;
 
 /**
@@ -25,7 +26,8 @@ public class Level {
 
     /**
      * Instantiate a new Level.
-     * @param player the Player object that will be playing in the level
+     *
+     * @param player     the Player object that will be playing in the level
      * @param numEnemies the amount of enemies that will be rendered in the level
      */
     public Level(final Player player, final int numEnemies) {
@@ -34,13 +36,22 @@ public class Level {
 
         this.player = player;
         this.enemies = generateEnemies(numEnemies);
+        initializeGameObjects();
 
         setUpPlayer();
         controller.renderSprite(enemies.get(0).getSprite(), 0, 0);
     }
 
+    private void initializeGameObjects() {
+        setUpPlayer();
+        for (Enemy enemy : enemies) {
+            controller.renderSprite(enemy.getSprite(), Math.random() * Game.BACKGROUND_WIDTH, Math.random() * Game.BACKGROUND_HEIGHT);
+        }
+    }
+
     /**
      * Return the scene object of the level.
+     *
      * @return the scene object of the level
      */
     public Scene getScene() {
@@ -67,18 +78,83 @@ public class Level {
     /*
     Generate an ArrayList of enemies and populate it with amount number of enemies.
      */
+//    private ArrayList<Enemy> generateEnemies(final int amount) {
+//        ArrayList<Enemy> newEnemies = new ArrayList<>();
+//        for (int count = 0; count < amount; count++) {
+//            newEnemies.add(new Enemy(1, 1));
+//        }
+//        return newEnemies;
+//    }
     private ArrayList<Enemy> generateEnemies(final int amount) {
         ArrayList<Enemy> newEnemies = new ArrayList<>();
-        for (int count = 0; count < amount; count++) {
-            newEnemies.add(new Enemy(1));
+        int gridRows = (int) Math.sqrt(amount);
+        int gridCols = amount / gridRows;
+
+        double cellWidth = Game.BACKGROUND_WIDTH / gridCols;
+        double cellHeight = Game.BACKGROUND_HEIGHT / gridRows;
+
+        double safeDistance = 100; // Set a safe distance around the player
+
+        int count = 0;
+        for (int row = 0; row < gridRows; row++) {
+            for (int col = 0; col < gridCols; col++) {
+                if (count >= amount) {
+                    break;
+                }
+
+                int speed = 1;
+                int difficulty = 1;
+
+                Enemy enemy = new Enemy(speed, difficulty);
+
+                double enemyX, enemyY;
+                boolean isInSafeArea;
+
+                do {
+                    enemyX = col * cellWidth + Math.random() * cellWidth;
+                    enemyY = row * cellHeight + Math.random() * cellHeight;
+
+                    double deltaX = enemyX - playerStartingXPosition;
+                    double deltaY = enemyY - playerStartingYPosition;
+                    double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+                    isInSafeArea = distance < safeDistance;
+                } while (isInSafeArea);
+
+                enemy.getSprite().setLayoutX(enemyX);
+                enemy.getSprite().setLayoutY(enemyY);
+
+                newEnemies.add(enemy);
+
+                count++;
+            }
         }
         return newEnemies;
     }
+
 
     /*
     Initialize the position and properties of the player on the Level.
      */
     private void setUpPlayer() {
         controller.renderSprite(this.player.getSprite(), this.playerStartingXPosition, this.playerStartingYPosition);
+    }
+
+    private AnimationTimer gameLoop;
+
+    public void startGameLoop() {
+        gameLoop = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                updateEnemies();
+            }
+        };
+        gameLoop.start();
+    }
+
+    private void updateEnemies() {
+        for (Enemy enemy : enemies) {
+            enemy.update(player);
+        }
     }
 }

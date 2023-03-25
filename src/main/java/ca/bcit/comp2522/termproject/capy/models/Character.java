@@ -21,6 +21,8 @@ public abstract class Character {
     private double previousXCoordinate;
     private double previousYCoordinate;
 
+    protected double speed;
+
     Character(final Image spriteImage) {
         this.hitPoints = 0;
         this.movementSpeed = DEFAULT_MOVEMENT_SPEED;

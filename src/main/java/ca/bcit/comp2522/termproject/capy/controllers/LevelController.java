@@ -50,7 +50,11 @@ public class LevelController implements Initializable, SceneController {
      * @param initialYPosition the initial y coordinate of the sprite on the scene
      */
     public void renderSprite(final ImageView sprite, final double initialXPosition, final double initialYPosition) {
-        this.pane.getChildren().add(sprite);
+        if (this.pane.getChildren().contains(sprite)) {
+            System.out.println("Sprite already exists in pane");
+        } else {
+            this.pane.getChildren().add(sprite);
+        }
 
         sprite.setLayoutX(initialXPosition);
         sprite.setLayoutY(initialYPosition);

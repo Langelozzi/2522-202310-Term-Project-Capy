@@ -1,6 +1,7 @@
 package ca.bcit.comp2522.termproject.capy.models;
 
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 /**
  * Enemy class represents an enemy in the game. Subclass of Character.
@@ -14,15 +15,49 @@ public class Enemy extends Character {
     private final int attackDamage;
     // private SugarCane sugarCane;
 
+    private static final String DEFAULT_SPRITE_PATH = "file:src/main/resources/ca/bcit/comp2522/termproject/capy/sprites/crocodile.png";
+    private static final String LEFT_FOOT_SPRITE_PATH = "file:src/main/resources/ca/bcit/comp2522/termproject/capy/sprites/crocodile-left-foot-forward.png";
+    private static final String RIGHT_FOOT_SPRITE_PATH = "file:src/main/resources/ca/bcit/comp2522/termproject/capy/sprites/crocodile-right-foot-forward.png";
+    private int animationCounter;
+
     /**
      * Instantiate a new Enemy with a specific difficulty.
      * @param difficulty the difficulty of the enemy, decides its amount of attack damage
      */
-    public Enemy(final int difficulty) {
+    public Enemy(int speed, final int difficulty) {
         super(new Image("file:src/main/resources/ca/bcit/comp2522/termproject/capy/sprites/crocodile.png"));
         this.difficulty = difficulty;
         this.attackDamage = ATTACK_MULTIPLIER * difficulty;
+        animationCounter = 0;
     }
+
+
+    public void updateSprite() {
+        animationCounter++;
+        Image updatedImage;
+        if (animationCounter % 30 < 10) {
+            updatedImage = new Image(LEFT_FOOT_SPRITE_PATH);
+        } else if (animationCounter % 30 < 20) {
+            updatedImage = new Image(DEFAULT_SPRITE_PATH);
+        } else {
+            updatedImage = new Image(RIGHT_FOOT_SPRITE_PATH);
+        }
+        this.getSprite().setImage(updatedImage);
+    }
+
+    public void update(Player player) {
+        // Calculate the angle between the enemy and the player
+        double deltaX = player.getSprite().getLayoutX() - this.getSprite().getLayoutX();
+        double deltaY = player.getSprite().getLayoutY() - this.getSprite().getLayoutY();
+        double angle = Math.toDegrees(Math.atan2(deltaY, deltaX));
+
+        // Rotate the enemy sprite to face the player
+        this.getSprite().setRotate(angle + 90); // Add 90 degrees to make the top of the image (head) face the player
+
+        // Move the enemy towards the player
+        EnemyAI.moveTowardsPlayer(this, player);
+    }
+
 
     /**
      * Get the Enemy difficulty.
