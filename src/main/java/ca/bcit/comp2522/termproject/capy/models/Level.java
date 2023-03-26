@@ -9,6 +9,8 @@ import javafx.animation.AnimationTimer;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import javafx.scene.shape.Ellipse;
+
 import java.util.ArrayList;
 
 /**
@@ -23,6 +25,7 @@ public class Level {
 
     private final Player player;
     private final ArrayList<Enemy> enemies;
+    private final Ellipse swampBoundary;
 
     private final double playerStartingXPosition = (Game.BACKGROUND_WIDTH / 2.0) - 20;
     private final double playerStartingYPosition = (Game.BACKGROUND_HEIGHT / 2.0) - 20;
@@ -46,6 +49,8 @@ public class Level {
         this.enemies = generateEnemies(numEnemies);
         initializeGameObjects();
 
+        this.swampBoundary = controller.getSwampBorder();
+
         setUpPlayer();
         controller.renderSprite(enemies.get(0).getSprite(), 0, 0);
 
@@ -68,6 +73,10 @@ public class Level {
      */
     public Scene getScene() {
         return this.scene;
+    }
+
+    public Ellipse getSwampBoundary() {
+        return this.swampBoundary;
     }
 
     /**

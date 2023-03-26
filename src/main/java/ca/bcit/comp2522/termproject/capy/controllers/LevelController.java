@@ -52,10 +52,14 @@ public class LevelController implements Initializable, SceneController {
     /**
      * Get the Text object that shows the players sugar cane points.
      * 
-     * @return the Text object that shows the players sugar can points
+     * @return the Text object that shows the players sugar cane points
      */
     public Text getSugarCanePoints() {
         return this.sugarCanePoints;
+    }
+
+    public Ellipse getSwampBorder() {
+        return this.swampBorder;
     }
 
     /**
@@ -66,9 +70,7 @@ public class LevelController implements Initializable, SceneController {
      * @param initialYPosition the initial y coordinate of the sprite on the scene
      */
     public void renderSprite(final ImageView sprite, final double initialXPosition, final double initialYPosition) {
-        if (this.pane.getChildren().contains(sprite)) {
-            System.out.println("Sprite already exists in pane");
-        } else {
+        if (!this.pane.getChildren().contains(sprite)) {
             this.pane.getChildren().add(sprite);
         }
 

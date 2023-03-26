@@ -15,18 +15,19 @@ public class Player extends Character {
      * The default amount of sugar cane points a player starts with.
      */
     public static final int DEFAULT_SUGAR_CANE_POINTS = 0;
+    public static final int DEFAULT_PLAYER_SPEED = 3;
+
     private int points;
 
     private Weapon weapon;
     private Armour armour;
-
 
     /**
      * Instantiate a Player object.
      * @param sprite the Image to use as the player's ImageView sprite
      */
     public Player(final Image sprite) {
-        super(sprite);
+        super(sprite, DEFAULT_PLAYER_SPEED);
 
         this.points = DEFAULT_SUGAR_CANE_POINTS;
     }
@@ -71,42 +72,5 @@ public class Player extends Character {
      */
     public void shoot() {
 
-    }
-
-    /**
-     * Move the character in any of the 4 directions.
-     * @param direction the direction to move the character
-     */
-    @Override
-    public void move(final Direction direction) {
-        switch (direction) {
-            case UP -> {
-                this.getSprite().setLayoutY(this.getSprite().getLayoutY() - this.getMovementSpeed());
-                if (this.getSprite().getLayoutY() < 0) {
-                    this.getSprite().setLayoutY(0);
-                }
-            }
-            case DOWN -> {
-                this.getSprite().setLayoutY(this.getSprite().getLayoutY() + this.getMovementSpeed());
-                final double calculatedDownLimit = Game.BACKGROUND_HEIGHT - this.getSprite().getImage().getHeight();
-                if (this.getSprite().getLayoutY() > calculatedDownLimit) {
-                    this.getSprite().setLayoutY(calculatedDownLimit);
-                }
-            }
-            case LEFT -> {
-                this.getSprite().setLayoutX(this.getSprite().getLayoutX() - this.getMovementSpeed());
-                if (this.getSprite().getLayoutX() < 0) {
-                    this.getSprite().setLayoutX(0);
-                }
-            }
-            case RIGHT -> {
-                this.getSprite().setLayoutX(this.getSprite().getLayoutX() + this.getMovementSpeed());
-                final double calculatedRightLimit = Game.BACKGROUND_WIDTH - this.getSprite().getImage().getWidth();
-                if (this.getSprite().getLayoutX() > calculatedRightLimit) {
-                    this.getSprite().setLayoutX(calculatedRightLimit);
-                }
-            }
-            default -> { }
-        }
     }
 }
