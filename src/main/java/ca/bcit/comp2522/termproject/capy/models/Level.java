@@ -182,6 +182,8 @@ public class Level {
         double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
         return distance >= safeDistance;
     }
+
+    // THIS VERSION MAKES THE HEALTH BAR JUST REMAIN 0 INSTEAD OF FLASHING LIKE THE ONE COMMENTED OUT BELOW
     private void updateEnemies() {
         LocalDateTime currentTime = LocalDateTime.now();
         for (int i = 0; i < enemies.size(); i++) {
@@ -190,18 +192,38 @@ public class Level {
             if (player.isCollidingWithEnemy(enemy)) {
                 // Check if the player's hit points are already 0 or below
                 if (player.getHitPoints() <= 0) {
-                    // TODO: Add Game Over logic here
+                    // TODO: Game over logic
                 } else if (Duration.between(this.lastDamageTimes.get(i), currentTime).getSeconds() >= 1) {
                     int damage = 20; // Player takes 20 damage per collision
                     player.setHitPoints(player.getHitPoints() - damage);
                     updatePlayerOverlayInformation(); // Update the player's health bar and other overlay information
                     this.lastDamageTimes.set(i, currentTime);
-                    // Check if the player's hit points have reached 0 or below after taking damage
+                    // TODO: Check if the player's hit points have reached 0 or below after taking damage
                     if (player.getHitPoints() <= 0) {
-                        // TODO: Add Game Over logic here
+                        // Game over logic
                     }
                 }
             }
         }
     }
+// THIS MAKES THE HP BAR FLASH IN RED WHEN IT REACHES ZERO
+//    private void updateEnemies() {
+//        LocalDateTime currentTime = LocalDateTime.now();
+//        for (int i = 0; i < enemies.size(); i++) {
+//            Enemy enemy = enemies.get(i);
+//            enemy.update(player, enemies);
+//            if (player.isCollidingWithEnemy(enemy)) {
+//                if (Duration.between(this.lastDamageTimes.get(i), currentTime).getSeconds() >= 1) {
+//                    int damage = 20; // Player takes 20 damage per collision
+//                    player.setHitPoints(player.getHitPoints() - damage);
+//                    // TODO: You can handle the game over scenario here if the player's health reaches 0
+//                    if (player.getHitPoints() <= 0) {
+//                        // TODO: Game over logic
+//                    }
+//                    updatePlayerOverlayInformation(); // Update the player's health bar and other overlay information
+//                    this.lastDamageTimes.set(i, currentTime);
+//                }
+//            }
+//        }
+//    }
 }
