@@ -40,11 +40,11 @@ public class GameMenuController implements Initializable, SceneController {
     /*
     Default font of buttons
      */
-    private final Font btnFont = new Font("Luminari", 26);
+    private final Font btnFont = new Font("Luminari", 32);
     /*
     Font of buttons when being hovered over
      */
-    private final Font btnFontHover = new Font("Luminari", 32);
+    private final Font btnFontHover = new Font("Luminari", 38);
 
     /**
      * Initialize the game menu with specific properties, which are different depending on if the user has a saved game.
@@ -72,8 +72,8 @@ public class GameMenuController implements Initializable, SceneController {
         final String btnBackgroundColorHover = "rgba(234, 249, 235, 0.85)";
         button.setStyle("-fx-background-color: " + btnBackgroundColorHover);
 
-        final int hoverWidth = 270;
-        final int hoverHeight = 110;
+        final int hoverWidth = 315;
+        final int hoverHeight = 135;
         button.setMinWidth(hoverWidth);
         button.setMinHeight(hoverHeight);
 
@@ -90,8 +90,8 @@ public class GameMenuController implements Initializable, SceneController {
         final String btnBackgroundColor = "rgba(234, 249, 235, 0.6)";
         button.setStyle("-fx-background-color: " + btnBackgroundColor);
 
-        final int defaultWidth = 230;
-        final int defaultHeight = 80;
+        final int defaultWidth = 280;
+        final int defaultHeight = 100;
         button.setMinWidth(defaultWidth);
         button.setMinHeight(defaultHeight);
 
