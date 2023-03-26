@@ -15,11 +15,11 @@ public class Player extends Character {
      * The default amount of sugar cane points a player starts with.
      */
     public static final int DEFAULT_SUGAR_CANE_POINTS = 0;
-
     private int points;
 
     private Weapon weapon;
     private Armour armour;
+
 
     /**
      * Instantiate a Player object.
@@ -41,7 +41,15 @@ public class Player extends Character {
 
         this.points = DEFAULT_SUGAR_CANE_POINTS;
     }
-
+    /**
+     * Check if the player's sprite is colliding with the given enemy's sprite.
+     *
+     * @param enemy the enemy to check for collision
+     * @return true if the player's sprite is colliding with the enemy's sprite, false otherwise
+     */
+    public boolean isCollidingWithEnemy(final Enemy enemy) {
+        return this.getSprite().getBoundsInParent().intersects(enemy.getSprite().getBoundsInParent());
+    }
     /**
      * Get the current amount of points that the player has.
      * @return the current amount of points that the player has
