@@ -184,6 +184,7 @@ public class Level {
     }
 
     // THIS VERSION MAKES THE HEALTH BAR JUST REMAIN 0 INSTEAD OF FLASHING LIKE THE ONE COMMENTED OUT BELOW
+    // THIS ONES PROBABLY BETTER CAUSE IT CHECKS IF HP IS 0 FIRST BEFORE ADDING MORE DMG
     private void updateEnemies() {
         LocalDateTime currentTime = LocalDateTime.now();
         for (int i = 0; i < enemies.size(); i++) {
