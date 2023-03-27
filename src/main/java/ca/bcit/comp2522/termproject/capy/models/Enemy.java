@@ -147,9 +147,4 @@ public class Enemy extends Character {
     public int getAttackDamage() {
         return attackDamage;
     }
-
-    @Override
-    public void move(final Direction direction) {
-
-    }
 }

@@ -20,11 +20,11 @@ public class Game {
     /**
      * The background/window width of the game.
      */
-    public static final int BACKGROUND_WIDTH = 865;
+    public static final int BACKGROUND_WIDTH = 1160;
     /**
      * The background/window height of the game.
      */
-    public static final int BACKGROUND_HEIGHT = 645;
+    public static final int BACKGROUND_HEIGHT = 864;
 
     private static boolean hasSavedGame = false;
 
@@ -47,7 +47,9 @@ public class Game {
         this.currentLevel = this.levels.get(1);
 
         KeyboardInputController keyboardInputController = new KeyboardInputController();
-        keyboardInputController.assignKeyboardInput(this.player, this.currentLevel.getScene());
+        keyboardInputController.assignKeyboardInput(
+                this.player, this.currentLevel.getScene(), this.currentLevel.getSwampBoundary()
+        );
 
         MouseInputController rotationController = new MouseInputController();
         rotationController.makeCursorRotatable(this.player, this.currentLevel.getScene());

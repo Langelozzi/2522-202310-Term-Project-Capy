@@ -13,7 +13,7 @@ public abstract class Character {
     /**
      * The default movement speed of a character.
      */
-    public static final int DEFAULT_MOVEMENT_SPEED = 2;
+    public static final int DEFAULT_CHARACTER_SPEED = 2;
     /**
      * The default amount of hit points the character starts with.
      */
@@ -30,7 +30,7 @@ public abstract class Character {
 
     Character(final Image spriteImage) {
         this.hitPoints = DEFAULT_HIT_POINTS;
-        this.movementSpeed = DEFAULT_MOVEMENT_SPEED;
+        this.movementSpeed = DEFAULT_CHARACTER_SPEED;
         this.sprite = new ImageView(spriteImage);
     }
 
@@ -135,11 +135,4 @@ public abstract class Character {
     public boolean isAlive() {
         return hitPoints > 0;
     }
-
-    /**
-     * Move the ImageView sprite on the scene in the indicated direction. If the Character can move in more than one
-     * direction, then this method should handle all the possible directions.
-     * @param direction the direction to move the character
-     */
-    public abstract void move(Direction direction);
 }

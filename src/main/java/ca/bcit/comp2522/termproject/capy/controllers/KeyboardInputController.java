@@ -10,6 +10,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
+import javafx.scene.shape.Ellipse;
 
 /**
  * KeyboardInputController handles the keyboard input functionality.
@@ -33,6 +34,9 @@ public class KeyboardInputController {
     @FXML
     private Scene scene;
 
+    @FXML
+    private Ellipse border;
+
     /**
      * Move the character when specific key is pressed.
      */
@@ -40,16 +44,20 @@ public class KeyboardInputController {
         @Override
         public void handle(final long l) {
             if (wPressed.get()) {
-                character.move(Direction.UP);
+                // character.move(Direction.UP);
+                moveCharacter(character, Direction.UP, border);
             }
             if (sPressed.get()) {
-                character.move(Direction.DOWN);
+                // character.move(Direction.DOWN);
+                moveCharacter(character, Direction.DOWN, border);
             }
             if (aPressed.get()) {
-                character.move(Direction.LEFT);
+                // character.move(Direction.LEFT);
+                moveCharacter(character, Direction.LEFT, border);
             }
             if (dPressed.get()) {
-                character.move(Direction.RIGHT);
+                // character.move(Direction.RIGHT);
+                moveCharacter(character, Direction.RIGHT, border);
             }
         }
     };
@@ -60,9 +68,10 @@ public class KeyboardInputController {
      * @param player the character to set the movement on
      * @param newScene the scene to which the listeners are attached
      */
-    public void assignKeyboardInput(final Character player, final Scene newScene) {
+    public void assignKeyboardInput(final Character player, final Scene newScene, final Ellipse border) {
         this.character = player;
         this.scene = newScene;
+        this.border = border;
 
         setListeners();
 
@@ -113,5 +122,27 @@ public class KeyboardInputController {
                 dPressed.set(false);
             }
         });
+    }
+
+    private void moveCharacter(final Character character, final Direction direction, final Ellipse border) {
+        double currentX = character.getSprite().getLayoutX();
+        double currentY = character.getSprite().getLayoutY();
+
+        double newX = currentX;
+        double newY = currentY;
+
+        switch (direction) {
+            case UP -> newY = currentY - character.getMovementSpeed();
+            case DOWN -> newY = currentY + character.getMovementSpeed();
+            case LEFT -> newX = currentX - character.getMovementSpeed();
+            case RIGHT -> newX = currentX + character.getMovementSpeed();
+        }
+
+        // must subtract the border position, as the contains() method compares to the "local coordinate space",
+        // where its layoutX and layoutY are considered 0
+        if (border.contains(newX - border.getLayoutX(), newY - border.getLayoutY())) {
+            character.getSprite().setLayoutX(newX);
+            character.getSprite().setLayoutY(newY);
+        }
     }
 }

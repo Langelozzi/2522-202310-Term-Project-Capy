@@ -6,6 +6,11 @@ import ca.bcit.comp2522.termproject.capy.controllers.LevelController;
 import javafx.scene.Scene;
 
 import javafx.animation.AnimationTimer;
+
+import java.time.Duration;
+import java.time.LocalDateTime;
+import javafx.scene.shape.Ellipse;
+
 import java.util.ArrayList;
 
 /**
@@ -20,9 +25,11 @@ public class Level {
 
     private final Player player;
     private final ArrayList<Enemy> enemies;
+    private final Ellipse swampBoundary;
 
     private final double playerStartingXPosition = (Game.BACKGROUND_WIDTH / 2.0) - 20;
     private final double playerStartingYPosition = (Game.BACKGROUND_HEIGHT / 2.0) - 20;
+    private ArrayList<LocalDateTime> lastDamageTimes;
 
     /**
      * Instantiate a new Level.
@@ -31,12 +38,18 @@ public class Level {
      * @param numEnemies the amount of enemies that will be rendered in the level
      */
     public Level(final Player player, final int numEnemies) {
+        this.lastDamageTimes = new ArrayList<>();
+        for (int i = 0; i < numEnemies; i++) {
+            this.lastDamageTimes.add(LocalDateTime.now());
+        }
         this.controller = (LevelController) Helpers.getFxmlController("level-view.fxml");
         this.scene = this.controller.getScene();
 
         this.player = player;
         this.enemies = generateEnemies(numEnemies);
         initializeGameObjects();
+
+        this.swampBoundary = controller.getSwampBorder();
 
         setUpPlayer();
         controller.renderSprite(enemies.get(0).getSprite(), 0, 0);
@@ -60,6 +73,10 @@ public class Level {
      */
     public Scene getScene() {
         return this.scene;
+    }
+
+    public Ellipse getSwampBoundary() {
+        return this.swampBoundary;
     }
 
     /**
@@ -112,7 +129,7 @@ public class Level {
         double cellWidth = (double) Game.BACKGROUND_WIDTH / gridCols;
         double cellHeight = (double) Game.BACKGROUND_HEIGHT / gridRows;
 
-        double safeDistance = 300; // Set a safe distance around the player
+        double safeDistance = 500; // Set a safe distance around the player
 
         int count = 0;
         for (int row = 0; row < gridRows; row++) {
@@ -144,16 +161,6 @@ public class Level {
         }
         return newEnemies;
     }
-    private boolean isSpawnLocationSafe(
-            final double x,
-            final double y,
-            final Player playerSprite,
-            final double safeDistance) {
-        double deltaX = playerSprite.getSprite().getLayoutX() - x;
-        double deltaY = playerSprite.getSprite().getLayoutY() - y;
-        double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-        return distance >= safeDistance;
-    }
     /*
     Initialize the position and properties of the player on the Level.
      */
@@ -174,10 +181,36 @@ public class Level {
         };
         gameLoop.start();
     }
-
+    private boolean isSpawnLocationSafe(
+            final double x,
+            final double y,
+            final Player playerSprite,
+            final double safeDistance) {
+        double deltaX = playerSprite.getSprite().getLayoutX() - x;
+        double deltaY = playerSprite.getSprite().getLayoutY() - y;
+        double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+        return distance >= safeDistance;
+    }
     private void updateEnemies() {
-        for (Enemy enemy : enemies) {
+        LocalDateTime currentTime = LocalDateTime.now();
+        for (int i = 0; i < enemies.size(); i++) {
+            Enemy enemy = enemies.get(i);
             enemy.update(player, enemies);
+            if (player.isCollidingWithEnemy(enemy)) {
+                // Check if the player's hit points are already 0 or below
+                if (player.getHitPoints() <= 0) {
+                    // TODO: Game over logic
+                } else if (Duration.between(this.lastDamageTimes.get(i), currentTime).getSeconds() >= 1) {
+                    int damage = 20; // Player takes 20 damage per collision
+                    player.setHitPoints(player.getHitPoints() - damage);
+                    updatePlayerOverlayInformation(); // Update the player's health bar and other overlay information
+                    this.lastDamageTimes.set(i, currentTime);
+                    // Check if the player's hit points have reached 0 or below after taking damage
+                    if (player.getHitPoints() <= 0) {
+                        // TODO: Game over logic
+                    }
+                }
+            }
         }
     }
 }
