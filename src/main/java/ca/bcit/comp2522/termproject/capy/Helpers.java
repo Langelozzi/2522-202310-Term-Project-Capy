@@ -1,6 +1,7 @@
 package ca.bcit.comp2522.termproject.capy;
 
 import ca.bcit.comp2522.termproject.capy.controllers.GameMenuController;
+import ca.bcit.comp2522.termproject.capy.controllers.UpgradesController;
 import ca.bcit.comp2522.termproject.capy.models.SceneController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -57,5 +58,12 @@ public final class Helpers {
             "game-menu-view.fxml"
         );
         Helpers.changeScene(menuController.getScene());
+    }
+
+    public static void openUpgradesMenu() {
+        UpgradesController upgradesController = (UpgradesController) Helpers.getFxmlController(
+                "upgrade-menu-view.fxml"
+        );
+        Helpers.changeScene(upgradesController.getScene());
     }
 }
