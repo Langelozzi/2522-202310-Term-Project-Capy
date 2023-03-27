@@ -22,29 +22,22 @@ import java.util.ResourceBundle;
  * @author COMP2522 Group 13
  * @version 1.0.0
  */
-public class GameMenuController implements Initializable, SceneController {
+public class UpgradesController implements Initializable, SceneController {
 
     @FXML
-    private AnchorPane anchorPane;
+    private AnchorPane upgradesAnchorPane;
     @FXML
-    private Button continueBtn;
-    @FXML
-    private Button newGameBtn;
-    @FXML
-    private Button saveBtn;
-    @FXML
-    private Button upgradesBtn;
-    @FXML
-    private Button quitBtn;
+    private Button stubBtn;
+
 
     /*
     Default font of buttons
      */
-    private final Font btnFont = new Font("Luminari", 32);
+    private final Font btnFont = new Font("Luminari", 26);
     /*
     Font of buttons when being hovered over
      */
-    private final Font btnFontHover = new Font("Luminari", 38);
+    private final Font btnFontHover = new Font("Luminari", 32);
 
     /**
      * Initialize the game menu with specific properties, which are different depending on if the user has a saved game.
@@ -53,13 +46,8 @@ public class GameMenuController implements Initializable, SceneController {
      */
     @Override
     public void initialize(final URL url, final ResourceBundle resourceBundle) {
-        anchorPane.setMinHeight(Game.BACKGROUND_HEIGHT);
-        anchorPane.setMinWidth(Game.BACKGROUND_WIDTH);
-
-        if (!Game.hasSavedGame()) {
-            continueBtn.setVisible(false);
-            saveBtn.setVisible(false);
-        }
+        upgradesAnchorPane.setMinHeight(Game.BACKGROUND_HEIGHT);
+        upgradesAnchorPane.setMinWidth(Game.BACKGROUND_WIDTH);
     }
 
     /**
@@ -72,8 +60,8 @@ public class GameMenuController implements Initializable, SceneController {
         final String btnBackgroundColorHover = "rgba(234, 249, 235, 0.85)";
         button.setStyle("-fx-background-color: " + btnBackgroundColorHover);
 
-        final int hoverWidth = 315;
-        final int hoverHeight = 135;
+        final int hoverWidth = 270;
+        final int hoverHeight = 110;
         button.setMinWidth(hoverWidth);
         button.setMinHeight(hoverHeight);
 
@@ -90,43 +78,23 @@ public class GameMenuController implements Initializable, SceneController {
         final String btnBackgroundColor = "rgba(234, 249, 235, 0.6)";
         button.setStyle("-fx-background-color: " + btnBackgroundColor);
 
-        final int defaultWidth = 280;
-        final int defaultHeight = 100;
+        final int defaultWidth = 230;
+        final int defaultHeight = 80;
         button.setMinWidth(defaultWidth);
         button.setMinHeight(defaultHeight);
 
         button.setFont(this.btnFont);
     }
 
-    /**
-     * Start a new game when "New Game" button is clicked.
-     */
-    public void onNewGameClick() {
-        CapyApplication.getGame().startNew();
+    public void onBackClick() {
+        Helpers.openGameMenu();
     }
 
-    //-- ToDo: write comment
-    public void onUpgradeClick() {
-        Helpers.openUpgradesMenu();
-    }
 
-    /**
-     * Return back to the current level, and it's state when "Continue" button is clicked.
-     */
-    public void onContinueClick() {
-        Helpers.changeScene(CapyApplication.getGame().getCurrentLevel().getScene());
-    }
-
-    /**
-     * Exit the game when the "Quit" button is clicked.
-     */
-    public void onQuitClick() {
-        Platform.exit();
-    }
-
-//    public void onUpgradesClick() {
-//        Helpers.changeScene();
+//    public void onUpgradeClick() {
+//        Helpers.openUpgradeMenu();
 //    }
+
 
     /**
      * Return the parent AnchorPane as the scene for this page.
@@ -134,7 +102,7 @@ public class GameMenuController implements Initializable, SceneController {
      */
     @Override
     public Scene getScene() {
-        return new Scene(anchorPane);
+        return new Scene(upgradesAnchorPane);
     }
 
 }
