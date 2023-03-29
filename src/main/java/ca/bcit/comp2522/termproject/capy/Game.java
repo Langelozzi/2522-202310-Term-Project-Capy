@@ -2,11 +2,16 @@ package ca.bcit.comp2522.termproject.capy;
 
 import ca.bcit.comp2522.termproject.capy.controllers.KeyboardInputController;
 import ca.bcit.comp2522.termproject.capy.controllers.MouseInputController;
+import ca.bcit.comp2522.termproject.capy.models.Item;
 import ca.bcit.comp2522.termproject.capy.models.Level;
 import ca.bcit.comp2522.termproject.capy.models.Player;
+import ca.bcit.comp2522.termproject.capy.models.Weapon;
 import javafx.scene.image.Image;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import javafx.scene.image.ImageView;
 
 
 /**
@@ -28,10 +33,20 @@ public class Game {
 
     private static boolean hasSavedGame = false;
 
+    private final static List<Item> availableItems = new ArrayList<Item>();
+
+    static {
+        final String spritesPath = "file:src/main/resources/ca/bcit/comp2522/termproject/capy/sprites/";
+        final int imageSize = 200;
+        availableItems.add(new Weapon(new ImageView(new Image(spritesPath + "level-1-weapon.png",  imageSize, imageSize, true, true)), 100, 1, "handgun", 3));
+        availableItems.add(new Weapon(new ImageView(new Image(spritesPath + "level-2-weapon.png", imageSize, imageSize, true, true)), 300, 2, "semi_automatic_rifle", 15));
+        availableItems.add(new Weapon(new ImageView(new Image(spritesPath + "level-3-weapon.png", imageSize, imageSize, true, true)), 400, 3, "automatic_rifle", 25));
+    }
+
     private final HashMap<Integer, Level> levels = new HashMap<>();
     private Level currentLevel;
     private final Player player;
-
+        
     /**
      * Instantiate a new Game object starting current level at level 1.
      */
@@ -94,6 +109,10 @@ public class Game {
         return this.currentLevel;
     }
 
+    public static List<Item> getAvailableItems() {
+        return availableItems;
+    }
+
     /**
      * Start a new game at level 1.
      */
@@ -102,5 +121,5 @@ public class Game {
         level1.resetLevel();
         CapyApplication.getStage().setScene(level1.getScene());
         CapyApplication.getStage().show();
-    }
+    }    
 }

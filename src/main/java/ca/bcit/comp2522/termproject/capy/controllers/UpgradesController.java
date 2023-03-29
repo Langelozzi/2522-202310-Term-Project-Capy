@@ -3,15 +3,22 @@ package ca.bcit.comp2522.termproject.capy.controllers;
 import ca.bcit.comp2522.termproject.capy.CapyApplication;
 import ca.bcit.comp2522.termproject.capy.Game;
 import ca.bcit.comp2522.termproject.capy.Helpers;
+import ca.bcit.comp2522.termproject.capy.models.Item;
 import ca.bcit.comp2522.termproject.capy.models.SceneController;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -26,6 +33,10 @@ public class UpgradesController implements Initializable, SceneController {
 
     @FXML
     private AnchorPane upgradesAnchorPane;
+
+    @FXML
+    private VBox itemsVbox;
+
     @FXML
     private Button stubBtn;
 
@@ -48,6 +59,24 @@ public class UpgradesController implements Initializable, SceneController {
     public void initialize(final URL url, final ResourceBundle resourceBundle) {
         upgradesAnchorPane.setMinHeight(Game.BACKGROUND_HEIGHT);
         upgradesAnchorPane.setMinWidth(Game.BACKGROUND_WIDTH);
+
+        Font itemLabelsFont = new Font("Luminari", 40); 
+
+        for(Item item : Game.getAvailableItems()){   
+            HBox hbox = new HBox();
+            hbox.setSpacing(30);
+            
+            Label labelName = new Label(item.getName());
+            labelName.setFont(itemLabelsFont);
+            labelName.setTextFill(Color.WHITE);
+
+            Label labelLevel = new Label("level: " + item.getLevel());
+            labelLevel.setFont(itemLabelsFont);
+            labelLevel.setTextFill(Color.WHITE);
+
+            hbox.getChildren().addAll(item.getSprite(), labelName, labelLevel);
+            itemsVbox.getChildren().add(hbox);
+        }
     }
 
     /**

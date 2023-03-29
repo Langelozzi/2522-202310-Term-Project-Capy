@@ -26,4 +26,8 @@ public abstract class Item {
     public String getName() {
         return this.name;
     }
+
+    public ImageView getSprite() {
+        return this.sprite;
+    }
 }
