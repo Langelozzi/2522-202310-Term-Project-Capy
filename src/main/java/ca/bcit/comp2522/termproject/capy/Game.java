@@ -208,9 +208,10 @@ public class Game {
         }
     }
 
-    private boolean isOffScreen(Rectangle bullet) {
-        double x = bullet.getX();
-        double y = bullet.getY();
+
+    private boolean isOffScreen(Circle bullet) {
+        double x = bullet.getCenterX();
+        double y = bullet.getCenterY();
 
         return x < 0 || x > BACKGROUND_WIDTH || y < 0 || y > BACKGROUND_HEIGHT;
     }
