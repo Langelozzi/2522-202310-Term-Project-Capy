@@ -18,10 +18,7 @@
         xmlns="http://javafx.com/javafx/19"
         xmlns:fx="http://javafx.com/fxml/1"
         fx:controller="ca.bcit.comp2522.termproject.capy.controllers.UpgradesController">
-<!--<AnchorPane xmlns="http://javafx.com/javafx"-->
-<!--            xmlns:fx="http://javafx.com/fxml"-->
-<!--            fx:controller="ca.bcit.comp2522.termproject.capy.controllers.GameMenuController"-->
-<!--            prefHeight="400.0" prefWidth="600.0">-->
+
     <ImageView fitHeight="692.0" fitWidth="995.0" layoutX="-92.0" layoutY="-14.0" opacity="0.93" pickOnBounds="true" preserveRatio="true">
         <image>
             <Image url="@imgs/start_menu_background.png" />
@@ -32,7 +29,7 @@
             <Font name="Luminari" size="80.0" />
         </font>
     </Text>
-    <ImageView fitWidth="150.0" layoutX="50.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
+    <!-- <ImageView fitWidth="150.0" layoutX="50.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
         <image>
             <Image url="@sprites/level-1-weapon.png" />
         </image>
@@ -41,11 +38,15 @@
     <image>
         <Image url="@sprites/level-2-weapon.png"  />
     </image>
-    </ImageView>
-    <Button fx:id="backBtn" mnemonicParsing="false" onAction="#onBackClick" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" prefHeight="81.0" prefWidth="234.0" style="-fx-background-color: rgba(234, 249, 235, 0.6);" text="Back" textAlignment="CENTER">
+    </ImageView> -->
+
+
+    <VBox fx:id = "itemsVbox">
+        <Button fx:id="backBtn" mnemonicParsing="false" onAction="#onBackClick" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" prefHeight="81.0" prefWidth="234.0" style="-fx-background-color: rgba(234, 249, 235, 0.6);" text="Back" textAlignment="CENTER">
         <font>
             <Font name="Luminari" size="26.0" />
         </font>
     </Button>
+    </VBox>
 <!--    <Button fx:id="purchaseBtn" mnemonicParsing="false" onAction=""-->
 </AnchorPane>
