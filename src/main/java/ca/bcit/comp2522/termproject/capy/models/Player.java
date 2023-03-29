@@ -3,6 +3,8 @@ package ca.bcit.comp2522.termproject.capy.models;
 import ca.bcit.comp2522.termproject.capy.Game;
 import javafx.scene.image.Image;
 
+import java.util.ArrayList;
+
 /**
  * Player class represents a user's player character in the game. Subclass of Character.
  *
@@ -16,6 +18,7 @@ public class Player extends Character {
      */
     public static final int DEFAULT_SUGAR_CANE_POINTS = 0;
     public static final int DEFAULT_PLAYER_SPEED = 3;
+    private ArrayList<Bullet> bullets = new ArrayList<>();
 
     private int points;
 
@@ -70,7 +73,18 @@ public class Player extends Character {
     /**
      * Shoot the weapon that the player is holding.
      */
-    public void shoot() {
+    public void shoot(double mouseX, double mouseY) {
+        double deltaX = mouseX - getSprite().getLayoutX();
+        double deltaY = mouseY - getSprite().getLayoutY();
+        double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 
+        double directionX = deltaX / distance;
+        double directionY = deltaY / distance;
+
+        Bullet bullet = new Bullet(getSprite().getLayoutX(), getSprite().getLayoutY(), directionX, directionY, 5);
+        bullets.add(bullet);
+    }
+    public ArrayList<Bullet> getBullets() {
+        return bullets;
     }
 }

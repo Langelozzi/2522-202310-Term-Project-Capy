@@ -9,6 +9,8 @@ import javafx.animation.AnimationTimer;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+
+import javafx.scene.layout.Pane;
 import javafx.scene.shape.Ellipse;
 
 import java.util.ArrayList;
@@ -78,6 +80,18 @@ public class Level {
     public Ellipse getSwampBoundary() {
         return this.swampBoundary;
     }
+
+    public ArrayList<Enemy> getEnemies() {
+        return enemies;
+    }
+
+    public ArrayList<LocalDateTime> getLastDamageTimes() {
+        return lastDamageTimes;
+    }
+    public Pane getGameLayer() {
+        return this.controller.getGameLayer();
+    }
+
 
     /**
      * Reset the state of the level back to default (beginning).
@@ -172,15 +186,15 @@ public class Level {
      * The game loop uses an AnimationTimer to call the updateEnemies method in each frame.
      * The handle method of the AnimationTimer is implemented as an anonymous inner class.
      */
-    public void startGameLoop() {
-        AnimationTimer gameLoop = new AnimationTimer() {
-            @Override
-            public void handle(final long now) {
-                updateEnemies();
-            }
-        };
-        gameLoop.start();
-    }
+//    public void startGameLoop() {
+//        AnimationTimer gameLoop = new AnimationTimer() {
+//            @Override
+//            public void handle(final long now) {
+//                updateEnemies();
+//            }
+//        };
+//        gameLoop.start();
+//    }
     private boolean isSpawnLocationSafe(
             final double x,
             final double y,
@@ -191,26 +205,26 @@ public class Level {
         double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
         return distance >= safeDistance;
     }
-    private void updateEnemies() {
-        LocalDateTime currentTime = LocalDateTime.now();
-        for (int i = 0; i < enemies.size(); i++) {
-            Enemy enemy = enemies.get(i);
-            enemy.update(player, enemies);
-            if (player.isCollidingWithEnemy(enemy)) {
-                // Check if the player's hit points are already 0 or below
-                if (player.getHitPoints() <= 0) {
-                    // TODO: Game over logic
-                } else if (Duration.between(this.lastDamageTimes.get(i), currentTime).getSeconds() >= 1) {
-                    int damage = 20; // Player takes 20 damage per collision
-                    player.setHitPoints(player.getHitPoints() - damage);
-                    updatePlayerOverlayInformation(); // Update the player's health bar and other overlay information
-                    this.lastDamageTimes.set(i, currentTime);
-                    // Check if the player's hit points have reached 0 or below after taking damage
-                    if (player.getHitPoints() <= 0) {
-                        // TODO: Game over logic
-                    }
-                }
-            }
-        }
-    }
+//    private void updateEnemies() {
+//        LocalDateTime currentTime = LocalDateTime.now();
+//        for (int i = 0; i < enemies.size(); i++) {
+//            Enemy enemy = enemies.get(i);
+//            enemy.update(player, enemies);
+//            if (player.isCollidingWithEnemy(enemy)) {
+//                // Check if the player's hit points are already 0 or below
+//                if (player.getHitPoints() <= 0) {
+//                    // TODO: Game over logic
+//                } else if (Duration.between(this.lastDamageTimes.get(i), currentTime).getSeconds() >= 1) {
+//                    int damage = 20; // Player takes 20 damage per collision
+//                    player.setHitPoints(player.getHitPoints() - damage);
+//                    updatePlayerOverlayInformation(); // Update the player's health bar and other overlay information
+//                    this.lastDamageTimes.set(i, currentTime);
+//                    // Check if the player's hit points have reached 0 or below after taking damage
+//                    if (player.getHitPoints() <= 0) {
+//                        // TODO: Game over logic
+//                    }
+//                }
+//            }
+//        }
+//    }
 }

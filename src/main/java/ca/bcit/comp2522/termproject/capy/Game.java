@@ -4,9 +4,20 @@ import ca.bcit.comp2522.termproject.capy.controllers.KeyboardInputController;
 import ca.bcit.comp2522.termproject.capy.controllers.MouseInputController;
 import ca.bcit.comp2522.termproject.capy.models.Level;
 import ca.bcit.comp2522.termproject.capy.models.Player;
-import javafx.scene.image.Image;
+import ca.bcit.comp2522.termproject.capy.models.Enemy;
+import ca.bcit.comp2522.termproject.capy.models.Bullet;
 
+import javafx.scene.image.Image;
+import javafx.animation.AnimationTimer;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
+
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.Iterator;
 
 
 /**
@@ -52,10 +63,12 @@ public class Game {
         );
 
         MouseInputController rotationController = new MouseInputController();
-        rotationController.makeCursorRotatable(this.player, this.currentLevel.getScene());
+        rotationController.makeCursorRotatable(player, player, currentLevel.getScene());
+        rotationController.handleShooting(player, currentLevel.getScene(), currentLevel.getGameLayer());
 
-        this.currentLevel.startGameLoop();
+        startGameLoop();
     }
+
 
     /**
      * Instantiate a new game object starting at a level other than level 1.
@@ -103,4 +116,85 @@ public class Game {
         CapyApplication.getStage().setScene(level1.getScene());
         CapyApplication.getStage().show();
     }
+
+    private void updateEnemies() {
+        LocalDateTime currentTime = LocalDateTime.now();
+        for (int i = 0; i < currentLevel.getEnemies().size(); i++) {
+            Enemy enemy = currentLevel.getEnemies().get(i);
+            enemy.update(player, currentLevel.getEnemies());
+            if (player.isCollidingWithEnemy(enemy)) {
+                // Check if the player's hit points are already 0 or below
+                if (player.getHitPoints() <= 0) {
+                    // TODO: Game over logic
+                } else if (Duration.between(currentLevel.getLastDamageTimes().get(i), currentTime).getSeconds() >= 1) {
+                    int damage = 20; // Player takes 20 damage per collision
+                    player.setHitPoints(player.getHitPoints() - damage);
+                    currentLevel.updatePlayerOverlayInformation(); // Update the player's health bar and other overlay information
+                    currentLevel.getLastDamageTimes().set(i, currentTime);
+                    // Check if the player's hit points have reached 0 or below after taking damage
+                    if (player.getHitPoints() <= 0) {
+                        // TODO: Game over logic
+                    }
+                }
+            }
+        }
+    }
+
+    private void startGameLoop() {
+        AnimationTimer gameLoop = new AnimationTimer() {
+            @Override
+            public void handle(final long now) {
+                updateEnemies();
+                updateBullets();
+            }
+        };
+        gameLoop.start();
+    }
+
+    private void updateBullets() {
+        // Update bullets
+        for (Bullet bullet : player.getBullets()) {
+            bullet.update();
+        }
+
+        // Check for bullet collisions with enemies
+        Iterator<Bullet> bulletIterator = player.getBullets().iterator();
+        while (bulletIterator.hasNext()) {
+            Bullet bullet = bulletIterator.next();
+            boolean collided = false;
+
+            Iterator<Enemy> enemyIterator = currentLevel.getEnemies().iterator();
+            while (enemyIterator.hasNext() && !collided) {
+                Enemy enemy = enemyIterator.next();
+                if (hasCollided(bullet, enemy)) {
+                    collided = true;
+                    int pointsGained = 10; // Set the points gained when an enemy is hit
+                    player.setPoints(player.getPoints() + pointsGained);
+
+                    int damage = 20; // Set the damage dealt to an enemy upon collision
+                    enemy.setHitPoints(enemy.getHitPoints() - damage);
+                    if (enemy.getHitPoints() <= 0) {
+                        enemyIterator.remove(); // Remove the enemy from the list if its hit points reach 0
+                    }
+                }
+            }
+
+            // Remove bullets that are off-screen or have collided
+            if (collided || isOffScreen(bullet.getBullet())) {
+                bulletIterator.remove();
+            }
+        }
+    }
+
+    private boolean isOffScreen(Rectangle bullet) {
+        double x = bullet.getX();
+        double y = bullet.getY();
+
+        return x < 0 || x > BACKGROUND_WIDTH || y < 0 || y > BACKGROUND_HEIGHT;
+    }
+
+    private boolean hasCollided(Bullet bullet, Enemy enemy) {
+        return bullet.getBullet().intersects(enemy.getSprite().getBoundsInLocal());
+    }
 }
+

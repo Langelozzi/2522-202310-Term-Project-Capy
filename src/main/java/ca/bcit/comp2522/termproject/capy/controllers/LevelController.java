@@ -23,6 +23,8 @@ public class LevelController implements Initializable, SceneController {
     @FXML
     private Pane pane;
     @FXML
+    private Pane gameLayer;
+    @FXML
     private ProgressBar healthBar;
     @FXML
     private Text sugarCanePoints;
@@ -37,7 +39,9 @@ public class LevelController implements Initializable, SceneController {
      */
     @Override
     public void initialize(final URL url, final ResourceBundle resourceBundle) {
-
+        // Initialize the gameLayer
+        gameLayer = new Pane();
+        pane.getChildren().add(gameLayer);
     }
 
     /**
@@ -85,5 +89,9 @@ public class LevelController implements Initializable, SceneController {
      */
     public Scene getScene() {
         return new Scene(pane);
+    }
+
+    public Pane getGameLayer() {
+        return this.gameLayer;
     }
 }
