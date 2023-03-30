@@ -44,11 +44,11 @@ public class UpgradesController implements Initializable, SceneController {
     /*
     Default font of buttons
      */
-    private final Font btnFont = new Font("Luminari", 26);
+    private final Font btnFont = new Font("Trebuchet MS", 26);
     /*
     Font of buttons when being hovered over
      */
-    private final Font btnFontHover = new Font("Luminari", 32);
+    private final Font btnFontHover = new Font("Trebuchet MS", 32);
 
     /**
      * Initialize the game menu with specific properties, which are different depending on if the user has a saved game.
@@ -60,7 +60,7 @@ public class UpgradesController implements Initializable, SceneController {
         upgradesAnchorPane.setMinHeight(Game.BACKGROUND_HEIGHT);
         upgradesAnchorPane.setMinWidth(Game.BACKGROUND_WIDTH);
 
-        Font itemLabelsFont = new Font("Luminari", 40); 
+        Font itemLabelsFont = new Font("Trebuchet MS", 40);
 
         for(Item item : Game.getAvailableItems()){   
             HBox hbox = new HBox();

@@ -50,7 +50,7 @@
          <bottom>
             <Text fx:id="sugarCanePoints" strokeType="OUTSIDE" strokeWidth="0.0" text="0" BorderPane.alignment="CENTER">
                <font>
-                  <Font name="Luminari" size="38.0" />
+                  <Font name="Trebuchet MS" size="38.0" />
                </font>
                <BorderPane.margin>
                   <Insets bottom="5.0" />
