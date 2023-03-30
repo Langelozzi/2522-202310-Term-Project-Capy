@@ -10,6 +10,7 @@ import javafx.animation.AnimationTimer;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Ellipse;
 
@@ -115,6 +116,15 @@ public class Level {
 
         final double progressAmount = this.player.getHitPoints() / 100.0;
         this.controller.getHealthBar().setProgress(progressAmount);
+    }
+
+    public void dropSugarCane(final Enemy enemy) {
+        final double sugarCaneX = enemy.getSprite().getLayoutX();
+        final double sugarCaneY = enemy.getSprite().getLayoutY();
+        final SugarCane sugarCane = enemy.getSugarCane();
+
+        this.controller.renderSprite(sugarCane.getSprite(), sugarCaneX, sugarCaneY);
+        sugarCane.setDropped(true);
     }
 
     /*

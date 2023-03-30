@@ -17,7 +17,13 @@ public class SugarCane {
         this.collected = false;
 
         this.sprite = new ImageView(
-                new Image("file:src/main/resources/ca/bcit/comp2522/termproject/capy/sprites/sugar_cane.png")
+                new Image(
+                        "file:src/main/resources/ca/bcit/comp2522/termproject/capy/sprites/sugar_cane.png",
+                        50.0,
+                        50.0,
+                        true,
+                        false
+                )
         );
     }
 

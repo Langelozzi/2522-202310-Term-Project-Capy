@@ -2,11 +2,7 @@ package ca.bcit.comp2522.termproject.capy;
 
 import ca.bcit.comp2522.termproject.capy.controllers.KeyboardInputController;
 import ca.bcit.comp2522.termproject.capy.controllers.MouseInputController;
-import ca.bcit.comp2522.termproject.capy.models.Item;
-import ca.bcit.comp2522.termproject.capy.models.Level;
-import ca.bcit.comp2522.termproject.capy.models.Player;
-import ca.bcit.comp2522.termproject.capy.models.Enemy;
-import ca.bcit.comp2522.termproject.capy.models.Bullet;
+import ca.bcit.comp2522.termproject.capy.models.*;
 
 import javafx.scene.image.Image;
 import javafx.animation.AnimationTimer;
@@ -19,7 +15,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Iterator;
-import ca.bcit.comp2522.termproject.capy.models.Weapon;
+
 import javafx.scene.image.Image;
 
 import java.util.ArrayList;
@@ -202,6 +198,9 @@ public class Game {
                         enemyIterator.remove(); // Remove the enemy from the list
                         currentLevel.getGameLayer().getChildren().remove(enemy.getSprite()); // Remove the enemy from the game layer
                         enemy.setDeadSprite(); // Set the enemy sprite to the dead crocodile
+
+                        this.currentLevel.dropSugarCane(enemy);
+
                         // TODO: Add points system
                     }
                     bulletIterator.remove(); // Remove the bullet from the list
@@ -216,11 +215,6 @@ public class Game {
             }
         }
     }
-
-
-
-
-
 
     private boolean isOffScreen(Circle bullet) {
         double x = bullet.getCenterX();

@@ -26,23 +26,8 @@ public class Enemy extends Character {
     private final int difficulty;
     private final int attackDamage;
     private int animationCounter;
-    // private SugarCane sugarCane;
+    private final SugarCane sugarCane;
     private int hitsTaken;
-
-    public int getHitsTaken() {
-        return hitsTaken;
-    }
-
-    public void setHitsTaken(int hitsTaken) {
-        this.hitsTaken = hitsTaken;
-    }
-
-    public boolean isHitByBullet(Bullet bullet) {
-        return this.getSprite().getBoundsInParent().intersects(bullet.getBullet().getBoundsInParent());
-    }
-    public void setDeadSprite() {
-        this.getSprite().setImage(new Image(DEAD_SPRITE_PATH));
-    }
 
     /**
      * Instantiate a new Enemy with a specific difficulty.
@@ -55,7 +40,44 @@ public class Enemy extends Character {
         this.difficulty = difficulty;
         this.attackDamage = ATTACK_MULTIPLIER * difficulty;
         animationCounter = 0;
+        this.sugarCane = new SugarCane(this.difficulty);
+    }
 
+        /**
+     * Get the Enemy difficulty.
+     *
+     * @return the enemy's difficulty
+     */
+    public int getDifficulty() {
+        return difficulty;
+    }
+
+    /**
+     * Get the Enemy attack damage.
+     *
+     * @return the enemy's attack damage
+     */
+    public int getAttackDamage() {
+        return attackDamage;
+    }
+
+    public int getHitsTaken() {
+        return hitsTaken;
+    }
+
+    public void setHitsTaken(int hitsTaken) {
+        this.hitsTaken = hitsTaken;
+    }
+
+    public SugarCane getSugarCane() {
+        return sugarCane;
+    }
+
+    public boolean isHitByBullet(Bullet bullet) {
+        return this.getSprite().getBoundsInParent().intersects(bullet.getBullet().getBoundsInParent());
+    }
+    public void setDeadSprite() {
+        this.getSprite().setImage(new Image(DEAD_SPRITE_PATH));
     }
 
     /**
@@ -148,23 +170,5 @@ public class Enemy extends Character {
             }
         }
         return false;
-    }
-
-    /**
-     * Get the Enemy difficulty.
-     *
-     * @return the enemy's difficulty
-     */
-    public int getDifficulty() {
-        return difficulty;
-    }
-
-    /**
-     * Get the Enemy attack damage.
-     *
-     * @return the enemy's attack damage
-     */
-    public int getAttackDamage() {
-        return attackDamage;
     }
 }
