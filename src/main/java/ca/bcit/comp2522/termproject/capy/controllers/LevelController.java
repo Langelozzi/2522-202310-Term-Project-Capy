@@ -91,6 +91,11 @@ public class LevelController implements Initializable, SceneController {
         return new Scene(pane);
     }
 
+    /**
+     * Returns the game layer.
+     *
+     * @return the game layer
+     */
     public Pane getGameLayer() {
         return this.gameLayer;
     }
