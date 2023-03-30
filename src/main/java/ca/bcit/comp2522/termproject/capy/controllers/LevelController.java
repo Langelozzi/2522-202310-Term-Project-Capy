@@ -74,8 +74,8 @@ public class LevelController implements Initializable, SceneController {
      * @param initialYPosition the initial y coordinate of the sprite on the scene
      */
     public void renderSprite(final ImageView sprite, final double initialXPosition, final double initialYPosition) {
-        if (!this.pane.getChildren().contains(sprite)) {
-            this.pane.getChildren().add(sprite);
+        if (!this.gameLayer.getChildren().contains(sprite)) {
+            this.gameLayer.getChildren().add(sprite);
         }
 
         sprite.setLayoutX(initialXPosition);

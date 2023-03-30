@@ -50,4 +50,8 @@ public class SugarCane {
     public ImageView getSprite() {
         return sprite;
     }
+
+    public boolean checkCollision(final Player player) {
+        return player.getSprite().getBoundsInParent().intersects(this.getSprite().getBoundsInParent());
+    }
 }

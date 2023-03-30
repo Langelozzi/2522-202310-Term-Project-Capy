@@ -169,6 +169,8 @@ public class Game {
             public void handle(final long now) {
                 updateEnemies();
                 updateBullets();
+                currentLevel.checkSugarCaneCollected();
+                currentLevel.updatePlayerOverlayInformation();
             }
         };
         gameLoop.start();
@@ -225,6 +227,10 @@ public class Game {
 
     private boolean hasCollided(Bullet bullet, Enemy enemy) {
         return bullet.getBullet().intersects(enemy.getSprite().getBoundsInLocal());
+    }
+
+    private void checkSugarCaneCollected() {
+
     }
 }
 

@@ -87,4 +87,10 @@ public class Player extends Character {
     public ArrayList<Bullet> getBullets() {
         return bullets;
     }
+
+    public void collectSugarCane(final SugarCane sugarCane) {
+        sugarCane.setCollected(true);
+
+        this.points += sugarCane.getValue();
+    }
 }

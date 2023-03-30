@@ -5,12 +5,8 @@ import ca.bcit.comp2522.termproject.capy.Helpers;
 import ca.bcit.comp2522.termproject.capy.controllers.LevelController;
 import javafx.scene.Scene;
 
-import javafx.animation.AnimationTimer;
-
-import java.time.Duration;
 import java.time.LocalDateTime;
 
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Ellipse;
 
@@ -34,6 +30,8 @@ public class Level {
     private final double playerStartingYPosition = (Game.BACKGROUND_HEIGHT / 2.0) - 20;
     private ArrayList<LocalDateTime> lastDamageTimes;
 
+    private final ArrayList<SugarCane> droppedSugarCane;
+
     /**
      * Instantiate a new Level.
      *
@@ -42,6 +40,7 @@ public class Level {
      */
     public Level(final Player player, final int numEnemies) {
         this.lastDamageTimes = new ArrayList<>();
+        this.droppedSugarCane = new ArrayList<>();
         for (int i = 0; i < numEnemies; i++) {
             this.lastDamageTimes.add(LocalDateTime.now());
         }
@@ -125,6 +124,17 @@ public class Level {
 
         this.controller.renderSprite(sugarCane.getSprite(), sugarCaneX, sugarCaneY);
         sugarCane.setDropped(true);
+        this.droppedSugarCane.add(sugarCane);
+    }
+
+    public void checkSugarCaneCollected() {
+        for (SugarCane sugarCane : this.droppedSugarCane) {
+            if (sugarCane.checkCollision(this.player) && !sugarCane.isCollected()) {
+                sugarCane.setCollected(true);
+                this.player.collectSugarCane(sugarCane);
+                this.controller.getGameLayer().getChildren().remove(sugarCane.getSprite());
+            }
+        }
     }
 
     /*
