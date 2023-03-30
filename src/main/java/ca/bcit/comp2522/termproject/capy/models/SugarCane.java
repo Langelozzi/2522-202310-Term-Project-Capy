@@ -19,8 +19,8 @@ public class SugarCane {
         this.sprite = new ImageView(
                 new Image(
                         "file:src/main/resources/ca/bcit/comp2522/termproject/capy/sprites/sugar_cane.png",
-                        50.0,
-                        50.0,
+                        60.0,
+                        60.0,
                         true,
                         false
                 )
