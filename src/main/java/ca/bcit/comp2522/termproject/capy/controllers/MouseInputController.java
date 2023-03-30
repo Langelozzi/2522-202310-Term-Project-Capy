@@ -11,6 +11,8 @@
     import javafx.scene.input.MouseEvent;
     import javafx.scene.layout.Pane;
 
+    import java.util.function.Consumer;
+
     /**
      * MouseInputController handles the logic for the mouse movement of the Player.
      *
@@ -71,7 +73,7 @@
                 player.shoot(event.getSceneX(), event.getSceneY());
             }
         }
-        public void handleShooting(Player player, Scene scene, Pane gameLayer) {
+        public void handleShooting(Player player, Scene scene, Consumer<Bullet> bulletConsumer) {
             scene.setOnMouseClicked(event -> {
                 if (event.getButton() == MouseButton.PRIMARY) {
                     ImageView sprite = player.getSprite();
@@ -87,10 +89,8 @@
 
                     Bullet bullet = new Bullet(centerX, centerY, directionX, directionY, 5);
                     player.getBullets().add(bullet);
-                    gameLayer.getChildren().add(bullet.getBullet());
+                    bulletConsumer.accept(bullet);
                 }
             });
-        }
+        }}
 
-
-    }

@@ -82,7 +82,12 @@ public class Game {
 
         MouseInputController rotationController = new MouseInputController();
         rotationController.makeCursorRotatable(player, player, currentLevel.getScene());
-        rotationController.handleShooting(player, currentLevel.getScene(), currentLevel.getGameLayer());
+        rotationController.handleShooting(player, currentLevel.getScene(), bullet -> {
+            currentLevel.getGameLayer().getChildren().add(bullet.getBullet());
+            bullet.getBullet().toBack();
+            player.getSprite().toFront();
+        });
+
 
         startGameLoop();
     }
@@ -188,25 +193,33 @@ public class Game {
             Iterator<Enemy> enemyIterator = currentLevel.getEnemies().iterator();
             while (enemyIterator.hasNext() && !collided) {
                 Enemy enemy = enemyIterator.next();
-                if (hasCollided(bullet, enemy)) {
+                if (enemy.isHitByBullet(bullet)) {
                     collided = true;
-                    int pointsGained = 10; // Set the points gained when an enemy is hit
-                    player.setPoints(player.getPoints() + pointsGained);
 
-                    int damage = 20; // Set the damage dealt to an enemy upon collision
-                    enemy.setHitPoints(enemy.getHitPoints() - damage);
-                    if (enemy.getHitPoints() <= 0) {
-                        enemyIterator.remove(); // Remove the enemy from the list if its hit points reach 0
+                    // Increment the enemy's hits taken and remove it if it has taken 5 hits
+                    enemy.setHitsTaken(enemy.getHitsTaken() + 1);
+                    if (enemy.getHitsTaken() >= 5) {
+                        enemyIterator.remove(); // Remove the enemy from the list
+                        currentLevel.getGameLayer().getChildren().remove(enemy.getSprite()); // Remove the enemy from the game layer
+                        enemy.setDeadSprite(); // Set the enemy sprite to the dead crocodile
+                        // TODO: Add points system
                     }
+                    bulletIterator.remove(); // Remove the bullet from the list
+                    currentLevel.getGameLayer().getChildren().remove(bullet.getBullet()); // Remove the bullet from the game layer
                 }
             }
 
-            // Remove bullets that are off-screen or have collided
-            if (collided || isOffScreen(bullet.getBullet())) {
+            // Remove bullets that are off-screen
+            if (!collided && isOffScreen(bullet.getBullet())) {
                 bulletIterator.remove();
+                currentLevel.getGameLayer().getChildren().remove(bullet.getBullet()); // Remove the bullet from the game layer
             }
         }
     }
+
+
+
+
 
 
     private boolean isOffScreen(Circle bullet) {

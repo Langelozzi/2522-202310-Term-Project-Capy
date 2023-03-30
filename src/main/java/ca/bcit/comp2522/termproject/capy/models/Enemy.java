@@ -20,10 +20,29 @@ public class Enemy extends Character {
             + "capy/sprites/crocodile-left-foot-forward.png";
     private static final String RIGHT_FOOT_SPRITE_PATH = "file:src/main/resources/ca/bcit/comp2522/termproject/"
             + "capy/sprites/crocodile-right-foot-forward.png";
+    private static final String DEAD_SPRITE_PATH = "file:src/main/resources/ca/bcit/comp2522/termproject/"
+            + "capy/sprites/crocodile-rip.png";
+
     private final int difficulty;
     private final int attackDamage;
     private int animationCounter;
     // private SugarCane sugarCane;
+    private int hitsTaken;
+
+    public int getHitsTaken() {
+        return hitsTaken;
+    }
+
+    public void setHitsTaken(int hitsTaken) {
+        this.hitsTaken = hitsTaken;
+    }
+
+    public boolean isHitByBullet(Bullet bullet) {
+        return this.getSprite().getBoundsInParent().intersects(bullet.getBullet().getBoundsInParent());
+    }
+    public void setDeadSprite() {
+        this.getSprite().setImage(new Image(DEAD_SPRITE_PATH));
+    }
 
     /**
      * Instantiate a new Enemy with a specific difficulty.
@@ -36,6 +55,7 @@ public class Enemy extends Character {
         this.difficulty = difficulty;
         this.attackDamage = ATTACK_MULTIPLIER * difficulty;
         animationCounter = 0;
+
     }
 
     /**
