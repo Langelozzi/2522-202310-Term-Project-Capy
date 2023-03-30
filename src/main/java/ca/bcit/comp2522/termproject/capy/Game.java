@@ -42,6 +42,7 @@ public class Game {
     public static final int BACKGROUND_HEIGHT = 864;
 
     private static boolean hasSavedGame = false;
+    private static boolean paused = false;
 
     private final static List<Item> availableItems = new ArrayList<Item>();
 
@@ -56,7 +57,7 @@ public class Game {
     private final HashMap<Integer, Level> levels = new HashMap<>();
     private Level currentLevel;
     private final Player player;
-        
+
     /**
      * Instantiate a new Game object starting current level at level 1.
      */
@@ -83,7 +84,6 @@ public class Game {
             bullet.getBullet().toBack();
             player.getSprite().toFront();
         });
-
 
         startGameLoop();
     }
@@ -130,6 +130,14 @@ public class Game {
         return availableItems;
     }
 
+    public static boolean isPaused() {
+        return paused;
+    }
+
+    public static void setPaused(final boolean paused) {
+        Game.paused = paused;
+    }
+
     /**
      * Start a new game at level 1.
      */
@@ -167,10 +175,12 @@ public class Game {
         AnimationTimer gameLoop = new AnimationTimer() {
             @Override
             public void handle(final long now) {
-                updateEnemies();
-                updateBullets();
-                currentLevel.checkSugarCaneCollected();
-                currentLevel.updatePlayerOverlayInformation();
+                if (!Game.paused) {
+                    updateEnemies();
+                    updateBullets();
+                    currentLevel.checkSugarCaneCollected();
+                    currentLevel.updatePlayerOverlayInformation();
+                }
             }
         };
         gameLoop.start();

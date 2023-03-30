@@ -103,6 +103,7 @@ public class GameMenuController implements Initializable, SceneController {
      */
     public void onNewGameClick() {
         CapyApplication.getGame().startNew();
+        Game.setPaused(false);
     }
 
     //-- ToDo: write comment
@@ -115,6 +116,7 @@ public class GameMenuController implements Initializable, SceneController {
      */
     public void onContinueClick() {
         Helpers.changeScene(CapyApplication.getGame().getCurrentLevel().getScene());
+        Game.setPaused(false);
     }
 
     /**

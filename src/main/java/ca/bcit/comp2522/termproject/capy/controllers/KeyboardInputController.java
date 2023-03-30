@@ -1,5 +1,6 @@
 package ca.bcit.comp2522.termproject.capy.controllers;
 
+import ca.bcit.comp2522.termproject.capy.Game;
 import ca.bcit.comp2522.termproject.capy.Helpers;
 import ca.bcit.comp2522.termproject.capy.models.Character;
 import ca.bcit.comp2522.termproject.capy.models.Direction;

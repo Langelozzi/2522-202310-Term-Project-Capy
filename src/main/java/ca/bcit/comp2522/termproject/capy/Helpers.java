@@ -53,7 +53,8 @@ public final class Helpers {
      * Open the GameMenu scene on the stage.
      */
     public static void openGameMenu() {
-        Game.setHasSavedGame(true);
+        // Game.setHasSavedGame(true);
+        Game.setPaused(true);
         GameMenuController menuController = (GameMenuController) Helpers.getFxmlController(
             "game-menu-view.fxml"
         );
@@ -61,6 +62,7 @@ public final class Helpers {
     }
 
     public static void openUpgradesMenu() {
+        Game.setPaused(true);
         UpgradesController upgradesController = (UpgradesController) Helpers.getFxmlController(
                 "upgrade-menu-view.fxml"
         );
