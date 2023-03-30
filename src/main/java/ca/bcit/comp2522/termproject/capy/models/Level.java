@@ -19,18 +19,18 @@ import java.util.ArrayList;
  * @version 1.0.0
  */
 public class Level {
+
+    // INITIALIZATION  =================================================================================================
+
     private final Scene scene;
     private final LevelController controller;
-
     private final Player player;
-    private final ArrayList<Enemy> enemies;
     private final Ellipse swampBoundary;
-
+    private final ArrayList<Enemy> enemies;
+    private ArrayList<LocalDateTime> lastDamageTimes;
+    private final ArrayList<SugarCane> droppedSugarCane;
     private final double playerStartingXPosition = (Game.BACKGROUND_WIDTH / 2.0) - 20;
     private final double playerStartingYPosition = (Game.BACKGROUND_HEIGHT / 2.0) - 20;
-    private ArrayList<LocalDateTime> lastDamageTimes;
-
-    private final ArrayList<SugarCane> droppedSugarCane;
 
     /**
      * Instantiate a new Level.
@@ -68,6 +68,8 @@ public class Level {
         }
     }
 
+    // GETTERS AND SETTERS =============================================================================================
+
     /**
      * Return the scene object of the level.
      *
@@ -77,21 +79,43 @@ public class Level {
         return this.scene;
     }
 
+    /**
+     * Returns the boundary of the swamp area in the game.
+     *
+     * @return The boundary of the swamp area in the game.
+     */
     public Ellipse getSwampBoundary() {
         return this.swampBoundary;
     }
 
+    /**
+     * Returns the list of enemies in the game.
+     *
+     * @return The list of enemies in the game.
+     */
     public ArrayList<Enemy> getEnemies() {
         return enemies;
     }
 
+    /**
+     * Returns the list of last damage times of enemies in the game.
+     *
+     * @return The list of last damage times of enemies in the game.
+     */
     public ArrayList<LocalDateTime> getLastDamageTimes() {
         return lastDamageTimes;
     }
+
+    // LEVEL RELATED ===================================================================================================
+
+    /**
+     * Returns the game layer of the game.
+     *
+     * @return The game layer of the game.
+     */
     public Pane getGameLayer() {
         return this.controller.getGameLayer();
     }
-
 
     /**
      * Reset the state of the level back to default (beginning).
@@ -101,8 +125,25 @@ public class Level {
         this.resetEnemies();
     }
 
+    // PLAYER ACTIONS ==================================================================================================
+
+    /*
+     * Initialize the position and properties of the player on the Level.
+     */
+    private void setUpPlayer() {
+        controller.renderSprite(this.player.getSprite(), this.playerStartingXPosition, this.playerStartingYPosition);
+    }
+
+    /*
+     * Reset the player back to its default state and position.
+     */
+    private void resetPlayer() {
+        this.player.getSprite().setLayoutX(this.playerStartingXPosition);
+        this.player.getSprite().setLayoutY(this.playerStartingYPosition);
+    }
+
     /**
-    Set the player health bar and sugar can information for the level overlay.
+     * Set the player health bar and sugar can information for the level overlay.
      */
     public void updatePlayerOverlayInformation() {
         this.controller.getSugarCanePoints().setText(String.valueOf(this.player.getPoints()));
@@ -117,6 +158,13 @@ public class Level {
         this.controller.getHealthBar().setProgress(progressAmount);
     }
 
+    // SUGARCANE ACTIONS ===============================================================================================
+
+    /**
+     * Drops the sugar cane carried by the enemy.
+     *
+     * @param enemy the enemy whose sugar cane will be dropped
+     */
     public void dropSugarCane(final Enemy enemy) {
         final double sugarCaneX = enemy.getSprite().getLayoutX();
         final double sugarCaneY = enemy.getSprite().getLayoutY();
@@ -127,6 +175,9 @@ public class Level {
         this.droppedSugarCane.add(sugarCane);
     }
 
+    /**
+     * Checks if the player has collected the dropped sugar cane.
+     */
     public void checkSugarCaneCollected() {
         for (SugarCane sugarCane : this.droppedSugarCane) {
             if (sugarCane.checkCollision(this.player) && !sugarCane.isCollected()) {
@@ -137,13 +188,7 @@ public class Level {
         }
     }
 
-    /*
-    Reset the player back to its default state and position.
-     */
-    private void resetPlayer() {
-        this.player.getSprite().setLayoutX(this.playerStartingXPosition);
-        this.player.getSprite().setLayoutY(this.playerStartingYPosition);
-    }
+    // ENEMY ACTIONS ===================================================================================================
 
     /*
     Reset all the enemies back to their default spawn locations and states.
@@ -195,26 +240,10 @@ public class Level {
         }
         return newEnemies;
     }
+
     /*
-    Initialize the position and properties of the player on the Level.
+    Checks if a spawn location is safe.
      */
-    private void setUpPlayer() {
-        controller.renderSprite(this.player.getSprite(), this.playerStartingXPosition, this.playerStartingYPosition);
-    }
-    /**
-     * Starts the game loop to continuously update the enemies in the game.
-     * The game loop uses an AnimationTimer to call the updateEnemies method in each frame.
-     * The handle method of the AnimationTimer is implemented as an anonymous inner class.
-     */
-//    public void startGameLoop() {
-//        AnimationTimer gameLoop = new AnimationTimer() {
-//            @Override
-//            public void handle(final long now) {
-//                updateEnemies();
-//            }
-//        };
-//        gameLoop.start();
-//    }
     private boolean isSpawnLocationSafe(
             final double x,
             final double y,
@@ -225,26 +254,4 @@ public class Level {
         double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
         return distance >= safeDistance;
     }
-//    private void updateEnemies() {
-//        LocalDateTime currentTime = LocalDateTime.now();
-//        for (int i = 0; i < enemies.size(); i++) {
-//            Enemy enemy = enemies.get(i);
-//            enemy.update(player, enemies);
-//            if (player.isCollidingWithEnemy(enemy)) {
-//                // Check if the player's hit points are already 0 or below
-//                if (player.getHitPoints() <= 0) {
-//                    // TODO: Game over logic
-//                } else if (Duration.between(this.lastDamageTimes.get(i), currentTime).getSeconds() >= 1) {
-//                    int damage = 20; // Player takes 20 damage per collision
-//                    player.setHitPoints(player.getHitPoints() - damage);
-//                    updatePlayerOverlayInformation(); // Update the player's health bar and other overlay information
-//                    this.lastDamageTimes.set(i, currentTime);
-//                    // Check if the player's hit points have reached 0 or below after taking damage
-//                    if (player.getHitPoints() <= 0) {
-//                        // TODO: Game over logic
-//                    }
-//                }
-//            }
-//        }
-//    }
 }

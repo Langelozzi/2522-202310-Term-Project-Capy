@@ -17,6 +17,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -49,7 +50,8 @@ public class UpgradesController implements Initializable, SceneController {
 
     /**
      * Initialize the game menu with specific properties, which are different depending on if the user has a saved game.
-     * @param url url of the fxml, passed automatically by javafx
+     *
+     * @param url            url of the fxml, passed automatically by javafx
      * @param resourceBundle resources for the fxml, passed automatically by javafx
      */
     @Override
@@ -59,13 +61,13 @@ public class UpgradesController implements Initializable, SceneController {
 
         itemsVbox.setPadding(new Insets(20, 20, 20, 20));
 
-        for(Item item : Game.getAvailableItems()){   
+        for (Item item : Game.getAvailableItems()) {
             HBox hbox = new HBox();
             hbox.setSpacing(30);
             hbox.setPrefWidth(Double.MAX_VALUE);
-            hbox.setStyle("-fx-background-color: rgba(0, 255, 0, 0.3)");    
-            hbox.setAlignment(Pos.CENTER_LEFT);        
-            
+            hbox.setStyle("-fx-background-color: rgba(0, 255, 0, 0.3)");
+            hbox.setAlignment(Pos.CENTER_LEFT);
+
             Label labelName = new Label(item.getName());
             labelName.setFont(new Font("Trebuchet MS", 40));
             labelName.setTextFill(Color.WHITE);
@@ -81,6 +83,7 @@ public class UpgradesController implements Initializable, SceneController {
 
     /**
      * Change the size, color and font of the button when mousing over for visual cue.
+     *
      * @param event the mouse event triggered when hovering over the button
      */
     public void onMouseEntered(final MouseEvent event) {
@@ -99,6 +102,7 @@ public class UpgradesController implements Initializable, SceneController {
 
     /**
      * Change the button properties back to default when the mouse stops hovering over the button.
+     *
      * @param event the mouse event triggered when the mouse stops hovering
      */
     public void onMouseExited(final MouseEvent event) {
@@ -115,6 +119,9 @@ public class UpgradesController implements Initializable, SceneController {
         button.setFont(this.btnFont);
     }
 
+    /**
+     * Called when the back button is clicked. Opens the game menu.
+     */
     public void onBackClick() {
         Helpers.openGameMenu();
     }
@@ -127,6 +134,7 @@ public class UpgradesController implements Initializable, SceneController {
 
     /**
      * Return the parent AnchorPane as the scene for this page.
+     *
      * @return the parent AnchorPane as a Scene
      */
     @Override

@@ -48,7 +48,8 @@ public class GameMenuController implements Initializable, SceneController {
 
     /**
      * Initialize the game menu with specific properties, which are different depending on if the user has a saved game.
-     * @param url url of the fxml, passed automatically by javafx
+     *
+     * @param url            url of the fxml, passed automatically by javafx
      * @param resourceBundle resources for the fxml, passed automatically by javafx
      */
     @Override
@@ -64,6 +65,7 @@ public class GameMenuController implements Initializable, SceneController {
 
     /**
      * Change the size, color and font of the button when mousing over for visual cue.
+     *
      * @param event the mouse event triggered when hovering over the button
      */
     public void onMouseEntered(final MouseEvent event) {
@@ -82,6 +84,7 @@ public class GameMenuController implements Initializable, SceneController {
 
     /**
      * Change the button properties back to default when the mouse stops hovering over the button.
+     *
      * @param event the mouse event triggered when the mouse stops hovering
      */
     public void onMouseExited(final MouseEvent event) {
@@ -106,7 +109,9 @@ public class GameMenuController implements Initializable, SceneController {
         Game.setPaused(false);
     }
 
-    //-- ToDo: write comment
+    /**
+     * Handles the action when the "Upgrades" button is clicked.
+     */
     public void onUpgradeClick() {
         Helpers.openUpgradesMenu();
     }
@@ -132,6 +137,7 @@ public class GameMenuController implements Initializable, SceneController {
 
     /**
      * Return the parent AnchorPane as the scene for this page.
+     *
      * @return the parent AnchorPane as a Scene
      */
     @Override

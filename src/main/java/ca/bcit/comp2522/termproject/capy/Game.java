@@ -4,24 +4,19 @@ import ca.bcit.comp2522.termproject.capy.controllers.KeyboardInputController;
 import ca.bcit.comp2522.termproject.capy.controllers.MouseInputController;
 import ca.bcit.comp2522.termproject.capy.models.*;
 
-import javafx.scene.image.Image;
 import javafx.animation.AnimationTimer;
+
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+
 import java.util.HashMap;
 import java.util.Iterator;
-
-import javafx.scene.image.Image;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import javafx.scene.image.ImageView;
 
 
 /**
@@ -32,6 +27,8 @@ import javafx.scene.image.ImageView;
  */
 public class Game {
 
+    // INITIALIZATION  =================================================================================================
+
     /**
      * The background/window width of the game.
      */
@@ -40,19 +37,21 @@ public class Game {
      * The background/window height of the game.
      */
     public static final int BACKGROUND_HEIGHT = 864;
-
     private static boolean hasSavedGame = false;
     private static boolean paused = false;
-
-    private final static List<Item> availableItems = new ArrayList<Item>();
+    private static final List<Item> availableItems = new ArrayList<Item>();
 
     static {
         final String spritesPath = "file:src/main/resources/ca/bcit/comp2522/termproject/capy/sprites/";
         final int imageHeigh = 100;
-        availableItems.add(new Weapon(new ImageView(new Image(spritesPath + "level-1-weapon.png",  0, imageHeigh, true, true)), 100, 1, "handgun", 3));
-        availableItems.add(new Weapon(new ImageView(new Image(spritesPath + "level-2-weapon.png", 0, imageHeigh, true, true)), 300, 2, "rifle", 15));
-        availableItems.add(new Weapon(new ImageView(new Image(spritesPath + "level-3-weapon.png", 0, imageHeigh, true, true)), 400, 3, "automatic rifle", 25));
-        availableItems.add(new Weapon(new ImageView(new Image(spritesPath + "level-4-weapon.png", 0, imageHeigh, true, true)), 600, 4, "blaster", 35));
+        availableItems.add(new Weapon(new ImageView(new Image(spritesPath + "level-1-weapon.png",
+                0, imageHeigh, true, true)), 100, 1, "handgun", 3));
+        availableItems.add(new Weapon(new ImageView(new Image(spritesPath + "level-2-weapon.png",
+                0, imageHeigh, true, true)), 300, 2, "rifle", 15));
+        availableItems.add(new Weapon(new ImageView(new Image(spritesPath + "level-3-weapon.png",
+                0, imageHeigh, true, true)), 400, 3, "automatic rifle", 25));
+        availableItems.add(new Weapon(new ImageView(new Image(spritesPath + "level-4-weapon.png",
+                0, imageHeigh, true, true)), 600, 4, "blaster", 35));
     }
 
     private final HashMap<Integer, Level> levels = new HashMap<>();
@@ -100,14 +99,8 @@ public class Game {
                 + "capy/sprites/test_player.png"));
     }
 
-    /**
-     * Return if there is saved data in this game object.
-     *
-     * @return true if there is a saved game, false otherwise
-     */
-    public static boolean hasSavedGame() {
-        return hasSavedGame;
-    }
+    // GETTERS AND SETTERS =============================================================================================
+
 
     /**
      * Set the value of savedGame.
@@ -127,16 +120,42 @@ public class Game {
         return this.currentLevel;
     }
 
+    /**
+     * The list of available items in the game.
+     *
+     * @return the list of available items
+     */
     public static List<Item> getAvailableItems() {
         return availableItems;
     }
 
+    /**
+     * Returns whether the game is currently paused.
+     *
+     * @return true if the game is paused, false otherwise
+     */
     public static boolean isPaused() {
         return paused;
     }
 
+    /**
+     * Sets the pause state of the game.
+     *
+     * @param paused true to pause the game, false to resume
+     */
     public static void setPaused(final boolean paused) {
         Game.paused = paused;
+    }
+
+    // GAME LOGIC ======================================================================================================
+
+    /**
+     * Return if there is saved data in this game object.
+     *
+     * @return true if there is a saved game, false otherwise
+     */
+    public static boolean hasSavedGame() {
+        return hasSavedGame;
     }
 
     /**
@@ -147,29 +166,6 @@ public class Game {
         level1.resetLevel();
         CapyApplication.getStage().setScene(level1.getScene());
         CapyApplication.getStage().show();
-    }
-
-    private void updateEnemies() {
-        LocalDateTime currentTime = LocalDateTime.now();
-        for (int i = 0; i < currentLevel.getEnemies().size(); i++) {
-            Enemy enemy = currentLevel.getEnemies().get(i);
-            enemy.update(player, currentLevel.getEnemies());
-            if (player.isCollidingWithEnemy(enemy)) {
-                // Check if the player's hit points are already 0 or below
-                if (player.getHitPoints() <= 0) {
-                    // TODO: Game over logic
-                } else if (Duration.between(currentLevel.getLastDamageTimes().get(i), currentTime).getSeconds() >= 1) {
-                    int damage = 20; // Player takes 20 damage per collision
-                    player.setHitPoints(player.getHitPoints() - damage);
-                    currentLevel.updatePlayerOverlayInformation(); // Update the player's health bar and other overlay information
-                    currentLevel.getLastDamageTimes().set(i, currentTime);
-                    // Check if the player's hit points have reached 0 or below after taking damage
-                    if (player.getHitPoints() <= 0) {
-                        // TODO: Game over logic
-                    }
-                }
-            }
-        }
     }
 
     private void startGameLoop() {
@@ -185,6 +181,33 @@ public class Game {
             }
         };
         gameLoop.start();
+    }
+
+    // ENEMY LOGIC =====================================================================================================
+
+    private void updateEnemies() {
+        LocalDateTime currentTime = LocalDateTime.now();
+        for (int i = 0; i < currentLevel.getEnemies().size(); i++) {
+            Enemy enemy = currentLevel.getEnemies().get(i);
+            enemy.update(player, currentLevel.getEnemies());
+            if (player.isCollidingWithEnemy(enemy)) {
+                // Check if the player's hit points are already 0 or below
+                if (player.getHitPoints() <= 0) {
+                    // TODO: Game over logic
+                } else if (Duration.between(currentLevel.getLastDamageTimes().get(i), currentTime).getSeconds() >= 1) {
+                    int damage = 20; // Player takes 20 damage per collision
+                    player.setHitPoints(player.getHitPoints() - damage);
+
+                    // Update the player's health bar and other overlay information
+                    currentLevel.updatePlayerOverlayInformation();
+                    currentLevel.getLastDamageTimes().set(i, currentTime);
+                    // Check if the player's hit points have reached 0 or below after taking damage
+                    if (player.getHitPoints() <= 0) {
+                        // TODO: Game over logic
+                    }
+                }
+            }
+        }
     }
 
     private void updateBullets() {
@@ -209,7 +232,9 @@ public class Game {
                     enemy.setHitsTaken(enemy.getHitsTaken() + 1);
                     if (enemy.getHitsTaken() >= 5) {
                         enemyIterator.remove(); // Remove the enemy from the list
-                        currentLevel.getGameLayer().getChildren().remove(enemy.getSprite()); // Remove the enemy from the game layer
+
+                        // Remove the enemy from the game layer
+                        currentLevel.getGameLayer().getChildren().remove(enemy.getSprite());
                         enemy.setDeadSprite(); // Set the enemy sprite to the dead crocodile
 
                         this.currentLevel.dropSugarCane(enemy);
@@ -217,26 +242,30 @@ public class Game {
                         // TODO: Add points system
                     }
                     bulletIterator.remove(); // Remove the bullet from the list
-                    currentLevel.getGameLayer().getChildren().remove(bullet.getBullet()); // Remove the bullet from the game layer
+
+                    // Remove the bullet from the game layer
+                    currentLevel.getGameLayer().getChildren().remove(bullet.getBullet());
                 }
             }
 
             // Remove bullets that are off-screen
             if (!collided && isOffScreen(bullet.getBullet())) {
                 bulletIterator.remove();
-                currentLevel.getGameLayer().getChildren().remove(bullet.getBullet()); // Remove the bullet from the game layer
+
+                // Remove the bullet from the game layer
+                currentLevel.getGameLayer().getChildren().remove(bullet.getBullet());
             }
         }
     }
 
-    private boolean isOffScreen(Circle bullet) {
+    private boolean isOffScreen(final Circle bullet) {
         double x = bullet.getCenterX();
         double y = bullet.getCenterY();
 
         return x < 0 || x > BACKGROUND_WIDTH || y < 0 || y > BACKGROUND_HEIGHT;
     }
 
-    private boolean hasCollided(Bullet bullet, Enemy enemy) {
+    private boolean hasCollided(final Bullet bullet, final Enemy enemy) {
         return bullet.getBullet().intersects(enemy.getSprite().getBoundsInLocal());
     }
 

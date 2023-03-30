@@ -33,7 +33,7 @@ public class LevelController implements Initializable, SceneController {
 
     /**
      * Initialize the Level scene with its initial properties.
-     * 
+     *
      * @param url            url of the fxml, passed automatically by javafx
      * @param resourceBundle resources for the fxml, passed automatically by javafx
      */
@@ -46,7 +46,7 @@ public class LevelController implements Initializable, SceneController {
 
     /**
      * Get the health bar ProgressBar object of the level.
-     * 
+     *
      * @return the health bar ProgressBar
      */
     public ProgressBar getHealthBar() {
@@ -55,20 +55,25 @@ public class LevelController implements Initializable, SceneController {
 
     /**
      * Get the Text object that shows the players sugar cane points.
-     * 
+     *
      * @return the Text object that shows the players sugar cane points
      */
     public Text getSugarCanePoints() {
         return this.sugarCanePoints;
     }
 
+    /**
+     * Get the Ellipse object that represents the border of the swamp in the Level scene.
+     *
+     * @return the Ellipse object that represents the border of the swamp in the Level scene
+     */
     public Ellipse getSwampBorder() {
         return this.swampBorder;
     }
 
     /**
      * Render an ImageView sprite on the level scene.
-     * 
+     *
      * @param sprite           the ImageView to render
      * @param initialXPosition the initial x coordinate of the sprite on the scene
      * @param initialYPosition the initial y coordinate of the sprite on the scene
@@ -84,7 +89,7 @@ public class LevelController implements Initializable, SceneController {
 
     /**
      * Return the Scene object of this level.
-     * 
+     *
      * @return the Scene object of this level
      */
     public Scene getScene() {

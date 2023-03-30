@@ -13,8 +13,12 @@ import javafx.stage.Stage;
  */
 public class CapyApplication extends Application {
 
+    // INITIALIZATION  =================================================================================================
+
     private static Stage stage;
     private static Game game;
+
+    // GETTERS AND SETTERS =============================================================================================
 
     /**
      * Get the stage/window of the application.
@@ -31,6 +35,8 @@ public class CapyApplication extends Application {
     public static Game getGame() {
         return game;
     }
+
+    // GAME START ======================================================================================================
 
     /**
      * Start the application with the provided stage, effectively starting the game with default settings.
@@ -53,7 +59,6 @@ public class CapyApplication extends Application {
         mainStage.setMinWidth(Game.BACKGROUND_WIDTH);
         mainStage.show();
     }
-
 
     /**
      * Main method. Launch the application.

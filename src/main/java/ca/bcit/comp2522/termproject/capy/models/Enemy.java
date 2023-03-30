@@ -12,6 +12,8 @@ import java.util.List;
  */
 public class Enemy extends Character {
 
+    // INITIALIZATION  =================================================================================================
+
     private static final double ENEMY_SPEED = 1.0;
     private static final int ATTACK_MULTIPLIER = 3;
     private static final String DEFAULT_SPRITE_PATH = "file:src/main/resources/ca/bcit/comp2522/termproject/"
@@ -43,7 +45,9 @@ public class Enemy extends Character {
         this.sugarCane = new SugarCane(this.difficulty);
     }
 
-        /**
+    // GETTERS AND SETTERS =============================================================================================
+
+    /**
      * Get the Enemy difficulty.
      *
      * @return the enemy's difficulty
@@ -61,49 +65,50 @@ public class Enemy extends Character {
         return attackDamage;
     }
 
+    /**
+     * Get the number of hits that the enemy has taken.
+     *
+     * @return the number of hits that the enemy has taken
+     */
     public int getHitsTaken() {
         return hitsTaken;
     }
 
-    public void setHitsTaken(int hitsTaken) {
+    /**
+     * Set the number of hits that the enemy has taken.
+     *
+     * @param hitsTaken the number of hits that the enemy has taken
+     */
+    public void setHitsTaken(final int hitsTaken) {
         this.hitsTaken = hitsTaken;
     }
 
+    /**
+     * Get the SugarCane object that the enemy is holding.
+     *
+     * @return the SugarCane object that the enemy is holding
+     */
     public SugarCane getSugarCane() {
         return sugarCane;
     }
 
-    public boolean isHitByBullet(Bullet bullet) {
+    // ENEMY ACTIONS ===================================================================================================
+
+    /**
+     * Check if the enemy is hit by a bullet.
+     *
+     * @param bullet the bullet to check for collision with the enemy
+     * @return true if the enemy is hit by the bullet, false otherwise
+     */
+    public boolean isHitByBullet(final Bullet bullet) {
         return this.getSprite().getBoundsInParent().intersects(bullet.getBullet().getBoundsInParent());
-    }
-    public void setDeadSprite() {
-        this.getSprite().setImage(new Image(DEAD_SPRITE_PATH));
     }
 
     /**
-     * Moves the enemy towards the player.
-     *
-     * @param enemy   The enemy that will be moved.
-     * @param player  The player that the enemy will move towards.
-     * @param enemies A list of all the enemies in the game.
+     * Set the sprite of the enemy to its dead state.
      */
-    public static void moveTowardsPlayer(final Enemy enemy, final Player player, final List<Enemy> enemies) {
-        double deltaX = player.getSprite().getLayoutX() - enemy.getSprite().getLayoutX();
-        double deltaY = player.getSprite().getLayoutY() - enemy.getSprite().getLayoutY();
-        double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-
-        double moveX = ENEMY_SPEED * deltaX / distance;
-        double moveY = ENEMY_SPEED * deltaY / distance;
-
-        double newX = enemy.getSprite().getLayoutX() + moveX;
-        double newY = enemy.getSprite().getLayoutY() + moveY;
-
-        // Check for collision with other enemies before updating the position
-        if (!isEnemyCollision(enemy, enemies, newX, newY)) {
-            enemy.getSprite().setLayoutX(newX);
-            enemy.getSprite().setLayoutY(newY);
-        }
-        enemy.updateSprite();
+    public void setDeadSprite() {
+        this.getSprite().setImage(new Image(DEAD_SPRITE_PATH));
     }
 
     /**
@@ -138,7 +143,35 @@ public class Enemy extends Character {
         this.getSprite().setRotate(angle + 90); // Add 90 degrees to make the top of the image (head) face the player
 
         // Move the enemy towards the player
-        Enemy.moveTowardsPlayer(this, player, enemies);
+        this.moveTowardsPlayer(this, player, enemies);
+    }
+
+    // ENEMY MOVEMENT ==================================================================================================
+
+    /**
+     * Moves the enemy towards the player.
+     *
+     * @param enemy   The enemy that will be moved.
+     * @param player  The player that the enemy will move towards.
+     * @param enemies A list of all the enemies in the game.
+     */
+    public void moveTowardsPlayer(final Enemy enemy, final Player player, final List<Enemy> enemies) {
+        double deltaX = player.getSprite().getLayoutX() - this.getSprite().getLayoutX();
+        double deltaY = player.getSprite().getLayoutY() - this.getSprite().getLayoutY();
+        double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+        double moveX = ENEMY_SPEED * deltaX / distance;
+        double moveY = ENEMY_SPEED * deltaY / distance;
+
+        double newX = this.getSprite().getLayoutX() + moveX;
+        double newY = this.getSprite().getLayoutY() + moveY;
+
+        // Check for collision with other enemies before updating the position
+        if (!isEnemyCollision(enemy, enemies, newX, newY)) {
+            this.getSprite().setLayoutX(newX);
+            this.getSprite().setLayoutY(newY);
+        }
+        this.updateSprite();
     }
 
     /**
@@ -150,7 +183,7 @@ public class Enemy extends Character {
      * @param newY         The y-coordinate of the position that the enemy would be moved to.
      * @return True if the enemy would collide with another enemy, false otherwise.
      */
-    private static boolean isEnemyCollision(
+    private boolean isEnemyCollision(
             final Enemy currentEnemy,
             final List<Enemy> enemies,
             final double newX,

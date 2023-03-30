@@ -2,15 +2,34 @@ package ca.bcit.comp2522.termproject.capy.models;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
 
+/**
+ * Bullet class represents a bullet in the game.
+ *
+ * @author COMP2522 Group 13
+ * @version 1.0.0
+ */
 public class Bullet {
     private Circle bullet;
     private double speed;
     private double directionX;
     private double directionY;
 
-    public Bullet(double startX, double startY, double directionX, double directionY, int speed) {
+    /**
+     * Instantiates a new Bullet with specified coordinates and speed.
+     *
+     * @param startX     the starting x coordinate
+     * @param startY     the starting y coordinate
+     * @param directionX the x direction of the bullet's movement
+     * @param directionY the y direction of the bullet's movement
+     * @param speed      the speed of the bullet
+     */
+    public Bullet(
+            final double startX,
+            final double startY,
+            final double directionX,
+            final double directionY,
+            final int speed) {
         this.speed = speed;
         this.directionX = directionX;
         this.directionY = directionY;
@@ -19,11 +38,19 @@ public class Bullet {
         this.bullet.setFill(Color.YELLOW); // Set the color of the rectangle
     }
 
+    /**
+     * Updates the bullet's position based on its speed and direction.
+     */
     public void update() {
         bullet.setCenterX(bullet.getCenterX() + directionX * speed);
         bullet.setCenterY(bullet.getCenterY() + directionY * speed);
     }
 
+    /**
+     * Returns the Circle object representing the bullet.
+     *
+     * @return the bullet Circle object
+     */
     public Circle getBullet() {
         return bullet;
     }

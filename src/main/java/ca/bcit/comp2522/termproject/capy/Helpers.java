@@ -17,12 +17,15 @@ import java.net.URL;
  */
 public final class Helpers {
 
+    // INITIALIZATION  =================================================================================================
+
     private Helpers() {
 
     }
 
     /**
      * Return the controller class for a specific fxml file.
+     *
      * @param fxmlFileName the name of the fxml file
      * @return the controller object of fxml file
      * @throws RuntimeException if the fxml file fails to load
@@ -40,8 +43,11 @@ public final class Helpers {
         return loader.getController();
     }
 
+    // HELPER METHODS  =================================================================================================
+
     /**
      * Change the scene on the stage.
+     *
      * @param scene the scene to change to
      */
     public static void changeScene(final Scene scene) {
@@ -56,11 +62,14 @@ public final class Helpers {
         // Game.setHasSavedGame(true);
         Game.setPaused(true);
         GameMenuController menuController = (GameMenuController) Helpers.getFxmlController(
-            "game-menu-view.fxml"
+                "game-menu-view.fxml"
         );
         Helpers.changeScene(menuController.getScene());
     }
 
+    /**
+     * Opens the upgrades' menu. Pauses the game and switches to the upgrades menu scene.
+     */
     public static void openUpgradesMenu() {
         Game.setPaused(true);
         UpgradesController upgradesController = (UpgradesController) Helpers.getFxmlController(

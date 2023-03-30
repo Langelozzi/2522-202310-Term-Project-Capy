@@ -1,14 +1,18 @@
 package ca.bcit.comp2522.termproject.capy.controllers;
 
-import ca.bcit.comp2522.termproject.capy.Game;
+
 import ca.bcit.comp2522.termproject.capy.Helpers;
 import ca.bcit.comp2522.termproject.capy.models.Character;
 import ca.bcit.comp2522.termproject.capy.models.Direction;
+
 import javafx.animation.AnimationTimer;
+
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+
 import javafx.fxml.FXML;
+
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.shape.Ellipse;
@@ -68,6 +72,7 @@ public class KeyboardInputController {
      *
      * @param player the character to set the movement on
      * @param newScene the scene to which the listeners are attached
+     * @param border the border of the game map
      */
     public void assignKeyboardInput(final Character player, final Scene newScene, final Ellipse border) {
         this.character = player;
