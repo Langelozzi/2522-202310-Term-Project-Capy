@@ -48,10 +48,11 @@ public class Game {
 
     static {
         final String spritesPath = "file:src/main/resources/ca/bcit/comp2522/termproject/capy/sprites/";
-        final int imageSize = 200;
-        availableItems.add(new Weapon(new ImageView(new Image(spritesPath + "level-1-weapon.png",  imageSize, imageSize, true, true)), 100, 1, "handgun", 3));
-        availableItems.add(new Weapon(new ImageView(new Image(spritesPath + "level-2-weapon.png", imageSize, imageSize, true, true)), 300, 2, "semi_automatic_rifle", 15));
-        availableItems.add(new Weapon(new ImageView(new Image(spritesPath + "level-3-weapon.png", imageSize, imageSize, true, true)), 400, 3, "automatic_rifle", 25));
+        final int imageHeigh = 100;
+        availableItems.add(new Weapon(new ImageView(new Image(spritesPath + "level-1-weapon.png",  0, imageHeigh, true, true)), 100, 1, "handgun", 3));
+        availableItems.add(new Weapon(new ImageView(new Image(spritesPath + "level-2-weapon.png", 0, imageHeigh, true, true)), 300, 2, "rifle", 15));
+        availableItems.add(new Weapon(new ImageView(new Image(spritesPath + "level-3-weapon.png", 0, imageHeigh, true, true)), 400, 3, "automatic rifle", 25));
+        availableItems.add(new Weapon(new ImageView(new Image(spritesPath + "level-4-weapon.png", 0, imageHeigh, true, true)), 600, 4, "blaster", 35));
     }
 
     private final HashMap<Integer, Level> levels = new HashMap<>();

@@ -1,25 +1,22 @@
 package ca.bcit.comp2522.termproject.capy.controllers;
 
-import ca.bcit.comp2522.termproject.capy.CapyApplication;
 import ca.bcit.comp2522.termproject.capy.Game;
 import ca.bcit.comp2522.termproject.capy.Helpers;
 import ca.bcit.comp2522.termproject.capy.models.Item;
 import ca.bcit.comp2522.termproject.capy.models.SceneController;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -60,21 +57,24 @@ public class UpgradesController implements Initializable, SceneController {
         upgradesAnchorPane.setMinHeight(Game.BACKGROUND_HEIGHT);
         upgradesAnchorPane.setMinWidth(Game.BACKGROUND_WIDTH);
 
-        Font itemLabelsFont = new Font("Trebuchet MS", 40);
+        itemsVbox.setPadding(new Insets(20, 20, 20, 20));
 
         for(Item item : Game.getAvailableItems()){   
             HBox hbox = new HBox();
             hbox.setSpacing(30);
+            hbox.setPrefWidth(Double.MAX_VALUE);
+            hbox.setStyle("-fx-background-color: rgba(0, 255, 0, 0.3)");    
+            hbox.setAlignment(Pos.CENTER_LEFT);        
             
             Label labelName = new Label(item.getName());
-            labelName.setFont(itemLabelsFont);
+            labelName.setFont(new Font("Trebuchet MS", 40));
             labelName.setTextFill(Color.WHITE);
 
-            Label labelLevel = new Label("level: " + item.getLevel());
-            labelLevel.setFont(itemLabelsFont);
-            labelLevel.setTextFill(Color.WHITE);
+            Button btnPurchase = new Button("Purchase");
+            btnPurchase.setAlignment(Pos.CENTER_RIGHT);
+            btnPurchase.prefHeight(100);
 
-            hbox.getChildren().addAll(item.getSprite(), labelName, labelLevel);
+            hbox.getChildren().addAll(item.getSprite(), labelName, btnPurchase);
             itemsVbox.getChildren().add(hbox);
         }
     }
