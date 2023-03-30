@@ -40,11 +40,11 @@ public class GameMenuController implements Initializable, SceneController {
     /*
     Default font of buttons
      */
-    private final Font btnFont = new Font("Luminari", 32);
+    private final Font btnFont = new Font("Trebuchet MS", 32);
     /*
     Font of buttons when being hovered over
      */
-    private final Font btnFontHover = new Font("Luminari", 38);
+    private final Font btnFontHover = new Font("Trebuchet MS", 38);
 
     /**
      * Initialize the game menu with specific properties, which are different depending on if the user has a saved game.
