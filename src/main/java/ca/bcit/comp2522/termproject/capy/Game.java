@@ -8,16 +8,12 @@ import javafx.animation.AnimationTimer;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
-import java.time.Duration;
-import java.time.LocalDateTime;
-
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 
 /**
@@ -55,7 +51,8 @@ public class Game {
                 0, imageHeigh, true, true)), 600, 4, "blaster", 35));
     }
 
-    private final HashMap<Integer, Level> levels = new HashMap<>();
+    private final ArrayList<Level> levels;
+    private final ListIterator<Level> levelsIterator;
     private Level currentLevel;
     private final Player player;
 
@@ -66,12 +63,9 @@ public class Game {
         this.player = new Player(new Image("file:src/main/resources/ca/bcit/comp2522/termproject/"
                 + "capy/sprites/test_player.png"));
 
-        final int numberOfEnemies = 3;
-        Level level1 = new Level(player, numberOfEnemies);
-
-        this.levels.put(1, level1);
-
-        this.currentLevel = this.levels.get(1);
+        this.levels = generateLevels();
+        this.levelsIterator = this.levels.listIterator();
+        this.currentLevel = this.levelsIterator.next();
 
         KeyboardInputController keyboardInputController = new KeyboardInputController();
         keyboardInputController.assignKeyboardInput(
@@ -87,20 +81,7 @@ public class Game {
         });
     }
 
-
-    /**
-     * Instantiate a new game object starting at a level other than level 1.
-     *
-     * @param startingLevel the level to start the game at.
-     */
-    public Game(final Level startingLevel) {
-        this.player = new Player(new Image("file:src/main/resources/ca/bcit/comp2522/termproject/"
-                + "capy/sprites/test_player.png"));
-    }
-
     // GETTERS AND SETTERS =============================================================================================
-
-
     /**
      * Set the value of savedGame.
      *
@@ -189,104 +170,43 @@ public class Game {
             @Override
             public void handle(final long now) {
                 if (!Game.paused) {
-                    updateEnemies();
-                    updateBullets();
-                    currentLevel.checkSugarCaneCollected();
-                    currentLevel.updatePlayerOverlayInformation();
+                    boolean levelComplete = currentLevel.play();
+
+                    if (levelComplete) {
+                        System.out.println("done level");
+                    }
                 }
             }
         };
         gameLoop.start();
     }
 
-    // ENEMY LOGIC =====================================================================================================
-
-    private void updateEnemies() {
-        LocalDateTime currentTime = LocalDateTime.now();
-        for (int i = 0; i < currentLevel.getEnemies().size(); i++) {
-            Enemy enemy = currentLevel.getEnemies().get(i);
-            enemy.update(player, currentLevel.getEnemies());
-            if (player.isCollidingWithEnemy(enemy)) {
-                // Check if the player's hit points are already 0 or below
-                if (player.getHitPoints() <= 0) {
-                    // TODO: Game over logic
-                } else if (Duration.between(currentLevel.getLastDamageTimes().get(i), currentTime).getSeconds() >= 1) {
-                    int damage = 20; // Player takes 20 damage per collision
-                    player.setHitPoints(player.getHitPoints() - damage);
-
-                    // Update the player's health bar and other overlay information
-                    currentLevel.updatePlayerOverlayInformation();
-                    currentLevel.getLastDamageTimes().set(i, currentTime);
-                    // Check if the player's hit points have reached 0 or below after taking damage
-                    if (player.getHitPoints() <= 0) {
-                        // TODO: Game over logic
-                    }
-                }
-            }
-        }
-    }
-
-    private void updateBullets() {
-        // Update bullets
-        for (Bullet bullet : player.getBullets()) {
-            bullet.update();
-        }
-
-        // Check for bullet collisions with enemies
-        Iterator<Bullet> bulletIterator = player.getBullets().iterator();
-        while (bulletIterator.hasNext()) {
-            Bullet bullet = bulletIterator.next();
-            boolean collided = false;
-
-            Iterator<Enemy> enemyIterator = currentLevel.getEnemies().iterator();
-            while (enemyIterator.hasNext() && !collided) {
-                Enemy enemy = enemyIterator.next();
-                if (enemy.isHitByBullet(bullet)) {
-                    collided = true;
-
-                    // Increment the enemy's hits taken and remove it if it has taken 5 hits
-                    enemy.setHitsTaken(enemy.getHitsTaken() + 1);
-                    if (enemy.getHitsTaken() >= 5) {
-                        enemyIterator.remove(); // Remove the enemy from the list
-
-                        // Remove the enemy from the game layer
-                        currentLevel.getGameLayer().getChildren().remove(enemy.getSprite());
-                        enemy.setDeadSprite(); // Set the enemy sprite to the dead crocodile
-
-                        this.currentLevel.dropSugarCane(enemy);
-
-                        // TODO: Add points system
-                    }
-                    bulletIterator.remove(); // Remove the bullet from the list
-
-                    // Remove the bullet from the game layer
-                    currentLevel.getGameLayer().getChildren().remove(bullet.getBullet());
-                }
-            }
-
-            // Remove bullets that are off-screen
-            if (!collided && isOffScreen(bullet.getBullet())) {
-                bulletIterator.remove();
-
-                // Remove the bullet from the game layer
-                currentLevel.getGameLayer().getChildren().remove(bullet.getBullet());
-            }
-        }
-    }
-
-    private boolean isOffScreen(final Circle bullet) {
-        double x = bullet.getCenterX();
-        double y = bullet.getCenterY();
-
-        return x < 0 || x > BACKGROUND_WIDTH || y < 0 || y > BACKGROUND_HEIGHT;
-    }
+    // 12 levels
+    // 1-4: easy enemies, but each level we add one more (3 enemies - 6 enemies)
+    // 5-8: medium enemies, (3 - 6 enemies)
+    // 9-12: hard enemies, (
 
     private boolean hasCollided(final Bullet bullet, final Enemy enemy) {
         return bullet.getBullet().intersects(enemy.getSprite().getBoundsInLocal());
     }
 
-    private void checkSugarCaneCollected() {
+    private ArrayList<Level> generateLevels() {
+        ArrayList<Level> levels = new ArrayList<>();
 
+        int minDifficulty = 1;
+        int maxDifficulty = 3;
+        int minNumEnemies = 3;
+        int maxNumEnemies = 6;
+
+        for (int difficulty = minDifficulty; difficulty <= maxDifficulty; difficulty++) {
+            for (int numEnemies = minNumEnemies; numEnemies <= maxNumEnemies; numEnemies++) {
+                levels.add(new Level(this.player, numEnemies, difficulty));
+                System.out.printf("%d enemies of difficulty %d\n", numEnemies, difficulty);
+            }
+        }
+
+        System.out.println(levels.size());
+        return levels;
     }
 }
 
