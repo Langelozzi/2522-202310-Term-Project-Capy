@@ -135,4 +135,9 @@ public abstract class Character {
     public boolean isAlive() {
         return hitPoints > 0;
     }
+
+    /**
+     * Reset the state of the character.
+     */
+    public abstract void reset();
 }

@@ -9,6 +9,7 @@ import javafx.animation.AnimationTimer;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Circle;
+import javafx.stage.Stage;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -84,8 +85,6 @@ public class Game {
             bullet.getBullet().toBack();
             player.getSprite().toFront();
         });
-
-        startGameLoop();
     }
 
 
@@ -158,6 +157,21 @@ public class Game {
         return hasSavedGame;
     }
 
+    public void play(final Stage stage) {
+        // create a game menu controller and show the game menu
+        // check in our "database" first to see if there is a saved game, if so give the user continue option
+
+        // menu controller handles clicks, if they click new game then we start a new game at level/wave one
+
+        // each level will control its own game loop via a level.start() method or something like that which will get
+        // called here
+
+        // after each level we will save the state of the game into the "database", and then we will either have
+        // somewhere the player has to move to go to next level or just start next wave
+
+        //
+    }
+
     /**
      * Start a new game at level 1.
      */
@@ -166,6 +180,8 @@ public class Game {
         level1.resetLevel();
         CapyApplication.getStage().setScene(level1.getScene());
         CapyApplication.getStage().show();
+        startGameLoop();
+        Game.setHasSavedGame(true);
     }
 
     private void startGameLoop() {

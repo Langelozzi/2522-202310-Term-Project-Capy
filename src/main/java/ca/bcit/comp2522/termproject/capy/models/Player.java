@@ -121,4 +121,9 @@ public class Player extends Character {
 
         this.points += sugarCane.getValue();
     }
+
+    public void reset() {
+        this.points = DEFAULT_SUGAR_CANE_POINTS;
+        this.setHitPoints(Character.DEFAULT_HIT_POINTS);
+    }
 }

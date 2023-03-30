@@ -146,6 +146,11 @@ public class Enemy extends Character {
         this.moveTowardsPlayer(this, player, enemies);
     }
 
+    public void reset() {
+        this.setHitsTaken(0);
+        this.setHitPoints(DEFAULT_HIT_POINTS);
+    }
+
     // ENEMY MOVEMENT ==================================================================================================
 
     /**

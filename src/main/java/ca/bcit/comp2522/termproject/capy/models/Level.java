@@ -123,6 +123,7 @@ public class Level {
     public void resetLevel() {
         this.resetPlayer();
         this.resetEnemies();
+        this.updatePlayerOverlayInformation();
     }
 
     // PLAYER ACTIONS ==================================================================================================
@@ -140,6 +141,7 @@ public class Level {
     private void resetPlayer() {
         this.player.getSprite().setLayoutX(this.playerStartingXPosition);
         this.player.getSprite().setLayoutY(this.playerStartingYPosition);
+        this.player.reset();
     }
 
     /**

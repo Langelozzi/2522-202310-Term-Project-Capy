@@ -53,10 +53,10 @@ public class CapyApplication extends Application {
         mainStage.getIcons().add(
                 new Image("file:src/main/resources/ca/bcit/comp2522/termproject/capy/imgs/medium_pixel_capy.png")
         );
-
-        mainStage.setScene(startViewController.getScene());
         mainStage.setMinHeight(Game.BACKGROUND_HEIGHT);
         mainStage.setMinWidth(Game.BACKGROUND_WIDTH);
+
+        mainStage.setScene(startViewController.getScene());
         mainStage.show();
     }
 
