@@ -156,6 +156,7 @@ public class Level {
      * Reset the state of the level back to default (beginning).
      */
     public void resetLevel() {
+        this.started = false;
         this.resetPlayer();
         this.resetEnemies();
         this.updatePlayerOverlayInformation();
@@ -345,7 +346,7 @@ public class Level {
                     // Increment the enemy's hits taken and remove it if it has taken 5 hits
                     enemy.setHitsTaken(enemy.getHitsTaken() + 1);
                     if (enemy.getHitsTaken() >= 5) {
-                        enemyIterator.remove(); // Remove the enemy from the list
+                        // enemyIterator.remove(); // Remove the enemy from the list
 
                         // Remove the enemy from the game layer
                         this.getGameLayer().getChildren().remove(enemy.getSprite());

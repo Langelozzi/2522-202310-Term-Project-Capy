@@ -1,5 +1,6 @@
 package ca.bcit.comp2522.termproject.capy;
 
+import ca.bcit.comp2522.termproject.capy.controllers.WaveMessageController;
 import ca.bcit.comp2522.termproject.capy.models.*;
 
 import javafx.animation.AnimationTimer;
@@ -146,9 +147,12 @@ public class Game {
         Level level1 = this.levels.get(0);
         level1.resetLevel();
         this.currentLevel = level1;
+        this.waveCount = 1;
         Game.setHasSavedGame(true);
 
-        startGameLoop();
+        showWaveMessage();
+
+        Helpers.delay(3000, this::startGameLoop);
     }
 
     private void startGameLoop() {
@@ -159,8 +163,7 @@ public class Game {
                     boolean levelComplete = currentLevel.play();
 
                     if (levelComplete) {
-                        waveCount++;
-                        currentLevel = levelsIterator.next();
+                        startNextWave(this);
                     }
                 }
             }
@@ -192,6 +195,27 @@ public class Game {
         }
 
         return levels;
+    }
+
+    private void startNextWave(AnimationTimer gameLoop) {
+        gameLoop.stop();
+
+        waveCount++;
+        showWaveMessage();
+
+        Helpers.delay(3000, () -> {
+            currentLevel = levelsIterator.next();
+            gameLoop.start();
+        });
+    }
+
+    private void showWaveMessage() {
+        WaveMessageController waveMessageController = (WaveMessageController) Helpers.getFxmlController(
+                "wave-message-view.fxml"
+        );
+        System.out.println(this.waveCount);
+        waveMessageController.setWaveNumber(this.waveCount);
+        Helpers.changeScene(waveMessageController.getScene());
     }
 }
 

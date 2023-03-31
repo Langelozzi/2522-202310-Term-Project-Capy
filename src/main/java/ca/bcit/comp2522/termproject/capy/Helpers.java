@@ -3,6 +3,7 @@ package ca.bcit.comp2522.termproject.capy;
 import ca.bcit.comp2522.termproject.capy.controllers.GameMenuController;
 import ca.bcit.comp2522.termproject.capy.controllers.UpgradesController;
 import ca.bcit.comp2522.termproject.capy.models.SceneController;
+import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 
@@ -76,5 +77,18 @@ public final class Helpers {
                 "upgrade-menu-view.fxml"
         );
         Helpers.changeScene(upgradesController.getScene());
+    }
+
+    public static void delay(long millis, Runnable continuation) {
+      Task<Void> sleeper = new Task<Void>() {
+          @Override
+          protected Void call() throws Exception {
+              try { Thread.sleep(millis); }
+              catch (InterruptedException e) { }
+              return null;
+          }
+      };
+      sleeper.setOnSucceeded(event -> continuation.run());
+      new Thread(sleeper).start();
     }
 }
