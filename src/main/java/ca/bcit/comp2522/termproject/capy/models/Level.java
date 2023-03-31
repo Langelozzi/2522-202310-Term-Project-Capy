@@ -251,8 +251,7 @@ public class Level {
 
     private void spawnEnemies() {
         for (Enemy enemy : this.enemies) {
-            // double[] spawnCoords = this.chooseSpawnLocation();
-            double[] spawnCoords = {200, 200};
+            double[] spawnCoords = this.chooseSpawnLocation();
             double spawnX = spawnCoords[0];
             double spawnY = spawnCoords[1];
             this.controller.renderSprite(enemy.getSprite(), spawnX, spawnY);
@@ -260,28 +259,20 @@ public class Level {
     }
 
     private double[] chooseSpawnLocation() {
-        int gridRows = (int) Math.sqrt(this.enemies.size());
-        int gridCols = this.enemies.size() / gridRows;
+        double centerX = Game.BACKGROUND_WIDTH / 2.0;
+        double centerY = Game.BACKGROUND_HEIGHT / 2.0;
+        double radiusX = swampBoundary.getRadiusX();
+        double radiusY = swampBoundary.getRadiusY();
 
-        double cellWidth = (double) Game.BACKGROUND_WIDTH / gridCols;
-        double cellHeight = (double) Game.BACKGROUND_HEIGHT / gridRows;
+        double theta = Math.random() * 2 * Math.PI;
+        double enemyX = centerX + radiusX * Math.cos(theta);
+        double enemyY = centerY + radiusY * Math.sin(theta);
 
-        double safeDistance = 500; // Set a safe distance around the player
-
-        double enemyX = 0;
-        double enemyY = 0;
-
-        for (int row = 0; row < gridRows; row++) {
-            for (int col = 0; col < gridCols; col++) {
-                do {
-                    enemyX = col * cellWidth + Math.random() * cellWidth;
-                    enemyY = row * cellHeight + Math.random() * cellHeight;
-                } while (!isSpawnLocationSafe(enemyX, enemyY, player, safeDistance));
-
-            }
-        }
-        return new double[] {enemyX, enemyY};
+        return new double[] { enemyX, enemyY };
     }
+
+
+
 
     /*
     Checks if a spawn location is safe.
@@ -346,7 +337,7 @@ public class Level {
                     // Increment the enemy's hits taken and remove it if it has taken 5 hits
                     enemy.setHitsTaken(enemy.getHitsTaken() + 1);
                     if (enemy.getHitsTaken() >= 5) {
-                        // enemyIterator.remove(); // Remove the enemy from the list
+                         enemyIterator.remove(); // Remove the enemy from the list
 
                         // Remove the enemy from the game layer
                         this.getGameLayer().getChildren().remove(enemy.getSprite());
