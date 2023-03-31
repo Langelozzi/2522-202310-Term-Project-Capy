@@ -37,6 +37,7 @@ public class Game {
     private static boolean hasSavedGame = false;
     private static boolean paused = false;
     private static final List<Item> availableItems = new ArrayList<Item>();
+    private final AudioManager audioManager;
 
     static {
         final String spritesPath = "file:src/main/resources/ca/bcit/comp2522/termproject/capy/sprites/";
@@ -60,12 +61,22 @@ public class Game {
      * Instantiate a new Game object starting current level at level 1.
      */
     public Game() {
+        this.audioManager = new AudioManager();
         this.player = new Player(new Image("file:src/main/resources/ca/bcit/comp2522/termproject/"
-                + "capy/sprites/test_player.png"));
+                + "capy/sprites/test_player.png"), audioManager);
 
+<<<<<<< Updated upstream
         this.levels = generateLevels();
         this.levelsIterator = this.levels.listIterator();
         this.currentLevel = this.levelsIterator.next();
+=======
+        final int numberOfEnemies = 3;
+        Level level1 = new Level(player, numberOfEnemies, audioManager);
+
+        this.levels.put(1, level1);
+
+        this.currentLevel = this.levels.get(1);
+>>>>>>> Stashed changes
 
         KeyboardInputController keyboardInputController = new KeyboardInputController();
         keyboardInputController.assignKeyboardInput(
@@ -81,6 +92,21 @@ public class Game {
         });
     }
 
+<<<<<<< Updated upstream
+=======
+
+    /**
+     * Instantiate a new game object starting at a level other than level 1.
+     *
+     * @param startingLevel the level to start the game at.
+     */
+    public Game(final Level startingLevel) {
+        this.audioManager = new AudioManager();
+        this.player = new Player(new Image("file:src/main/resources/ca/bcit/comp2522/termproject/"
+                + "capy/sprites/test_player.png"), audioManager);
+    }
+
+>>>>>>> Stashed changes
     // GETTERS AND SETTERS =============================================================================================
     /**
      * Set the value of savedGame.
