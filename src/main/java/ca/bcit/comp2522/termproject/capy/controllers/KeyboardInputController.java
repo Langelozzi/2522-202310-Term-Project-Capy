@@ -11,10 +11,16 @@ import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.shape.Ellipse;
 
 /**
@@ -49,55 +55,37 @@ public class KeyboardInputController {
         @Override
         public void handle(final long l) {
             if (wPressed.get()) {
-                // character.move(Direction.UP);
                 moveCharacter(character, Direction.UP, border);
             }
             if (sPressed.get()) {
-                // character.move(Direction.DOWN);
                 moveCharacter(character, Direction.DOWN, border);
             }
             if (aPressed.get()) {
-                // character.move(Direction.LEFT);
                 moveCharacter(character, Direction.LEFT, border);
             }
             if (dPressed.get()) {
-                // character.move(Direction.RIGHT);
                 moveCharacter(character, Direction.RIGHT, border);
             }
         }
     };
 
-    /**
-     * Set all the keyboard input listeners. Set the movement controls for the Player and Game Menu button.
-     *
-     * @param player the character to set the movement on
-     * @param newScene the scene to which the listeners are attached
-     * @param border the border of the game map
-     */
-    public void assignKeyboardInput(final Character player, final Scene newScene, final Ellipse border) {
-        this.character = player;
-        this.scene = newScene;
-        this.border = border;
-
-        setListeners();
-
-        keyPressed.addListener(((observableValue, bool, t1) -> {
-            if (!bool) {
-                timer.start();
-            } else {
-                timer.stop();
+    private ChangeListener<Boolean> changeListener = new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean bool, Boolean t1) {
+                if (!bool) {
+                    timer.start();
+                } else {
+                    timer.stop();
+                }
             }
-        }));
-    }
+        };
 
-    /*
-    Attach the key event listeners to the scene.
-     */
-    private void setListeners() {
-        this.scene.setOnKeyPressed(e -> {
+    private final EventHandler<KeyEvent> keyPressEvent = new EventHandler<KeyEvent>() {
+        @Override
+        public void handle(KeyEvent e) {
             if (e.getCode() == KeyCode.ESCAPE) {
-                this.character.setPreviousXCoordinate();
-                this.character.setPreviousYCoordinate();
+                character.setPreviousXCoordinate();
+                character.setPreviousYCoordinate();
                 Helpers.openGameMenu();
             }
             if (e.getCode() == KeyCode.W) {
@@ -112,9 +100,13 @@ public class KeyboardInputController {
             if (e.getCode() == KeyCode.D) {
                 dPressed.set(true);
             }
-        });
+            e.consume();
+        }
+    };
 
-        scene.setOnKeyReleased(e -> {
+    private final EventHandler<KeyEvent> keyReleaseEvent = new EventHandler<KeyEvent>() {
+        @Override
+        public void handle(KeyEvent e) {
             if (e.getCode() == KeyCode.W) {
                 wPressed.set(false);
             }
@@ -127,7 +119,46 @@ public class KeyboardInputController {
             if (e.getCode() == KeyCode.D) {
                 dPressed.set(false);
             }
-        });
+            e.consume();
+        }
+    };
+
+    /**
+     * Set all the keyboard input listeners. Set the movement controls for the Player and Game Menu button.
+     *
+     * @param player the character to set the movement on
+     * @param newScene the scene to which the listeners are attached
+     * @param border the border of the game map
+     */
+    public void assignKeyboardInput(final Character player, final Scene newScene, final Ellipse border) {
+        resetControls();
+
+        this.character = player;
+        this.scene = newScene;
+        this.border = border;
+
+        setListeners();
+        keyPressed.addListener(changeListener);
+    }
+
+    public void removeKeyboardInput() {
+        resetControls();
+        this.timer.stop();
+        this.removeListeners();
+    }
+
+    /*
+    Attach the key event listeners to the scene.
+     */
+    private void setListeners() {
+        scene.setOnKeyPressed(keyPressEvent);
+        scene.setOnKeyReleased(keyReleaseEvent);
+    }
+
+    private void removeListeners() {
+        keyPressed.removeListener(changeListener);
+        scene.setOnKeyPressed(null);
+        scene.setOnKeyReleased(null);
     }
 
     private void moveCharacter(final Character character, final Direction direction, final Ellipse border) {
@@ -150,5 +181,12 @@ public class KeyboardInputController {
             character.getSprite().setLayoutX(newX);
             character.getSprite().setLayoutY(newY);
         }
+    }
+
+    private void resetControls() {
+        this.wPressed.set(false);
+        this.aPressed.set(false);
+        this.sPressed.set(false);
+        this.dPressed.set(false);
     }
 }
