@@ -1,9 +1,12 @@
 package ca.bcit.comp2522.termproject.capy.models;
 
+import ca.bcit.comp2522.termproject.capy.CapyApplication;
 import ca.bcit.comp2522.termproject.capy.Game;
 import ca.bcit.comp2522.termproject.capy.Helpers;
+import ca.bcit.comp2522.termproject.capy.controllers.KeyboardInputController;
 import ca.bcit.comp2522.termproject.capy.controllers.LevelController;
-import javafx.animation.AnimationTimer;
+import ca.bcit.comp2522.termproject.capy.controllers.MouseInputController;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 
 import java.time.Duration;
@@ -35,6 +38,8 @@ public class Level {
     private final ArrayList<SugarCane> droppedSugarCane;
     private final double playerStartingXPosition = (Game.BACKGROUND_WIDTH / 2.0) - 20;
     private final double playerStartingYPosition = (Game.BACKGROUND_HEIGHT / 2.0) - 20;
+    private boolean started;
+    private final KeyboardInputController keyboardInputController;
 
     /**
      * Instantiate a new Level.
@@ -53,14 +58,27 @@ public class Level {
         this.player = player;
         this.enemies = generateEnemies(numEnemies, enemyDifficulty);
         this.swampBoundary = controller.getSwampBorder();
-
-        // we don't want to do this in constructor we want to do it once this level starts
-        initializeGameObjects();
+        this.started = false;
+        this.keyboardInputController = new KeyboardInputController();
     }
 
-    private void initializeGameObjects() {
+    public void initializeGameObjects() {
         setUpPlayer();
         spawnEnemies();
+    }
+
+    public void bindUserControls() {
+        keyboardInputController.assignKeyboardInput(
+                this.player, this.scene, this.getSwampBoundary()
+        );
+
+        MouseInputController rotationController = new MouseInputController();
+        rotationController.makeCursorRotatable(this.player, this.getScene());
+        rotationController.handleShooting(this.player, this.getScene(), bullet -> {
+            this.getGameLayer().getChildren().add(bullet.getBullet());
+            bullet.getBullet().toBack();
+            this.player.getSprite().toFront();
+        });
     }
 
     // GETTERS AND SETTERS =============================================================================================
@@ -113,11 +131,22 @@ public class Level {
     }
 
     public boolean play() {
+        // everything that we want to happen only once at the beginning of the level goes in this if statement
+        if (!this.started) {
+            this.started = true;
+            this.initializeGameObjects();
+            this.bindUserControls();
+
+            CapyApplication.getStage().setScene(this.getScene());
+            CapyApplication.getStage().show();
+        }
+        // this stuff will run every frame
         updatePlayerOverlayInformation();
         updateEnemies();
         updateBullets();
         checkSugarCaneCollected();
         if (enemies.size() == 0) {
+            keyboardInputController.removeKeyboardInput();
             return true;
         }
         return false;
@@ -127,6 +156,7 @@ public class Level {
      * Reset the state of the level back to default (beginning).
      */
     public void resetLevel() {
+        this.started = false;
         this.resetPlayer();
         this.resetEnemies();
         this.updatePlayerOverlayInformation();
@@ -210,47 +240,19 @@ public class Level {
      */
     private ArrayList<Enemy> generateEnemies(final int amount, final int difficulty) {
         ArrayList<Enemy> newEnemies = new ArrayList<>();
-        int gridRows = (int) Math.sqrt(amount);
-        int gridCols = amount / gridRows;
 
-        double cellWidth = (double) Game.BACKGROUND_WIDTH / gridCols;
-        double cellHeight = (double) Game.BACKGROUND_HEIGHT / gridRows;
-
-        double safeDistance = 500; // Set a safe distance around the player
-
-        int count = 0;
-        for (int row = 0; row < gridRows; row++) {
-            for (int col = 0; col < gridCols; col++) {
-                if (count >= amount) {
-                    break;
-                }
-
-                int speed = 1;
-
-                Enemy enemy = new Enemy(speed, difficulty);
-
-                double enemyX;
-                double enemyY;
-
-                do {
-                    enemyX = col * cellWidth + Math.random() * cellWidth;
-                    enemyY = row * cellHeight + Math.random() * cellHeight;
-                } while (!isSpawnLocationSafe(enemyX, enemyY, player, safeDistance));
-
-                // enemy.getSprite().setLayoutX(enemyX);
-                // enemy.getSprite().setLayoutY(enemyY);
-
-                newEnemies.add(enemy);
-
-                count++;
-            }
+        final int enemySpeed = 1;
+        for (int count = 0; count < amount; count++) {
+            newEnemies.add(new Enemy(enemySpeed, difficulty));
         }
+
         return newEnemies;
     }
 
     private void spawnEnemies() {
         for (Enemy enemy : this.enemies) {
-            double[] spawnCoords = this.chooseSpawnLocation();
+            // double[] spawnCoords = this.chooseSpawnLocation();
+            double[] spawnCoords = {200, 200};
             double spawnX = spawnCoords[0];
             double spawnY = spawnCoords[1];
             this.controller.renderSprite(enemy.getSprite(), spawnX, spawnY);
@@ -268,9 +270,9 @@ public class Level {
 
         double enemyX = 0;
         double enemyY = 0;
+
         for (int row = 0; row < gridRows; row++) {
             for (int col = 0; col < gridCols; col++) {
-
                 do {
                     enemyX = col * cellWidth + Math.random() * cellWidth;
                     enemyY = row * cellHeight + Math.random() * cellHeight;
@@ -278,7 +280,6 @@ public class Level {
 
             }
         }
-
         return new double[] {enemyX, enemyY};
     }
 
@@ -345,7 +346,7 @@ public class Level {
                     // Increment the enemy's hits taken and remove it if it has taken 5 hits
                     enemy.setHitsTaken(enemy.getHitsTaken() + 1);
                     if (enemy.getHitsTaken() >= 5) {
-                        enemyIterator.remove(); // Remove the enemy from the list
+                        // enemyIterator.remove(); // Remove the enemy from the list
 
                         // Remove the enemy from the game layer
                         this.getGameLayer().getChildren().remove(enemy.getSprite());

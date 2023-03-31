@@ -1,7 +1,6 @@
 package ca.bcit.comp2522.termproject.capy;
 
-import ca.bcit.comp2522.termproject.capy.controllers.KeyboardInputController;
-import ca.bcit.comp2522.termproject.capy.controllers.MouseInputController;
+import ca.bcit.comp2522.termproject.capy.controllers.WaveMessageController;
 import ca.bcit.comp2522.termproject.capy.models.*;
 
 import javafx.animation.AnimationTimer;
@@ -10,7 +9,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
-import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -55,6 +53,7 @@ public class Game {
     private final ListIterator<Level> levelsIterator;
     private Level currentLevel;
     private final Player player;
+    private int waveCount;
 
     /**
      * Instantiate a new Game object starting current level at level 1.
@@ -66,19 +65,7 @@ public class Game {
         this.levels = generateLevels();
         this.levelsIterator = this.levels.listIterator();
         this.currentLevel = this.levelsIterator.next();
-
-        KeyboardInputController keyboardInputController = new KeyboardInputController();
-        keyboardInputController.assignKeyboardInput(
-                this.player, this.currentLevel.getScene(), this.currentLevel.getSwampBoundary()
-        );
-
-        MouseInputController rotationController = new MouseInputController();
-        rotationController.makeCursorRotatable(player, player, currentLevel.getScene());
-        rotationController.handleShooting(player, currentLevel.getScene(), bullet -> {
-            currentLevel.getGameLayer().getChildren().add(bullet.getBullet());
-            bullet.getBullet().toBack();
-            player.getSprite().toFront();
-        });
+        this.waveCount = 1;
     }
 
     // GETTERS AND SETTERS =============================================================================================
@@ -157,12 +144,15 @@ public class Game {
      * Start a new game at level 1.
      */
     public void startNew() {
-        Level level1 = this.levels.get(1);
+        Level level1 = this.levels.get(0);
         level1.resetLevel();
-        CapyApplication.getStage().setScene(level1.getScene());
-        CapyApplication.getStage().show();
-        startGameLoop();
+        this.currentLevel = level1;
+        this.waveCount = 1;
         Game.setHasSavedGame(true);
+
+        showWaveMessage();
+
+        Helpers.delay(3000, this::startGameLoop);
     }
 
     private void startGameLoop() {
@@ -173,7 +163,7 @@ public class Game {
                     boolean levelComplete = currentLevel.play();
 
                     if (levelComplete) {
-                        System.out.println("done level");
+                        startNextWave(this);
                     }
                 }
             }
@@ -201,12 +191,31 @@ public class Game {
         for (int difficulty = minDifficulty; difficulty <= maxDifficulty; difficulty++) {
             for (int numEnemies = minNumEnemies; numEnemies <= maxNumEnemies; numEnemies++) {
                 levels.add(new Level(this.player, numEnemies, difficulty));
-                System.out.printf("%d enemies of difficulty %d\n", numEnemies, difficulty);
             }
         }
 
-        System.out.println(levels.size());
         return levels;
+    }
+
+    private void startNextWave(AnimationTimer gameLoop) {
+        gameLoop.stop();
+
+        waveCount++;
+        showWaveMessage();
+
+        Helpers.delay(3000, () -> {
+            currentLevel = levelsIterator.next();
+            gameLoop.start();
+        });
+    }
+
+    private void showWaveMessage() {
+        WaveMessageController waveMessageController = (WaveMessageController) Helpers.getFxmlController(
+                "wave-message-view.fxml"
+        );
+        System.out.println(this.waveCount);
+        waveMessageController.setWaveNumber(this.waveCount);
+        Helpers.changeScene(waveMessageController.getScene());
     }
 }
 

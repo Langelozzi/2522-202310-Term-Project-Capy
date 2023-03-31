@@ -23,20 +23,16 @@ public class MouseInputController {
     @FXML
     private Character character;
     @FXML
-    private Player player;
-    @FXML
     private Scene scene;
 
     /**
      * Enable cursor rotation functionality on the character for the scene.
      *
      * @param character the player that will get the rotation functionality
-     * @param player    the player that will get the shooting functionality
      * @param newScene  the scene that the rotation applies to
      */
-    public void makeCursorRotatable(final Character character, final Player player, final Scene newScene) {
+    public void makeCursorRotatable(final Character character, final Scene newScene) {
         this.character = character;
-        this.player = player;
         this.scene = newScene;
 
         rotationSetup();
@@ -73,7 +69,7 @@ public class MouseInputController {
 
     private void handleMouseClick(final MouseEvent event) {
         if (event.getButton() == MouseButton.PRIMARY) {
-            player.shoot(event.getSceneX(), event.getSceneY());
+            ((Player) character).shoot(event.getSceneX(), event.getSceneY());
         }
     }
 

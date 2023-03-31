@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane fx:id="mainPane" maxHeight="864.0" maxWidth="1160.0" minHeight="864.0" minWidth="1160.0"
+      xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="ca.bcit.comp2522.termproject.capy.controllers.WaveMessageController">
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+   </padding>
+   <ImageView fitHeight="886.0" fitWidth="1180.0" layoutY="-8.0" pickOnBounds="true" preserveRatio="true">
+      <viewport>
+         <Rectangle2D height="645.0" width="865.0"/>
+      </viewport>
+      <Image url="@imgs/swamp_level.png"/>
+   </ImageView>
+   <Text fx:id="waveText" fill="#f8f6f6" layoutX="435.0" layoutY="451.0" strokeType="OUTSIDE" strokeWidth="0.0"
+         text="Wave 1">
+      <font>
+         <Font name="Trebuchet MS" size="96.0"/>
+      </font>
+      <effect>
+         <DropShadow height="53.43" radius="32.8475" spread="0.16" width="79.96">
+            <color>
+               <Color red="0.19736842811107635" green="0.19736842811107635" blue="0.19736842811107635"/>
+            </color>
+         </DropShadow>
+      </effect>
+   </Text>
+</Pane>
