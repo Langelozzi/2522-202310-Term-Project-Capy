@@ -1,4 +1,5 @@
 package ca.bcit.comp2522.termproject.capy.models;
+import ca.bcit.comp2522.termproject.capy.AudioManager;
 
 import javafx.scene.image.Image;
 
@@ -26,28 +27,33 @@ public class Player extends Character {
     private int points;
     private Weapon weapon;
     private Armour armour;
+    private AudioManager audioManager;
 
     /**
      * Instantiate a Player object.
      *
-     * @param sprite the Image to use as the player's ImageView sprite
+     * @param sprite      the Image to use as the player's ImageView sprite
+     * @param audioManager the AudioManager instance to handle sound effects
      */
-    public Player(final Image sprite) {
+    public Player(final Image sprite, final AudioManager audioManager) {
         super(sprite, DEFAULT_PLAYER_SPEED);
 
         this.points = DEFAULT_SUGAR_CANE_POINTS;
+        this.audioManager = audioManager;
     }
 
     /**
      * Instantiate a player object with a custom player speed.
      *
-     * @param sprite      the Image to use as the player's ImageView sprite
-     * @param playerSpeed the custom speed of the player
+     * @param sprite       the Image to use as the player's ImageView sprite
+     * @param playerSpeed  the custom speed of the player
+     * @param audioManager the AudioManager instance to handle sound effects
      */
-    public Player(final Image sprite, final int playerSpeed) {
+    public Player(final Image sprite, final int playerSpeed, final AudioManager audioManager) {
         super(sprite, playerSpeed);
 
         this.points = DEFAULT_SUGAR_CANE_POINTS;
+        this.audioManager = audioManager;
     }
 
     // GETTERS AND SETTERS =============================================================================================
@@ -98,6 +104,9 @@ public class Player extends Character {
 
         Bullet bullet = new Bullet(getSprite().getLayoutX(), getSprite().getLayoutY(), directionX, directionY, 5);
         bullets.add(bullet);
+
+        // Play the gun sound effect
+        audioManager.playSoundEffect(AudioManager.SoundEffect.GUN_SHOT);
     }
 
     /**

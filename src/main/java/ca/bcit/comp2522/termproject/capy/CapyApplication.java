@@ -17,6 +17,7 @@ public class CapyApplication extends Application {
 
     private static Stage stage;
     private static Game game;
+    private static AudioManager audioManager;
 
     // GETTERS AND SETTERS =============================================================================================
 
@@ -34,6 +35,10 @@ public class CapyApplication extends Application {
      */
     public static Game getGame() {
         return game;
+    }
+
+    public static AudioManager getAudioManager() { // Add a getter for AudioManager
+        return audioManager;
     }
 
     // GAME START ======================================================================================================
@@ -58,6 +63,9 @@ public class CapyApplication extends Application {
 
         mainStage.setScene(startViewController.getScene());
         mainStage.show();
+
+        CapyApplication.audioManager = new AudioManager(); // Initialize AudioManager
+        CapyApplication.audioManager.playBackgroundMusic(); // Play the background music
     }
 
     /**
