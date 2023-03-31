@@ -1,6 +1,5 @@
 package ca.bcit.comp2522.termproject.capy.models;
 
-import ca.bcit.comp2522.termproject.capy.AudioManager;
 import ca.bcit.comp2522.termproject.capy.Game;
 import ca.bcit.comp2522.termproject.capy.Helpers;
 import ca.bcit.comp2522.termproject.capy.controllers.LevelController;
@@ -34,7 +33,6 @@ public class Level {
     private final ArrayList<Enemy> enemies;
     private ArrayList<LocalDateTime> lastDamageTimes;
     private final ArrayList<SugarCane> droppedSugarCane;
-    private final AudioManager audioManager;
     private final double playerStartingXPosition = (Game.BACKGROUND_WIDTH / 2.0) - 20;
     private final double playerStartingYPosition = (Game.BACKGROUND_HEIGHT / 2.0) - 20;
 
@@ -44,14 +42,9 @@ public class Level {
      * @param player     the Player object that will be playing in the level
      * @param numEnemies the amount of enemies that will be rendered in the level
      */
-<<<<<<< Updated upstream
     public Level(final Player player, final int numEnemies, final int enemyDifficulty) {
-=======
-    public Level(final Player player, final int numEnemies, final AudioManager audioManager) {
->>>>>>> Stashed changes
         this.lastDamageTimes = new ArrayList<>();
         this.droppedSugarCane = new ArrayList<>();
-        this.audioManager = audioManager;
         for (int i = 0; i < numEnemies; i++) {
             this.lastDamageTimes.add(LocalDateTime.now());
         }
@@ -199,11 +192,9 @@ public class Level {
                 sugarCane.setCollected(true);
                 this.player.collectSugarCane(sugarCane);
                 this.controller.getGameLayer().getChildren().remove(sugarCane.getSprite());
-                audioManager.playSoundEffect(AudioManager.SoundEffect.PICKUP); // Play PICKUP sound effect
             }
         }
     }
-
 
     // ENEMY ACTIONS ===================================================================================================
 
