@@ -47,6 +47,8 @@ public class Game {
                 0, imageHeigh, true, true)), 400, 3, "automatic rifle", 25));
         availableItems.add(new Weapon(new ImageView(new Image(spritesPath + "level-4-weapon.png",
                 0, imageHeigh, true, true)), 600, 4, "blaster", 35));
+        availableItems.add(new Armour(new ImageView(new Image(spritesPath + "level-1-armor.png",
+                0, imageHeigh, true, true)), 600, 4, "armor_1", 35));
     }
 
     private final ArrayList<Level> levels;

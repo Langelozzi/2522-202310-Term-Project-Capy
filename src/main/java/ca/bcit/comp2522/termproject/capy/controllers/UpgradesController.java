@@ -14,6 +14,9 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -67,6 +70,11 @@ public class UpgradesController implements Initializable, SceneController {
             hbox.setPrefWidth(Double.MAX_VALUE);
             hbox.setStyle("-fx-background-color: rgba(0, 255, 0, 0.3)");
             hbox.setAlignment(Pos.CENTER_LEFT);
+            hbox.setPadding(new Insets(0, 30, 0, 30));
+
+            Pane paneImage = new Pane();
+            paneImage.setPrefSize(400, 100);
+            paneImage.getChildren().add(item.getSprite());
 
             Label labelName = new Label(item.getName());
             labelName.setFont(new Font("Trebuchet MS", 40));
@@ -74,9 +82,12 @@ public class UpgradesController implements Initializable, SceneController {
 
             Button btnPurchase = new Button("Purchase");
             btnPurchase.setAlignment(Pos.CENTER_RIGHT);
-            btnPurchase.prefHeight(100);
+            btnPurchase.minWidth(200);           
+    
+            Region region = new Region();
+            HBox.setHgrow(region, Priority.ALWAYS);
 
-            hbox.getChildren().addAll(item.getSprite(), labelName, btnPurchase);
+            hbox.getChildren().addAll(paneImage, labelName, region, btnPurchase);
             itemsVbox.getChildren().add(hbox);
         }
     }
