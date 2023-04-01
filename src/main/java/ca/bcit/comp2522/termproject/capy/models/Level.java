@@ -145,7 +145,7 @@ public class Level {
         updateEnemies();
         updateBullets();
         checkSugarCaneCollected();
-        if (enemies.size() == 0) {
+        if (this.enemies.size() == 0 && allSugarCaneCollected()) {
             keyboardInputController.removeKeyboardInput();
             return true;
         }
@@ -224,6 +224,15 @@ public class Level {
                 this.controller.getGameLayer().getChildren().remove(sugarCane.getSprite());
             }
         }
+    }
+
+    private boolean allSugarCaneCollected() {
+        for (SugarCane sugarCane : this.droppedSugarCane) {
+            if (!sugarCane.isCollected()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     // ENEMY ACTIONS ===================================================================================================
