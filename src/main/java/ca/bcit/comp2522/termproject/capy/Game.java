@@ -164,6 +164,10 @@ public class Game {
                 if (!Game.paused) {
                     boolean levelComplete = currentLevel.play();
 
+                    if (!levelsIterator.hasNext()) {
+                        this.stop();
+                        // show win screen
+                    }
                     if (levelComplete) {
                         startNextWave(this);
                     }
