@@ -51,23 +51,23 @@ public class Game {
                 0, imageHeigh, true, true)), 600, 4, "armor_1", 35));
     }
 
-    private final ArrayList<Level> levels;
-    private final ListIterator<Level> levelsIterator;
+    private ArrayList<Level> levels;
+    private ListIterator<Level> levelsIterator;
     private Level currentLevel;
-    private final Player player;
+    private Player player;
     private int waveCount;
 
     /**
      * Instantiate a new Game object starting current level at level 1.
      */
     public Game() {
-        this.player = new Player(new Image("file:src/main/resources/ca/bcit/comp2522/termproject/"
-                + "capy/sprites/test_player.png"));
-
-        this.levels = generateLevels();
-        this.levelsIterator = this.levels.listIterator();
-        this.currentLevel = this.levelsIterator.next();
-        this.waveCount = 1;
+        // this.player = new Player(new Image("file:src/main/resources/ca/bcit/comp2522/termproject/"
+        //         + "capy/sprites/test_player.png"));
+        //
+        // this.levels = generateLevels();
+        // this.levelsIterator = this.levels.listIterator();
+        // this.currentLevel = this.levelsIterator.next();
+        // this.waveCount = 1;
     }
 
     // GETTERS AND SETTERS =============================================================================================
@@ -146,11 +146,21 @@ public class Game {
      * Start a new game at level 1.
      */
     public void startNew() {
-        Level level1 = this.levels.get(0);
-        level1.resetLevel();
-        this.currentLevel = level1;
+        this.player = new Player(
+                new Image("file:src/main/resources/ca/bcit/comp2522/termproject/capy/sprites/test_player.png")
+        );
+
+        this.levels = generateLevels();
+        this.levelsIterator = this.levels.listIterator();
+        this.currentLevel = this.levelsIterator.next();
         this.waveCount = 1;
+
+        // Level level1 = this.levels.get(0);
+        // level1.resetLevel();
+        // this.currentLevel = level1;
+        // this.waveCount = 1;
         Game.setHasSavedGame(true);
+        Game.setPaused(false);
 
         showWaveMessage();
 
@@ -177,11 +187,6 @@ public class Game {
         gameLoop.start();
     }
 
-    // 12 levels
-    // 1-4: easy enemies, but each level we add one more (3 enemies - 6 enemies)
-    // 5-8: medium enemies, (3 - 6 enemies)
-    // 9-12: hard enemies, (
-
     private boolean hasCollided(final Bullet bullet, final Enemy enemy) {
         return bullet.getBullet().intersects(enemy.getSprite().getBoundsInLocal());
     }
@@ -206,7 +211,7 @@ public class Game {
     private void startNextWave(AnimationTimer gameLoop) {
         gameLoop.stop();
 
-        waveCount++;
+        this.waveCount++;
         showWaveMessage();
 
         Helpers.delay(3000, () -> {
@@ -219,7 +224,6 @@ public class Game {
         WaveMessageController waveMessageController = (WaveMessageController) Helpers.getFxmlController(
                 "wave-message-view.fxml"
         );
-        System.out.println(this.waveCount);
         waveMessageController.setWaveNumber(this.waveCount);
         Helpers.changeScene(waveMessageController.getScene());
     }

@@ -106,7 +106,6 @@ public class GameMenuController implements Initializable, SceneController {
      */
     public void onNewGameClick() {
         CapyApplication.getGame().startNew();
-        Game.setPaused(false);
     }
 
     /**

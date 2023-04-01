@@ -143,7 +143,7 @@ public class Enemy extends Character {
         this.getSprite().setRotate(angle + 90); // Add 90 degrees to make the top of the image (head) face the player
 
         // Move the enemy towards the player
-        this.moveTowardsPlayer(this, player, enemies);
+        this.moveTowardsPlayer(player, enemies);
     }
 
     public void reset() {
@@ -156,11 +156,10 @@ public class Enemy extends Character {
     /**
      * Moves the enemy towards the player.
      *
-     * @param enemy   The enemy that will be moved.
      * @param player  The player that the enemy will move towards.
      * @param enemies A list of all the enemies in the game.
      */
-    public void moveTowardsPlayer(final Enemy enemy, final Player player, final List<Enemy> enemies) {
+    public void moveTowardsPlayer(final Player player, final List<Enemy> enemies) {
         double deltaX = player.getSprite().getLayoutX() - this.getSprite().getLayoutX();
         double deltaY = player.getSprite().getLayoutY() - this.getSprite().getLayoutY();
         double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
@@ -172,7 +171,7 @@ public class Enemy extends Character {
         double newY = this.getSprite().getLayoutY() + moveY;
 
         // Check for collision with other enemies before updating the position
-        if (!isEnemyCollision(enemy, enemies, newX, newY)) {
+        if (!isEnemyCollision(enemies, newX, newY)) {
             this.getSprite().setLayoutX(newX);
             this.getSprite().setLayoutY(newY);
         }
@@ -182,19 +181,17 @@ public class Enemy extends Character {
     /**
      * Checks if an enemy would collide with another enemy if it was moved to the specified position.
      *
-     * @param currentEnemy The enemy that is being checked for collision.
      * @param enemies      A list of all the enemies in the game.
      * @param newX         The x-coordinate of the position that the enemy would be moved to.
      * @param newY         The y-coordinate of the position that the enemy would be moved to.
      * @return True if the enemy would collide with another enemy, false otherwise.
      */
     private boolean isEnemyCollision(
-            final Enemy currentEnemy,
             final List<Enemy> enemies,
             final double newX,
             final double newY) {
         for (Enemy enemy : enemies) {
-            if (enemy == currentEnemy) {
+            if (enemy == this) {
                 continue;
             }
 

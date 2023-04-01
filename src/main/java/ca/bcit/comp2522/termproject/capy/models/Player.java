@@ -96,7 +96,7 @@ public class Player extends Character {
         double directionX = deltaX / distance;
         double directionY = deltaY / distance;
 
-        Bullet bullet = new Bullet(getSprite().getLayoutX(), getSprite().getLayoutY(), directionX, directionY, 5);
+        Bullet bullet = new Bullet(getSprite().getLayoutX(), getSprite().getLayoutY(), directionX, directionY);
         bullets.add(bullet);
     }
 

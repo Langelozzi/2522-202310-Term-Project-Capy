@@ -10,6 +10,8 @@ import javafx.scene.shape.Circle;
  * @version 1.0.0
  */
 public class Bullet {
+    public static final int BULLET_SPEED = 5;
+
     private Circle bullet;
     private double speed;
     private double directionX;
@@ -22,15 +24,13 @@ public class Bullet {
      * @param startY     the starting y coordinate
      * @param directionX the x direction of the bullet's movement
      * @param directionY the y direction of the bullet's movement
-     * @param speed      the speed of the bullet
      */
     public Bullet(
             final double startX,
             final double startY,
             final double directionX,
-            final double directionY,
-            final int speed) {
-        this.speed = speed;
+            final double directionY) {
+        this.speed = BULLET_SPEED;
         this.directionX = directionX;
         this.directionY = directionY;
 

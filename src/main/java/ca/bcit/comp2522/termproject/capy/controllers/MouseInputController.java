@@ -95,7 +95,7 @@ public class MouseInputController {
                 double directionX = deltaX / distance;
                 double directionY = deltaY / distance;
 
-                Bullet bullet = new Bullet(centerX, centerY, directionX, directionY, 5);
+                Bullet bullet = new Bullet(centerX, centerY, directionX, directionY);
                 player.getBullets().add(bullet);
                 bulletConsumer.accept(bullet);
             }
