@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="anchorPane" minHeight="864.0" minWidth="1160.0" prefHeight="864.0" prefWidth="1160.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.bcit.comp2522.termproject.capy.controllers.WinViewController">
+   <ImageView fitHeight="913.0" fitWidth="1296.0" layoutX="-74.0" pickOnBounds="true" preserveRatio="true">
+      <Image url="@imgs/win_screen.png" />
+   </ImageView>
+   <Pane layoutX="321.0" layoutY="266.0" prefHeight="152.0" prefWidth="507.0" style="-fx-background-color: rgba(234, 228, 231, 0.5); -fx-background-radius: 30;">
+      <effect>
+         <DropShadow height="85.48" radius="40.042500000000004" width="76.69">
+            <color>
+               <Color red="0.6842105388641357" green="0.6842105388641357" blue="0.6842105388641357" />
+            </color>
+         </DropShadow>
+      </effect>
+      <Text layoutX="21.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="...and after all of Capy's hard work, he finally made it to the after party!" wrappingWidth="478.13671875">
+         <font>
+            <Font name="Trebuchet MS" size="35.0" />
+         </font>
+      </Text>
+   </Pane>
+   <Pane layoutX="804.0" layoutY="793.0" prefHeight="48.0" prefWidth="334.0" style="-fx-background-color: rgba(234, 228, 231, 0.5); -fx-background-radius: 30;">
+      <effect>
+         <DropShadow height="85.48" radius="40.042500000000004" width="76.69">
+            <color>
+               <Color red="0.6842105388641357" green="0.6842105388641357" blue="0.6842105388641357" />
+            </color>
+         </DropShadow>
+      </effect>
+      <children>
+         <Text layoutX="31.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Click space to continue..." wrappingWidth="290.13671875">
+            <font>
+               <Font name="Trebuchet MS" size="24.0" />
+            </font>
+         </Text>
+      </children>
+   </Pane>
+</AnchorPane>

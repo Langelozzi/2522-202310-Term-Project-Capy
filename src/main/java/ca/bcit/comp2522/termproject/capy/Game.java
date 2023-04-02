@@ -152,15 +152,14 @@ public class Game {
                 getWeaponForLevel(1)
         );
 
-        this.levels = generateLevels();
+        // this.levels = generateLevels();
+        this.levels = new ArrayList<Level>() {{
+            add(new Level(player, 3, 1));
+        }};
         this.levelsIterator = this.levels.listIterator();
         this.currentLevel = this.levelsIterator.next();
         this.waveCount = 1;
 
-        // Level level1 = this.levels.get(0);
-        // level1.resetLevel();
-        // this.currentLevel = level1;
-        // this.waveCount = 1;
         Game.setHasSavedGame(true);
         Game.setPaused(false);
 
@@ -180,11 +179,11 @@ public class Game {
                 if (!Game.paused) {
                     boolean levelComplete = currentLevel.play();
 
-                    if (!levelsIterator.hasNext()) {
+                    if (levelComplete && !levelsIterator.hasNext()) {
                         this.stop();
-                        // show win screen
+                        Helpers.showWinScreen();
                     }
-                    if (levelComplete) {
+                    else if (levelComplete) {
                         startNextWave(this);
                     }
                 }

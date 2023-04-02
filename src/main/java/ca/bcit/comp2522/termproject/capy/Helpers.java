@@ -2,6 +2,7 @@ package ca.bcit.comp2522.termproject.capy;
 
 import ca.bcit.comp2522.termproject.capy.controllers.GameMenuController;
 import ca.bcit.comp2522.termproject.capy.controllers.UpgradesController;
+import ca.bcit.comp2522.termproject.capy.controllers.WinViewController;
 import ca.bcit.comp2522.termproject.capy.models.SceneController;
 import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
@@ -66,6 +67,21 @@ public final class Helpers {
                 "game-menu-view.fxml"
         );
         Helpers.changeScene(menuController.getScene());
+    }
+
+    /**
+     * Open the Win screen.
+     */
+    public static void showWinScreen() {
+        Game.setPaused(true);
+        Game.setHasSavedGame(false);
+
+        WinViewController winViewController = (WinViewController) Helpers.getFxmlController(
+                "win-view.fxml"
+        );
+        Scene winScene = winViewController.getScene();
+        winViewController.setListeners(winScene);
+        Helpers.changeScene(winScene);
     }
 
     /**
