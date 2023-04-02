@@ -131,6 +131,7 @@ public class UpgradesController implements Initializable, SceneController {
     }
 
     private void initItemsList(){
+        this.itemsVbox.getChildren().clear();
         Player player = CapyApplication.getGame().getPlayer();
 
         itemsVbox.setPadding(new Insets(20, 20, 20, 20));
@@ -155,11 +156,11 @@ public class UpgradesController implements Initializable, SceneController {
             HBox.setHgrow(region, Priority.ALWAYS);
 
             hbox.getChildren().addAll(paneImage, labelName, region, purchaseNode);
-            itemsVbox.getChildren().add(hbox);
+            this.itemsVbox.getChildren().add(hbox);
         }
     }
 
-    private static Node getPurchaseNode(Item item, Player player){
+    private Node getPurchaseNode(Item item, Player player){
         int currentWeaponLevel = player.getWeapon().getLevel();
         if(Weapon.class.isInstance(item)){
             if(item.getLevel() == currentWeaponLevel)
@@ -192,8 +193,9 @@ public class UpgradesController implements Initializable, SceneController {
         return label;
     }
 
-    private static void PurchaseWeapon(Weapon weapon, Player player){
+    private void PurchaseWeapon(Weapon weapon, Player player){
         player.setWeapon(weapon);
         player.setPoints(player.getPoints() - weapon.getCost());
+        initItemsList();
     }
 }
