@@ -127,26 +127,13 @@ public class Game {
         return hasSavedGame;
     }
 
-    public void play(final Stage stage) {
-        // create a game menu controller and show the game menu
-        // check in our "database" first to see if there is a saved game, if so give the user continue option
-
-        // menu controller handles clicks, if they click new game then we start a new game at level/wave one
-
-        // each level will control its own game loop via a level.start() method or something like that which will get
-        // called here
-
-        // after each level we will save the state of the game into the "database", and then we will either have
-        // somewhere the player has to move to go to next level or just start next wave
-
-        //
-    }
-
     /**
      * Start a new game at level 1.
      * @throws Exception
      */
-    public void startNew() throws Exception {
+    public void start() throws Exception {
+        Game.setHasSavedGame(false);
+
         this.player = new Player(
                 new Image("file:src/main/resources/ca/bcit/comp2522/termproject/capy/sprites/test_player.png"),
                 getWeaponForLevel(1)

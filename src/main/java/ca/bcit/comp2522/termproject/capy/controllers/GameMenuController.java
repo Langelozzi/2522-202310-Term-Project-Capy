@@ -106,7 +106,8 @@ public class GameMenuController implements Initializable, SceneController {
      * @throws Exception
      */
     public void onNewGameClick() throws Exception {
-        CapyApplication.getGame().startNew();
+        CapyApplication.setGame(new Game());
+        CapyApplication.getGame().start();
     }
 
     /**

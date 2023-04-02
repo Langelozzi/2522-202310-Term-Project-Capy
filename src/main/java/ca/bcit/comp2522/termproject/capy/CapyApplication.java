@@ -36,6 +36,10 @@ public class CapyApplication extends Application {
         return game;
     }
 
+    public static void setGame(final Game newGame) {
+        game = newGame;
+    }
+
     // GAME START ======================================================================================================
 
     /**
