@@ -103,8 +103,9 @@ public class GameMenuController implements Initializable, SceneController {
 
     /**
      * Start a new game when "New Game" button is clicked.
+     * @throws Exception
      */
-    public void onNewGameClick() {
+    public void onNewGameClick() throws Exception {
         CapyApplication.getGame().startNew();
     }
 

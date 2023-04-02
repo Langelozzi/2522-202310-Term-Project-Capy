@@ -42,9 +42,9 @@ public class Game {
         availableItems.add(new Weapon(new ImageView(new Image(spritesPath + "level-1-weapon.png",
                 0, imageHeigh, true, true)), 100, 1, "handgun", 3));
         availableItems.add(new Weapon(new ImageView(new Image(spritesPath + "level-2-weapon.png",
-                0, imageHeigh, true, true)), 300, 2, "rifle", 15));
+                0, imageHeigh, true, true)), 0 /*stub to test menu */, 2, "rifle", 15));
         availableItems.add(new Weapon(new ImageView(new Image(spritesPath + "level-3-weapon.png",
-                0, imageHeigh, true, true)), 400, 3, "automatic rifle", 25));
+                0, imageHeigh, true, true)), 0 /*stub to test menu */, 3, "automatic rifle", 25));
         availableItems.add(new Weapon(new ImageView(new Image(spritesPath + "level-4-weapon.png",
                 0, imageHeigh, true, true)), 600, 4, "blaster", 35));
         availableItems.add(new Armour(new ImageView(new Image(spritesPath + "level-1-armor.png",
@@ -144,10 +144,12 @@ public class Game {
 
     /**
      * Start a new game at level 1.
+     * @throws Exception
      */
-    public void startNew() {
+    public void startNew() throws Exception {
         this.player = new Player(
-                new Image("file:src/main/resources/ca/bcit/comp2522/termproject/capy/sprites/test_player.png")
+                new Image("file:src/main/resources/ca/bcit/comp2522/termproject/capy/sprites/test_player.png"),
+                getWeaponForLevel(1)
         );
 
         this.levels = generateLevels();
@@ -165,6 +167,10 @@ public class Game {
         showWaveMessage();
 
         Helpers.delay(3000, this::startGameLoop);
+    }
+
+    public Player getPlayer(){
+        return this.player;
     }
 
     private void startGameLoop() {
@@ -226,6 +232,14 @@ public class Game {
         );
         waveMessageController.setWaveNumber(this.waveCount);
         Helpers.changeScene(waveMessageController.getScene());
+    }
+
+    private static Weapon getWeaponForLevel(int level) throws Exception{
+        for(Item item: availableItems){
+            if(Weapon.class.isInstance(item) && item.getLevel() == level)
+                return (Weapon)item;
+        }
+        throw new Exception("No weapon for level: " + level);
     }
 }
 
