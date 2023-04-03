@@ -33,7 +33,9 @@ public class GameMenuController implements Initializable, SceneController {
     @FXML
     private Button saveBtn;
     @FXML
-    private Button upgradesBtn;
+    private Button upgradeWeaponBtn;
+    @FXML
+    private Button upgradeArmourBtn;
     @FXML
     private Button quitBtn;
 
@@ -62,7 +64,8 @@ public class GameMenuController implements Initializable, SceneController {
             saveBtn.setVisible(false);
         }
 
-        upgradesBtn.setDisable(CapyApplication.getGame().getPlayer() == null);
+        upgradeWeaponBtn.setDisable(CapyApplication.getGame().getPlayer() == null);
+        upgradeArmourBtn.setDisable(CapyApplication.getGame().getPlayer() == null);
     }
 
     /**
@@ -121,8 +124,12 @@ public class GameMenuController implements Initializable, SceneController {
     /**
      * Handles the action when the "Upgrades" button is clicked.
      */
-    public void onUpgradeClick() {
-        Helpers.openUpgradesMenu();
+    public void onUpgradeWeaponClick() {
+        Helpers.openUpgradesMenu("Weapon");
+    }
+
+    public void onUpgradeArmourClick() {
+        Helpers.openUpgradesMenu("Armour");
     }
 
     /**

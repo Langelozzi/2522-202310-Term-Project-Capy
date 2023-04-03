@@ -3,6 +3,7 @@ package ca.bcit.comp2522.termproject.capy.controllers;
 import ca.bcit.comp2522.termproject.capy.CapyApplication;
 import ca.bcit.comp2522.termproject.capy.Game;
 import ca.bcit.comp2522.termproject.capy.Helpers;
+import ca.bcit.comp2522.termproject.capy.models.Armour;
 import ca.bcit.comp2522.termproject.capy.models.Item;
 import ca.bcit.comp2522.termproject.capy.models.Player;
 import ca.bcit.comp2522.termproject.capy.models.SceneController;
@@ -24,6 +25,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -45,6 +47,9 @@ public class UpgradesController implements Initializable, SceneController {
     @FXML
     private Button stubBtn;
 
+    @FXML
+    private Text menuText;
+
 
     /*
     Default font of buttons
@@ -55,6 +60,8 @@ public class UpgradesController implements Initializable, SceneController {
      */
     private final Font btnFontHover = new Font("Trebuchet MS", 32);
 
+    private String itemType;
+
     /**
      * Initialize the game menu with specific properties, which are different depending on if the user has a saved game.
      *
@@ -64,9 +71,13 @@ public class UpgradesController implements Initializable, SceneController {
     @Override
     public void initialize(final URL url, final ResourceBundle resourceBundle) {
         upgradesAnchorPane.setMinHeight(Game.BACKGROUND_HEIGHT);
-        upgradesAnchorPane.setMinWidth(Game.BACKGROUND_WIDTH);
+        upgradesAnchorPane.setMinWidth(Game.BACKGROUND_WIDTH);              
+    }
 
-        initItemsList();        
+    public void initData(String itemType){
+        this.itemType = itemType;
+        this.menuText.setText("Upgrade " + itemType);
+        initItemsList(); 
     }
 
     /**
@@ -130,13 +141,16 @@ public class UpgradesController implements Initializable, SceneController {
         return new Scene(upgradesAnchorPane);
     }
 
-    private void initItemsList(){
+    private void initItemsList() {
         this.itemsVbox.getChildren().clear();
         Player player = CapyApplication.getGame().getPlayer();
 
         itemsVbox.setPadding(new Insets(20, 20, 20, 20));
 
         for (Item item : Game.getAvailableItems()) {
+            if(!item.getClass().getSimpleName().equals(this.itemType))
+                continue;
+
             HBox hbox = new HBox();
             hbox.setSpacing(30);
             hbox.setPrefWidth(Double.MAX_VALUE);
@@ -160,30 +174,27 @@ public class UpgradesController implements Initializable, SceneController {
         }
     }
 
-    private Node getPurchaseNode(Item item, Player player){
-        int currentWeaponLevel = player.getWeapon().getLevel();
-        if(Weapon.class.isInstance(item)){
-            if(item.getLevel() == currentWeaponLevel)
-                return createStandardLabel("Equipped");
-                
-            if(item.getLevel() == currentWeaponLevel + 1){
-                if(item.getCost() > player.getPoints()){
-                    return createStandardLabel("Not enough points");
-                }
-                else {
-                    Button button = new Button("Purchase");
-                    button.setAlignment(Pos.CENTER_RIGHT);
-                    button.setOnAction((event) -> {
-                        PurchaseWeapon((Weapon)item, player);
-                    });                    
-                    return button;
-                }
-            }
-                
-            return createStandardLabel("Locked");
-        }
+    private Node getPurchaseNode(Item item, Player player) {
+        int currentItemLevel = getCurrentItemLevel(player);
 
-        return createStandardLabel("ToDo");
+        if(item.getLevel() == currentItemLevel)
+            return createStandardLabel("Equipped");
+            
+        if(item.getLevel() == currentItemLevel + 1){
+            if(item.getCost() > player.getPoints()){
+                return createStandardLabel("Not enough points");
+            }
+            else {
+                Button button = new Button("Purchase");
+                button.setAlignment(Pos.CENTER_RIGHT);
+                button.setOnAction((event) -> {
+                    purchaseItem(item, player);
+                });                    
+                return button;
+            }
+        }
+                
+        return createStandardLabel("Locked");
     }
 
     private static Label createStandardLabel(String text){
@@ -193,9 +204,32 @@ public class UpgradesController implements Initializable, SceneController {
         return label;
     }
 
-    private void PurchaseWeapon(Weapon weapon, Player player){
-        player.setWeapon(weapon);
-        player.setPoints(player.getPoints() - weapon.getCost());
+    private int getCurrentItemLevel(Player player) {
+        switch(this.itemType){
+            case "Weapon":
+                return player.getWeapon().getLevel();                
+            case "Armour":
+                return player.getArmour().getLevel(); 
+            default:
+                return 0;
+                //throw new Exception("Unknown item type: " + this.itemType);
+        }
+    }
+
+    private void purchaseItem(Item item, Player player) {        
+        switch(item.getClass().getSimpleName()){
+            case "Weapon":
+                player.setWeapon((Weapon)item);                
+                break;
+            case "Armour":
+                player.setArmour((Armour)item);                
+                break; 
+            default:
+                break;
+                //throw new Exception("Unknown item type to purchase: " + item.getClass().getSimpleName());
+        }
+        player.setPoints(player.getPoints() - item.getCost());
+        
         initItemsList();
     }
 }

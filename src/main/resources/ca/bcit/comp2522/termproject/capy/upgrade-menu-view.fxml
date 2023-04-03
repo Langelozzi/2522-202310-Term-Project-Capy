@@ -26,9 +26,9 @@
             <Image url="@imgs/start_menu_background.png" />
         </image>
     </ImageView>
-    <Text fill="WHITE" layoutX="412.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Upgrades" textAlignment="CENTER" wrappingWidth="377.6212158203125">
+    <Text fx:id="menuText" fill="WHITE" layoutX="412.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Upgrades" textAlignment="CENTER" wrappingWidth="377.6212158203125">
         <font>
-            <Font name="Trebuchet MS" size="80.0" />
+            <Font name="Trebuchet MS" size="40.0" />
         </font>
     </Text>
 

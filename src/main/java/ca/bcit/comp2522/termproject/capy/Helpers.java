@@ -87,11 +87,12 @@ public final class Helpers {
     /**
      * Opens the upgrades' menu. Pauses the game and switches to the upgrades menu scene.
      */
-    public static void openUpgradesMenu() {
+    public static void openUpgradesMenu(String itemType) {
         Game.setPaused(true);
         UpgradesController upgradesController = (UpgradesController) Helpers.getFxmlController(
                 "upgrade-menu-view.fxml"
         );
+        upgradesController.initData(itemType);
         Helpers.changeScene(upgradesController.getScene());
     }
 

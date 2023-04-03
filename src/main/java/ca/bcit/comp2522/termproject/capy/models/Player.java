@@ -32,11 +32,12 @@ public class Player extends Character {
      *
      * @param sprite the Image to use as the player's ImageView sprite
      */
-    public Player(final Image sprite, final Weapon initialWeapon) {
+    public Player(final Image sprite, final Weapon initialWeapon, final Armour initialArmour) {
         super(sprite, DEFAULT_PLAYER_SPEED);
 
         this.points = DEFAULT_SUGAR_CANE_POINTS;
         this.weapon = initialWeapon;
+        this.armour = initialArmour;
     }
 
     /**
@@ -76,6 +77,14 @@ public class Player extends Character {
     }
     public void setWeapon(Weapon weapon){
         this.weapon = weapon;
+    }
+
+    
+    public Armour getArmour() {
+        return this.armour;
+    }
+    public void setArmour(Armour armour){
+        this.armour = armour;
     }
 
     // SHOOTING LOGIC  =================================================================================================

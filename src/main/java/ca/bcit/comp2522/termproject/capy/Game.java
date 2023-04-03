@@ -48,7 +48,11 @@ public class Game {
         availableItems.add(new Weapon(new ImageView(new Image(spritesPath + "level-4-weapon.png",
                 0, imageHeigh, true, true)), 600, 4, "blaster", 35));
         availableItems.add(new Armour(new ImageView(new Image(spritesPath + "level-1-armor.png",
-                0, imageHeigh, true, true)), 600, 4, "armor_1", 35));
+                0, imageHeigh, true, true)), 600, 1, "armor_1", 35));
+        availableItems.add(new Armour(new ImageView(new Image(spritesPath + "level-1-armor.png",
+                0, imageHeigh, true, true)), 0 /*stub to test menu */, 2, "armor_2", 45));
+        availableItems.add(new Armour(new ImageView(new Image(spritesPath + "level-1-armor.png",
+                0, imageHeigh, true, true)), 0 /*stub to test menu */, 3, "armor_3", 55));
     }
 
     private ArrayList<Level> levels;
@@ -136,7 +140,8 @@ public class Game {
 
         this.player = new Player(
                 new Image("file:src/main/resources/ca/bcit/comp2522/termproject/capy/sprites/test_player.png"),
-                getWeaponForLevel(1)
+                getWeaponForLevel(1),
+                getArmourForLevel(1)
         );
 
         this.levels = generateLevels();
@@ -226,6 +231,14 @@ public class Game {
                 return (Weapon)item;
         }
         throw new Exception("No weapon for level: " + level);
+    }
+
+    private static Armour getArmourForLevel(int level) throws Exception{
+        for(Item item: availableItems){
+            if(Armour.class.isInstance(item) && item.getLevel() == level)
+                return (Armour)item;
+        }
+        throw new Exception("No armour for level: " + level);
     }
 }
 
