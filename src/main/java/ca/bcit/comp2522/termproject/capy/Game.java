@@ -139,10 +139,10 @@ public class Game {
                 getWeaponForLevel(1)
         );
 
-        // this.levels = generateLevels();
-        this.levels = new ArrayList<Level>() {{
-            add(new Level(player, 3, 1));
-        }};
+        this.levels = generateLevels();
+        // this.levels = new ArrayList<Level>() {{
+        //     add(new Level(player, 3, 1));
+        // }};
         this.levelsIterator = this.levels.listIterator();
         this.currentLevel = this.levelsIterator.next();
         this.waveCount = 1;
