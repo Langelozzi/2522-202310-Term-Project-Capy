@@ -31,7 +31,7 @@ public class GameMenuController implements Initializable, SceneController {
     @FXML
     private Button newGameBtn;
     @FXML
-    private Button saveBtn;
+    private Button leaderboardBtn;
     @FXML
     private Button upgradeWeaponBtn;
     @FXML
@@ -61,7 +61,6 @@ public class GameMenuController implements Initializable, SceneController {
 
         if (!Game.hasSavedGame()) {
             continueBtn.setVisible(false);
-            saveBtn.setVisible(false);
         }
 
         upgradeWeaponBtn.setDisable(CapyApplication.getGame().getPlayer() == null);
@@ -138,6 +137,10 @@ public class GameMenuController implements Initializable, SceneController {
     public void onContinueClick() {
         Helpers.changeScene(CapyApplication.getGame().getCurrentLevel().getScene());
         Game.setPaused(false);
+    }
+
+    public void onLeaderboardClick() {
+        Helpers.showLeaderboard();
     }
 
     /**

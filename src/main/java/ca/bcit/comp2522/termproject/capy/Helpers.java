@@ -1,6 +1,7 @@
 package ca.bcit.comp2522.termproject.capy;
 
 import ca.bcit.comp2522.termproject.capy.controllers.GameMenuController;
+import ca.bcit.comp2522.termproject.capy.controllers.LeaderboardController;
 import ca.bcit.comp2522.termproject.capy.controllers.UpgradesController;
 import ca.bcit.comp2522.termproject.capy.controllers.WinViewController;
 import ca.bcit.comp2522.termproject.capy.models.SceneController;
@@ -81,6 +82,16 @@ public final class Helpers {
         );
         Scene winScene = winViewController.getScene();
         winViewController.setListeners(winScene);
+        Helpers.changeScene(winScene);
+    }
+
+    public static void showLeaderboard() {
+        Game.setPaused(true);
+
+        LeaderboardController leaderboardController = (LeaderboardController) Helpers.getFxmlController(
+                "leaderboard-view.fxml"
+        );
+        Scene winScene = leaderboardController.getScene();
         Helpers.changeScene(winScene);
     }
 

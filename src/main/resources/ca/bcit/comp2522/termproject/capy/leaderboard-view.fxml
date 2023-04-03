@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="anchorPane" minHeight="864.0" minWidth="1160.0" prefHeight="864.0" prefWidth="1160.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.bcit.comp2522.termproject.capy.controllers.LeaderboardController">
+   <ImageView fitHeight="1057.0" fitWidth="1340.0" layoutX="-140.0" layoutY="-19.0" pickOnBounds="true" preserveRatio="true">
+      <Image url="@imgs/start_menu_background.png" />
+   </ImageView>
+   <ImageView fitHeight="365.0" fitWidth="491.0" layoutX="519.0" layoutY="-118.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">
+      <Image url="@imgs/cartoon-rope-png.png" />
+   </ImageView>
+   <ImageView fitHeight="365.0" fitWidth="491.0" layoutX="116.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">
+      <Image url="@imgs/cartoon-rope-png.png" />
+   </ImageView>
+   <ImageView fitHeight="365.0" fitWidth="491.0" layoutX="117.0" layoutY="405.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">
+      <Image url="@imgs/cartoon-rope-png.png" />
+   </ImageView>
+   <ImageView fitHeight="289.0" fitWidth="799.0" layoutX="164.0" layoutY="-31.0" pickOnBounds="true">
+      <Image url="@sprites/upgrade-menu-ui.png" />
+   </ImageView>
+   <Text fill="#fcdfa9" layoutX="349.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="High Scores" textAlignment="CENTER">
+      <font>
+         <Font name="Trebuchet MS" size="86.0" />
+      </font>
+      <effect>
+         <DropShadow height="3.31" radius="2.6300000000000003" width="9.21" />
+      </effect>
+   </Text>
+   <ImageView fitHeight="243.0" fitWidth="533.0" layoutX="515.0" layoutY="396.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">
+      <Image url="@imgs/cartoon-rope-png.png" />
+   </ImageView>
+   <ImageView fitHeight="190.0" fitWidth="799.0" layoutX="161.0" layoutY="157.0" pickOnBounds="true" rotate="180.0">
+      <Image url="@sprites/upgrade-menu-ui.png" />
+   </ImageView>
+   <ImageView fitHeight="190.0" fitWidth="799.0" layoutX="162.0" layoutY="419.0" pickOnBounds="true" rotate="180.0">
+      <Image url="@sprites/upgrade-menu-ui.png" />
+   </ImageView>
+   <ImageView fitHeight="190.0" fitWidth="799.0" layoutX="159.0" layoutY="559.0" pickOnBounds="true">
+      <Image url="@sprites/upgrade-menu-ui.png" />
+   </ImageView>
+   <ImageView fitHeight="190.0" fitWidth="799.0" layoutX="159.0" layoutY="307.0" pickOnBounds="true">
+      <Image url="@sprites/upgrade-menu-ui.png" />
+   </ImageView>
+   <ImageView fitHeight="190.0" fitWidth="799.0" layoutX="168.0" layoutY="671.0" pickOnBounds="true" rotate="180.0">
+      <Image url="@sprites/upgrade-menu-ui.png" />
+   </ImageView>
+   <Text fill="#fcdfa9" layoutX="315.0" layoutY="283.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1.">
+      <font>
+         <Font name="Trebuchet MS" size="63.0" />
+      </font>
+      <effect>
+         <DropShadow height="9.0" radius="4.0" width="9.0" />
+      </effect>
+   </Text>
+   <Text fill="#fcdfa9" layoutX="314.0" layoutY="417.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2.">
+      <font>
+         <Font name="Trebuchet MS" size="63.0" />
+      </font>
+      <effect>
+         <DropShadow height="9.0" radius="4.0" width="9.0" />
+      </effect>
+   </Text>
+   <Text fill="#fcdfa9" layoutX="313.0" layoutY="541.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3.">
+      <font>
+         <Font name="Trebuchet MS" size="63.0" />
+      </font>
+      <effect>
+         <DropShadow height="9.0" radius="4.0" width="9.0" />
+      </effect>
+   </Text>
+   <Text fill="#fcdfa9" layoutX="312.0" layoutY="663.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4.">
+      <font>
+         <Font name="Trebuchet MS" size="63.0" />
+      </font>
+      <effect>
+         <DropShadow height="9.0" radius="4.0" width="9.0" />
+      </effect>
+   </Text>
+   <Text fill="#fcdfa9" layoutX="316.0" layoutY="796.0" strokeType="OUTSIDE" strokeWidth="0.0" text="5.">
+      <font>
+         <Font name="Trebuchet MS" size="63.0" />
+      </font>
+      <effect>
+         <DropShadow height="9.0" radius="4.0" width="9.0" />
+      </effect>
+   </Text>
+   <Text fx:id="first" fill="#fcdfa9" layoutX="391.0" layoutY="285.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The legend">
+      <font>
+         <Font name="Trebuchet MS" size="63.0" />
+      </font>
+      <effect>
+         <DropShadow height="9.0" radius="4.0" width="9.0" />
+      </effect>
+   </Text>
+   <Text fx:id="second" fill="#fcdfa9" layoutX="389.0" layoutY="415.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The legend">
+      <font>
+         <Font name="Trebuchet MS" size="63.0" />
+      </font>
+      <effect>
+         <DropShadow height="9.0" radius="4.0" width="9.0" />
+      </effect>
+   </Text>
+   <Text fx:id="third" fill="#fcdfa9" layoutX="388.0" layoutY="541.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The legend">
+      <font>
+         <Font name="Trebuchet MS" size="63.0" />
+      </font>
+      <effect>
+         <DropShadow height="9.0" radius="4.0" width="9.0" />
+      </effect>
+   </Text>
+   <Text fx:id="fourth" fill="#fcdfa9" layoutX="385.0" layoutY="663.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The legend">
+      <font>
+         <Font name="Trebuchet MS" size="63.0" />
+      </font>
+      <effect>
+         <DropShadow height="9.0" radius="4.0" width="9.0" />
+      </effect>
+   </Text>
+   <Text fx:id="fifth" fill="#fcdfa9" layoutX="380.0" layoutY="795.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The legend">
+      <font>
+         <Font name="Trebuchet MS" size="63.0" />
+      </font>
+      <effect>
+         <DropShadow height="9.0" radius="4.0" width="9.0" />
+      </effect>
+   </Text>
+</AnchorPane>
