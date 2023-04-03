@@ -61,6 +61,8 @@ public class GameMenuController implements Initializable, SceneController {
             continueBtn.setVisible(false);
             saveBtn.setVisible(false);
         }
+
+        upgradesBtn.setDisable(CapyApplication.getGame().getPlayer() == null);
     }
 
     /**
@@ -70,6 +72,9 @@ public class GameMenuController implements Initializable, SceneController {
      */
     public void onMouseEntered(final MouseEvent event) {
         Button button = (Button) event.getTarget();
+        
+        if(button.isDisabled())
+            return;
 
         final String btnBackgroundColorHover = "rgba(234, 249, 235, 0.85)";
         button.setStyle("-fx-background-color: " + btnBackgroundColorHover);
@@ -89,6 +94,9 @@ public class GameMenuController implements Initializable, SceneController {
      */
     public void onMouseExited(final MouseEvent event) {
         Button button = (Button) event.getTarget();
+        
+        if(button.isDisabled())
+            return;
 
         final String btnBackgroundColor = "rgba(234, 249, 235, 0.6)";
         button.setStyle("-fx-background-color: " + btnBackgroundColor);
