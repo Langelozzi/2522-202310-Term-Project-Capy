@@ -1,8 +1,8 @@
 package ca.bcit.comp2522.termproject.capy.controllers;
 
 import ca.bcit.comp2522.termproject.capy.CapyApplication;
-import ca.bcit.comp2522.termproject.capy.Game;
-import ca.bcit.comp2522.termproject.capy.Helpers;
+import ca.bcit.comp2522.termproject.capy.models.Game;
+import ca.bcit.comp2522.termproject.capy.utils.Helpers;
 import ca.bcit.comp2522.termproject.capy.models.Armour;
 import ca.bcit.comp2522.termproject.capy.models.Item;
 import ca.bcit.comp2522.termproject.capy.models.Player;

@@ -1,7 +1,7 @@
-package ca.bcit.comp2522.termproject.capy.controllers;
+package ca.bcit.comp2522.termproject.capy.utils;
 
 
-import ca.bcit.comp2522.termproject.capy.Helpers;
+import ca.bcit.comp2522.termproject.capy.utils.Helpers;
 import ca.bcit.comp2522.termproject.capy.models.Character;
 import ca.bcit.comp2522.termproject.capy.models.Direction;
 
@@ -13,9 +13,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 
 import javafx.scene.Scene;

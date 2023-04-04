@@ -1,5 +1,7 @@
-package ca.bcit.comp2522.termproject.capy;
+package ca.bcit.comp2522.termproject.capy.utils;
 
+import ca.bcit.comp2522.termproject.capy.CapyApplication;
+import ca.bcit.comp2522.termproject.capy.models.Game;
 import ca.bcit.comp2522.termproject.capy.controllers.GameMenuController;
 import ca.bcit.comp2522.termproject.capy.controllers.LeaderboardController;
 import ca.bcit.comp2522.termproject.capy.controllers.UpgradesController;

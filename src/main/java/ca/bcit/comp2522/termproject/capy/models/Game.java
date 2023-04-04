@@ -1,13 +1,12 @@
-package ca.bcit.comp2522.termproject.capy;
+package ca.bcit.comp2522.termproject.capy.models;
 
 import ca.bcit.comp2522.termproject.capy.controllers.WaveMessageController;
-import ca.bcit.comp2522.termproject.capy.models.*;
 
+import ca.bcit.comp2522.termproject.capy.utils.Helpers;
 import javafx.animation.AnimationTimer;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package ca.bcit.comp2522.termproject.capy.controllers;
+package ca.bcit.comp2522.termproject.capy.utils;
 
 import ca.bcit.comp2522.termproject.capy.models.Bullet;
 import ca.bcit.comp2522.termproject.capy.models.Character;

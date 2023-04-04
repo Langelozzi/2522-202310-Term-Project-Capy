@@ -1,12 +1,10 @@
 package ca.bcit.comp2522.termproject.capy.models;
 
 import ca.bcit.comp2522.termproject.capy.CapyApplication;
-import ca.bcit.comp2522.termproject.capy.Game;
-import ca.bcit.comp2522.termproject.capy.Helpers;
-import ca.bcit.comp2522.termproject.capy.controllers.KeyboardInputController;
+import ca.bcit.comp2522.termproject.capy.utils.Helpers;
+import ca.bcit.comp2522.termproject.capy.utils.KeyboardInputController;
 import ca.bcit.comp2522.termproject.capy.controllers.LevelController;
-import ca.bcit.comp2522.termproject.capy.controllers.MouseInputController;
-import javafx.application.Platform;
+import ca.bcit.comp2522.termproject.capy.utils.MouseInputController;
 import javafx.scene.Scene;
 
 import java.time.Duration;

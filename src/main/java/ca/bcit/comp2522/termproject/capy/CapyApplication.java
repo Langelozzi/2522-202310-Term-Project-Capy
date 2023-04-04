@@ -1,6 +1,8 @@
 package ca.bcit.comp2522.termproject.capy;
 
 import ca.bcit.comp2522.termproject.capy.controllers.GameMenuController;
+import ca.bcit.comp2522.termproject.capy.models.Game;
+import ca.bcit.comp2522.termproject.capy.utils.Helpers;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
