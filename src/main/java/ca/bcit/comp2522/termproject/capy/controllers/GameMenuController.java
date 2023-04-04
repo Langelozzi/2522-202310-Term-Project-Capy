@@ -59,12 +59,9 @@ public class GameMenuController implements Initializable, SceneController {
         anchorPane.setMinHeight(Game.BACKGROUND_HEIGHT);
         anchorPane.setMinWidth(Game.BACKGROUND_WIDTH);
 
-        if (!Game.hasSavedGame()) {
-            continueBtn.setVisible(false);
-        }
-
-        upgradeWeaponBtn.setDisable(CapyApplication.getGame().getPlayer() == null);
-        upgradeArmourBtn.setDisable(CapyApplication.getGame().getPlayer() == null);
+        continueBtn.setVisible(Game.hasSavedGame());
+        upgradeWeaponBtn.setDisable(!Game.hasSavedGame());
+        upgradeArmourBtn.setDisable(!Game.hasSavedGame());
     }
 
     /**
@@ -140,7 +137,7 @@ public class GameMenuController implements Initializable, SceneController {
     }
 
     public void onLeaderboardClick() {
-        Helpers.showLeaderboard();
+        Helpers.showLeaderboard(true, null);
     }
 
     /**

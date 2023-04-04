@@ -4,6 +4,7 @@ import ca.bcit.comp2522.termproject.capy.controllers.GameMenuController;
 import ca.bcit.comp2522.termproject.capy.controllers.LeaderboardController;
 import ca.bcit.comp2522.termproject.capy.controllers.UpgradesController;
 import ca.bcit.comp2522.termproject.capy.controllers.WinViewController;
+import ca.bcit.comp2522.termproject.capy.models.Player;
 import ca.bcit.comp2522.termproject.capy.models.SceneController;
 import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
@@ -73,7 +74,7 @@ public final class Helpers {
     /**
      * Open the Win screen.
      */
-    public static void showWinScreen() {
+    public static void showWinScreen(final Player player) {
         Game.setPaused(true);
         Game.setHasSavedGame(false);
 
@@ -81,16 +82,26 @@ public final class Helpers {
                 "win-view.fxml"
         );
         Scene winScene = winViewController.getScene();
-        winViewController.setListeners(winScene);
+        winViewController.setListeners(winScene, player);
         Helpers.changeScene(winScene);
     }
 
-    public static void showLeaderboard() {
+    public static void showLeaderboard(final boolean fromMenu, final Player player) {
         Game.setPaused(true);
 
         LeaderboardController leaderboardController = (LeaderboardController) Helpers.getFxmlController(
                 "leaderboard-view.fxml"
         );
+        leaderboardController.setFromMenu(fromMenu);
+
+        if (!fromMenu) {
+            Game.setHasSavedGame(false);
+            boolean newHighScore = leaderboardController.checkForNewHighScore(player);
+            if (newHighScore) {
+                leaderboardController.showNewHighScoreForm();
+            }
+        }
+
         Scene winScene = leaderboardController.getScene();
         Helpers.changeScene(winScene);
     }

@@ -1,6 +1,7 @@
 package ca.bcit.comp2522.termproject.capy.controllers;
 
 import ca.bcit.comp2522.termproject.capy.Helpers;
+import ca.bcit.comp2522.termproject.capy.models.Player;
 import ca.bcit.comp2522.termproject.capy.models.SceneController;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -21,10 +22,10 @@ public class WinViewController implements SceneController, Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
     }
 
-    public void setListeners(final Scene scene) {
+    public void setListeners(final Scene scene, final Player player) {
         scene.setOnKeyPressed(e -> {
             if (e.getCode() == KeyCode.SPACE) {
-                Helpers.openGameMenu();
+                Helpers.showLeaderboard(false, player);
             }
         });
     }

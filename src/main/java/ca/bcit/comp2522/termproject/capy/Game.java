@@ -172,8 +172,7 @@ public class Game {
                     boolean levelComplete = currentLevel.play();
 
                     if (levelComplete && !levelsIterator.hasNext()) {
-                        this.stop();
-                        Helpers.showWinScreen();
+                        onWinGame(this);
                     }
                     else if (levelComplete) {
                         startNextWave(this);
@@ -182,6 +181,11 @@ public class Game {
             }
         };
         gameLoop.start();
+    }
+
+    private void onWinGame(AnimationTimer gameLoop) {
+        gameLoop.stop();
+        Helpers.showWinScreen(this.player);
     }
 
     private boolean hasCollided(final Bullet bullet, final Enemy enemy) {
