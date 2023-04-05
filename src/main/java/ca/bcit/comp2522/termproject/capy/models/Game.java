@@ -72,16 +72,9 @@ public class Game {
     private AnimationTimer gameLoop;
 
     /**
-     * Instantiate a new Game object starting current level at level 1.
+     * Instantiate a new Game object.
      */
     public Game() {
-//         this.player = new Player(new Image("file:src/main/resources/ca/bcit/comp2522/termproject/"
-//                 + "capy/sprites/test_player.png"));
-//
-//         this.levels = generateLevels();
-//         this.levelsIterator = this.levels.listIterator();
-//         this.currentLevel = this.levelsIterator.next();
-//         this.waveCount = 1;
     }
 
     // GETTERS AND SETTERS =============================================================================================

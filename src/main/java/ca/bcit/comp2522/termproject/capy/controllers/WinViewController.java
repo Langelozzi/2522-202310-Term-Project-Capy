@@ -12,15 +12,22 @@ import javafx.scene.layout.AnchorPane;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class WinViewController implements SceneController, Initializable {
+/**
+ * WinViewController handles the functions related to the win scene.
+ *
+ * @author COMP2522 Group 13
+ * @version 1.0.0
+ */
+public class WinViewController implements SceneController {
 
     @FXML
     private AnchorPane anchorPane;
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-    }
-
+    /**
+     * Set the event listeners for this screen.
+     * @param scene the scene to set the listeners on
+     * @param player the player to check for new high score on
+     */
     public void setListeners(final Scene scene, final Player player) {
         scene.setOnKeyPressed(e -> {
             if (e.getCode() == KeyCode.SPACE) {
@@ -29,10 +36,12 @@ public class WinViewController implements SceneController, Initializable {
         });
     }
 
+    /**
+     * Return the scene of this controller.
+     * @return the scene of this controller
+     */
     @Override
     public Scene getScene() {
         return new Scene(this.anchorPane);
     }
-
-
 }

@@ -74,6 +74,10 @@ public class UpgradesController implements Initializable, SceneController {
         upgradesAnchorPane.setMinWidth(Game.BACKGROUND_WIDTH);              
     }
 
+    /**
+     * Initialize the data for an item type.
+     * @param itemType the type of items to initialize
+     */
     public void initData(String itemType){
         this.itemType = itemType;
         this.menuText.setText("Upgrade " + itemType);
