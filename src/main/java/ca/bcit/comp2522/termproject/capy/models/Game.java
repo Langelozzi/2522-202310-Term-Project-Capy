@@ -41,27 +41,27 @@ public class Game {
 
         availableItems.add(new Weapon(
             new ImageView(new Image(spritesPath + "level-1-weapon.png", 0, imageHeigh, true, true)), 
-            100, 1, "handgun", 3,
+            0, 1, "handgun", 3,
             new Image(spritesPath + "player_weapon_1.png")));
         availableItems.add(new Weapon(
             new ImageView(new Image(spritesPath + "level-2-weapon.png", 0, imageHeigh, true, true)), 
-            0 /*stub to test menu */, 2, "rifle", 15,
+            10, 2, "rifle", 15,
             new Image(spritesPath + "player_weapon_2.png")));
         availableItems.add(new Weapon(
             new ImageView(new Image(spritesPath + "level-3-weapon.png", 0, imageHeigh, true, true)), 
-            0 /*stub to test menu */, 3, "automatic rifle", 25,
+           20, 3, "automatic rifle", 25,
             new Image(spritesPath + "player_weapon_3.png")));
         availableItems.add(new Weapon(
             new ImageView(new Image(spritesPath + "level-4-weapon.png", 0, imageHeigh, true, true)), 
-            600, 4, "blaster", 35,
+            50, 4, "blaster", 35,
             new Image(spritesPath + "player_weapon_4.png")));
 
         availableItems.add(new Armour(new ImageView(new Image(spritesPath + "level-1-armor.png",
-                0, imageHeigh, true, true)), 600, 1, "armor_1", 35));
-        availableItems.add(new Armour(new ImageView(new Image(spritesPath + "level-1-armor.png",
-                0, imageHeigh, true, true)), 0 /*stub to test menu */, 2, "armor_2", 45));
-        availableItems.add(new Armour(new ImageView(new Image(spritesPath + "level-1-armor.png",
-                0, imageHeigh, true, true)), 0 /*stub to test menu */, 3, "armor_3", 55));
+                200, imageHeigh, true, true)), 10, 1, "armor_1", 15));
+        availableItems.add(new Armour(new ImageView(new Image(spritesPath + "level-2-armor.png",
+                200, imageHeigh, true, true)), 15 /*stub to test menu */, 2, "armor_2", 30));
+        availableItems.add(new Armour(new ImageView(new Image(spritesPath + "level-3-armor.png",
+                200, imageHeigh, true, true)), 30 /*stub to test menu */, 3, "armor_3", 70));
     }
 
     private ArrayList<Level> levels;
@@ -144,7 +144,7 @@ public class Game {
         this.player = new Player(
                 new Image("file:src/main/resources/ca/bcit/comp2522/termproject/capy/sprites/player_weapon_1.png"),
                 getWeaponForLevel(1),
-                getArmourForLevel(1)
+                null
         );
 
         this.levels = generateLevels();

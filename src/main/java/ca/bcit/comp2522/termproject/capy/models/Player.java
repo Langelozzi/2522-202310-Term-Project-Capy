@@ -85,6 +85,7 @@ public class Player extends Character {
     }
     public void setArmour(Armour armour){
         this.armour = armour;
+        setHitPoints(getHitPoints() + armour.getHitpoints());
     }
 
     // SHOOTING LOGIC  =================================================================================================

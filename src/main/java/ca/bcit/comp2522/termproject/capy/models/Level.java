@@ -351,6 +351,7 @@ public class Level {
                     collided = true;
 
                     // Increment the enemy's hits taken and remove it if it has taken 5 hits
+//                  // TODO: figure out how to implement enemy.setHitsTaken(enemy.getHitsTaken() + player.getWeapon().getDamagepoints());
                     enemy.setHitsTaken(enemy.getHitsTaken() + 1);
                     if (enemy.getHitsTaken() >= 5) {
                          enemyIterator.remove(); // Remove the enemy from the list
