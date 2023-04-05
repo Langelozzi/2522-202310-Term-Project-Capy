@@ -2,6 +2,7 @@ package ca.bcit.comp2522.termproject.capy.models;
 
 import ca.bcit.comp2522.termproject.capy.controllers.WaveMessageController;
 
+import ca.bcit.comp2522.termproject.capy.enums.EnemyDifficulty;
 import ca.bcit.comp2522.termproject.capy.utils.Helpers;
 import javafx.animation.AnimationTimer;
 
@@ -197,12 +198,10 @@ public class Game {
     private ArrayList<Level> generateLevels() {
         ArrayList<Level> levels = new ArrayList<>();
 
-        int minDifficulty = 1;
-        int maxDifficulty = 3;
         int minNumEnemies = 3;
         int maxNumEnemies = 6;
 
-        for (int difficulty = minDifficulty; difficulty <= maxDifficulty; difficulty++) {
+        for (EnemyDifficulty difficulty : EnemyDifficulty.values()) {
             for (int numEnemies = minNumEnemies; numEnemies <= maxNumEnemies; numEnemies++) {
                 levels.add(new Level(this, this.player, numEnemies, difficulty));
             }

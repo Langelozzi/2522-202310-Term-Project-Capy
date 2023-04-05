@@ -2,7 +2,7 @@ package ca.bcit.comp2522.termproject.capy.utils;
 
 
 import ca.bcit.comp2522.termproject.capy.models.Character;
-import ca.bcit.comp2522.termproject.capy.models.Direction;
+import ca.bcit.comp2522.termproject.capy.enums.Direction;
 
 import javafx.animation.AnimationTimer;
 

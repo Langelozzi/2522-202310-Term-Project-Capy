@@ -1,5 +1,6 @@
 package ca.bcit.comp2522.termproject.capy.models;
 
+import ca.bcit.comp2522.termproject.capy.enums.EnemyDifficulty;
 import javafx.scene.image.Image;
 
 import java.util.List;
@@ -16,16 +17,14 @@ public class Enemy extends Character {
 
     private static final double ENEMY_SPEED = 1.0;
     private static final int ATTACK_MULTIPLIER = 3;
-    private static final String DEFAULT_SPRITE_PATH = "file:src/main/resources/ca/bcit/comp2522/termproject/"
-            + "capy/sprites/crocodile.png";
-    private static final String LEFT_FOOT_SPRITE_PATH = "file:src/main/resources/ca/bcit/comp2522/termproject/"
-            + "capy/sprites/crocodile-left-foot-forward.png";
-    private static final String RIGHT_FOOT_SPRITE_PATH = "file:src/main/resources/ca/bcit/comp2522/termproject/"
-            + "capy/sprites/crocodile-right-foot-forward.png";
     private static final String DEAD_SPRITE_PATH = "file:src/main/resources/ca/bcit/comp2522/termproject/"
             + "capy/sprites/crocodile-rip.png";
 
-    private final int difficulty;
+    private final String normalSpritePath;
+    private final String leftFootSpritePath;
+    private final String rightFootSpritePath;
+
+    private final EnemyDifficulty difficulty;
     private final int attackDamage;
     private int animationCounter;
     private final SugarCane sugarCane;
@@ -37,12 +36,39 @@ public class Enemy extends Character {
      * @param speed      The speed at which the enemy can move.
      * @param difficulty the difficulty of the enemy, decides its amount of attack damage
      */
-    public Enemy(final int speed, final int difficulty) {
-        super(new Image("file:src/main/resources/ca/bcit/comp2522/termproject/capy/sprites/crocodile.png"));
+    public Enemy(final int speed, final EnemyDifficulty difficulty) {
+        super(new Image("file:src/main/resources/ca/bcit/comp2522/termproject/capy/sprites/enemy/crocodile.png"));
         this.difficulty = difficulty;
-        this.attackDamage = ATTACK_MULTIPLIER * difficulty;
-        animationCounter = 0;
-        this.sugarCane = new SugarCane(this.difficulty);
+        this.animationCounter = 0;
+
+        switch (this.difficulty){
+            case MEDIUM -> {
+                final int mediumMultiplier = 2;
+                this.attackDamage = ATTACK_MULTIPLIER * mediumMultiplier;
+                this.sugarCane = new SugarCane(mediumMultiplier);
+
+                this.normalSpritePath = "file:src/main/resources/ca/bcit/comp2522/termproject/capy/sprites/enemy/crocodile-medium.png";
+                this.leftFootSpritePath = "file:src/main/resources/ca/bcit/comp2522/termproject/capy/sprites/enemy/crocodile-medium-left-foot-forward.png";
+                this.rightFootSpritePath = "file:src/main/resources/ca/bcit/comp2522/termproject/capy/sprites/enemy/crocodile-medium-right-foot-forward.png";
+            }
+            case HARD -> {
+                final int hardMultiplier = 3;
+                this.attackDamage = ATTACK_MULTIPLIER * hardMultiplier;
+                this.sugarCane = new SugarCane(hardMultiplier);
+
+                this.normalSpritePath = "file:src/main/resources/ca/bcit/comp2522/termproject/capy/sprites/enemy/crocodile-hard.png";
+                this.leftFootSpritePath = "file:src/main/resources/ca/bcit/comp2522/termproject/capy/sprites/enemy/crocodile-hard-left-foot-forward.png";
+                this.rightFootSpritePath = "file:src/main/resources/ca/bcit/comp2522/termproject/capy/sprites/enemy/crocodile-hard-right-foot-forward.png";
+            }
+            default -> {
+                this.attackDamage = ATTACK_MULTIPLIER;
+                this.sugarCane = new SugarCane(1);
+
+                this.normalSpritePath = "file:src/main/resources/ca/bcit/comp2522/termproject/capy/sprites/enemy/crocodile.png";
+                this.leftFootSpritePath = "file:src/main/resources/ca/bcit/comp2522/termproject/capy/sprites/enemy/crocodile-left-foot-forward.png";
+                this.rightFootSpritePath = "file:src/main/resources/ca/bcit/comp2522/termproject/capy/sprites/enemy/crocodile-right-foot-forward.png";
+            }
+        }
     }
 
     // GETTERS AND SETTERS =============================================================================================
@@ -52,7 +78,7 @@ public class Enemy extends Character {
      *
      * @return the enemy's difficulty
      */
-    public int getDifficulty() {
+    public EnemyDifficulty getDifficulty() {
         return difficulty;
     }
 
@@ -118,11 +144,11 @@ public class Enemy extends Character {
         animationCounter++;
         Image updatedImage;
         if (animationCounter % 30 < 10) {
-            updatedImage = new Image(LEFT_FOOT_SPRITE_PATH);
+            updatedImage = new Image(this.leftFootSpritePath);
         } else if (animationCounter % 30 < 20) {
-            updatedImage = new Image(DEFAULT_SPRITE_PATH);
+            updatedImage = new Image(this.normalSpritePath);
         } else {
-            updatedImage = new Image(RIGHT_FOOT_SPRITE_PATH);
+            updatedImage = new Image(this.rightFootSpritePath);
         }
         this.getSprite().setImage(updatedImage);
     }

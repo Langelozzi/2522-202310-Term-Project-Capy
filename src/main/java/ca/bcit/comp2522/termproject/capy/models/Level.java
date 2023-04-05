@@ -1,6 +1,7 @@
 package ca.bcit.comp2522.termproject.capy.models;
 
 
+import ca.bcit.comp2522.termproject.capy.enums.EnemyDifficulty;
 import ca.bcit.comp2522.termproject.capy.utils.Helpers;
 import ca.bcit.comp2522.termproject.capy.CapyApplication;
 import ca.bcit.comp2522.termproject.capy.utils.KeyboardInputController;
@@ -49,7 +50,7 @@ public class Level {
      * @param player     the Player object that will be playing in the level
      * @param numEnemies the amount of enemies that will be rendered in the level
      */
-    public Level(final Game game, final Player player, final int numEnemies, final int enemyDifficulty) {
+    public Level(final Game game, final Player player, final int numEnemies, final EnemyDifficulty enemyDifficulty) {
         this.lastDamageTimes = new ArrayList<>();
         this.droppedSugarCane = new ArrayList<>();
         for (int i = 0; i < numEnemies; i++) {
@@ -230,7 +231,7 @@ public class Level {
     /*
     Generate an ArrayList of enemies and populate it with amount number of enemies.
      */
-    private ArrayList<Enemy> generateEnemies(final int amount, final int difficulty) {
+    private ArrayList<Enemy> generateEnemies(final int amount, final EnemyDifficulty difficulty) {
         ArrayList<Enemy> newEnemies = new ArrayList<>();
 
         final int enemySpeed = 1;

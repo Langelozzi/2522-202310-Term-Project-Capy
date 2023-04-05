@@ -15,4 +15,6 @@ module ca.bcit.comp2522.termproject.capy {
     exports ca.bcit.comp2522.termproject.capy.controllers;
     exports ca.bcit.comp2522.termproject.capy.utils;
     opens ca.bcit.comp2522.termproject.capy.utils to javafx.fxml;
+    exports ca.bcit.comp2522.termproject.capy.enums;
+    opens ca.bcit.comp2522.termproject.capy.enums to javafx.fxml;
 }

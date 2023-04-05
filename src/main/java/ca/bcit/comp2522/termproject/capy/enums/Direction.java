@@ -1,4 +1,4 @@
-package ca.bcit.comp2522.termproject.capy.models;
+package ca.bcit.comp2522.termproject.capy.enums;
 
 /**
  * An enum representing the 4 directions a Character can move.
