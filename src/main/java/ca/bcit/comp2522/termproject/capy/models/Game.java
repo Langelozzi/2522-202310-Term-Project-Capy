@@ -42,19 +42,19 @@ public class Game {
         availableItems.add(new Weapon(
             new ImageView(new Image(spritesPath + "level-1-weapon.png", 0, imageHeigh, true, true)), 
             100, 1, "handgun", 3,
-            new ImageView(new Image(spritesPath + "player_weapon_1.png"))));
+            new Image(spritesPath + "player_weapon_1.png")));
         availableItems.add(new Weapon(
             new ImageView(new Image(spritesPath + "level-2-weapon.png", 0, imageHeigh, true, true)), 
             0 /*stub to test menu */, 2, "rifle", 15,
-            new ImageView(new Image(spritesPath + "player_weapon_2.png"))));
+            new Image(spritesPath + "player_weapon_2.png")));
         availableItems.add(new Weapon(
             new ImageView(new Image(spritesPath + "level-3-weapon.png", 0, imageHeigh, true, true)), 
             0 /*stub to test menu */, 3, "automatic rifle", 25,
-            new ImageView(new Image(spritesPath + "player_weapon_3.png"))));
+            new Image(spritesPath + "player_weapon_3.png")));
         availableItems.add(new Weapon(
             new ImageView(new Image(spritesPath + "level-4-weapon.png", 0, imageHeigh, true, true)), 
             600, 4, "blaster", 35,
-            new ImageView(new Image(spritesPath + "player_weapon_4.png"))));
+            new Image(spritesPath + "player_weapon_4.png")));
 
         availableItems.add(new Armour(new ImageView(new Image(spritesPath + "level-1-armor.png",
                 0, imageHeigh, true, true)), 600, 1, "armor_1", 35));

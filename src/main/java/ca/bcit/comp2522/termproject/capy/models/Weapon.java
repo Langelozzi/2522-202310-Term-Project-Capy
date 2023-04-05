@@ -1,5 +1,6 @@
 package ca.bcit.comp2522.termproject.capy.models;
 
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 /**
@@ -14,7 +15,7 @@ public class Weapon extends Item {
     // INITIALIZATION  =================================================================================================
 
     private final int damagepoints;
-    private final ImageView spritePlayerWithWeapon;
+    private final Image imagePlayerWithWeapon;
 
     /**
      * Instantiate a new Weapon object.
@@ -31,10 +32,10 @@ public class Weapon extends Item {
             final int level,
             final String name,
             final int damagepoints,
-            final ImageView spritePlayerWithWeapon) {
+            final Image imagePlayerWithWeapon) {
         super(sprite, cost, level, name);
         this.damagepoints = damagepoints;
-        this.spritePlayerWithWeapon = spritePlayerWithWeapon;
+        this.imagePlayerWithWeapon = imagePlayerWithWeapon;
     }
 
     // GETTERS AND SETTERS =============================================================================================
@@ -48,7 +49,7 @@ public class Weapon extends Item {
         return this.damagepoints;
     }
 
-    public ImageView getSpritePlayerWithWeapon(){
-        return this.spritePlayerWithWeapon;
+    public Image getImagePlayerWithWeapon(){
+        return this.imagePlayerWithWeapon;
     }
 }

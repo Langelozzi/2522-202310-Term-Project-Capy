@@ -221,7 +221,7 @@ public class UpgradesController implements Initializable, SceneController {
             case "Weapon":
                 Weapon weapon = (Weapon)item;
                 player.setWeapon(weapon);
-                player.setSprite(weapon.getSpritePlayerWithWeapon());                
+                player.getSprite().setImage(weapon.getImagePlayerWithWeapon());
                 break;
             case "Armour":
                 player.setArmour((Armour)item);                
