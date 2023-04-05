@@ -219,7 +219,9 @@ public class UpgradesController implements Initializable, SceneController {
     private void purchaseItem(Item item, Player player) {        
         switch(item.getClass().getSimpleName()){
             case "Weapon":
-                player.setWeapon((Weapon)item);                
+                Weapon weapon = (Weapon)item;
+                player.setWeapon(weapon);
+                player.setSprite(weapon.getSpritePlayerWithWeapon());                
                 break;
             case "Armour":
                 player.setArmour((Armour)item);                
