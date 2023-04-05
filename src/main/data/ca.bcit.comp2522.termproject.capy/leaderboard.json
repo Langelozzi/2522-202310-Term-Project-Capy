@@ -1,1 +1,22 @@
-[{"score":108,"name":"The Legend"},{"score":97,"name":"Akila"},{"score":70,"name":"Test 2"},{"score":32,"name":null},{"score":30,"name":"Daniel"}]
+[
+  {
+    "score": 108,
+    "name": "The Legend"
+  },
+  {
+    "score": 108,
+    "name": "Carl"
+  },
+  {
+    "score": 69,
+    "name": "Amir"
+  },
+  {
+    "score": 52,
+    "name": "Akila"
+  },
+  {
+    "score": 24,
+    "name": "Yue"
+  }
+]

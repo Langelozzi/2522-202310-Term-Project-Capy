@@ -39,6 +39,35 @@ public class MouseInputController {
         this.scene.setOnMouseClicked(this::handleMouseClick);
     }
 
+    /**
+     * Handles shooting of the player by creating a new Bullet and adding itto the list of player's
+     * bullets on mouse click.
+     *
+     * @param player the player to handle shooting for
+     * @param scene the Scene on which mouse click event occurred
+     * @param bulletConsumer a Consumer of Bullet objects that will accept the new Bullet object created
+     */
+    public void handleShooting(final Player player, final Scene scene, final Consumer<Bullet> bulletConsumer) {
+        scene.setOnMouseClicked(event -> {
+            if (event.getButton() == MouseButton.PRIMARY) {
+                ImageView sprite = player.getSprite();
+                double centerX = sprite.getLayoutX() + sprite.getBoundsInLocal().getWidth() / 2;
+                double centerY = sprite.getLayoutY() + sprite.getBoundsInLocal().getHeight() / 2;
+
+                double deltaX = event.getX() - centerX;
+                double deltaY = event.getY() - centerY;
+                double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+                double directionX = deltaX / distance;
+                double directionY = deltaY / distance;
+
+                Bullet bullet = new Bullet(centerX, centerY, directionX, directionY);
+                player.getBullets().add(bullet);
+                bulletConsumer.accept(bullet);
+            }
+        });
+    }
+
     /*
     Set the rotation for both mouse move event and mouse drag event
     so that user can click and rotate at the same time.
@@ -67,39 +96,13 @@ public class MouseInputController {
         this.character.getSprite().setRotate(angle);
     }
 
+    /*
+    Handle the logic for mouse click event.
+     */
     private void handleMouseClick(final MouseEvent event) {
         if (event.getButton() == MouseButton.PRIMARY) {
             ((Player) character).shoot(event.getSceneX(), event.getSceneY());
         }
-    }
-
-    /**
-     * Handles shooting of the player by creating a new Bullet and adding itto the list of player's
-     * bullets on mouse click.
-     *
-     * @param player the player to handle shooting for
-     * @param scene the Scene on which mouse click event occurred
-     * @param bulletConsumer a Consumer of Bullet objects that will accept the new Bullet object created
-     */
-    public void handleShooting(final Player player, final Scene scene, final Consumer<Bullet> bulletConsumer) {
-        scene.setOnMouseClicked(event -> {
-            if (event.getButton() == MouseButton.PRIMARY) {
-                ImageView sprite = player.getSprite();
-                double centerX = sprite.getLayoutX() + sprite.getBoundsInLocal().getWidth() / 2;
-                double centerY = sprite.getLayoutY() + sprite.getBoundsInLocal().getHeight() / 2;
-
-                double deltaX = event.getX() - centerX;
-                double deltaY = event.getY() - centerY;
-                double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-
-                double directionX = deltaX / distance;
-                double directionY = deltaY / distance;
-
-                Bullet bullet = new Bullet(centerX, centerY, directionX, directionY);
-                player.getBullets().add(bullet);
-                bulletConsumer.accept(bullet);
-            }
-        });
     }
 }
 
