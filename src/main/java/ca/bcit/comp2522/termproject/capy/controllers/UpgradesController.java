@@ -74,6 +74,10 @@ public class UpgradesController implements Initializable, SceneController {
         upgradesAnchorPane.setMinWidth(Game.BACKGROUND_WIDTH);              
     }
 
+    /**
+     * Initialize the data for an item type.
+     * @param itemType the type of items to initialize
+     */
     public void initData(String itemType){
         this.itemType = itemType;
         this.menuText.setText("Upgrade " + itemType);
@@ -185,8 +189,10 @@ public class UpgradesController implements Initializable, SceneController {
                 return createStandardLabel("Not enough points");
             }
             else {
-                Button button = new Button("Purchase");
+                Button button = new Button("Cost: " + item.getCost());
                 button.setAlignment(Pos.CENTER_RIGHT);
+                button.setMaxSize(280.0, 190.0);
+                button.setFont(this.btnFont);
                 button.setOnAction((event) -> {
                     purchaseItem(item, player);
                 });                    
@@ -209,7 +215,7 @@ public class UpgradesController implements Initializable, SceneController {
             case "Weapon":
                 return player.getWeapon().getLevel();                
             case "Armour":
-                return player.getArmour().getLevel(); 
+                return player.getArmour() == null ? 0 : player.getArmour().getLevel();
             default:
                 return 0;
                 //throw new Exception("Unknown item type: " + this.itemType);
@@ -219,10 +225,12 @@ public class UpgradesController implements Initializable, SceneController {
     private void purchaseItem(Item item, Player player) {        
         switch(item.getClass().getSimpleName()){
             case "Weapon":
-                player.setWeapon((Weapon)item);                
+                Weapon weapon = (Weapon)item;
+                player.setWeapon(weapon);
+                player.getSprite().setImage(weapon.getImagePlayerWithWeapon());
                 break;
             case "Armour":
-                player.setArmour((Armour)item);                
+                player.setArmour((Armour)item);
                 break; 
             default:
                 break;

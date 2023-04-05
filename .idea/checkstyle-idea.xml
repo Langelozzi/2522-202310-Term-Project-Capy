@@ -10,6 +10,7 @@
       <list>
         <ConfigurationLocation id="bundled-sun-checks" type="BUNDLED" scope="All" description="Sun Checks">(bundled)</ConfigurationLocation>
         <ConfigurationLocation id="bundled-google-checks" type="BUNDLED" scope="All" description="Google Checks">(bundled)</ConfigurationLocation>
+        <ConfigurationLocation id="5a7c1116-1f13-4eb8-8a7b-9e9fdcbfacc7" type="LOCAL_FILE" scope="All" description="COMP-2522">$USER_HOME$/OneDrive/bcit/cst/level_2/comp2522_oop_1/COMP-2522-Checkstyle.xml</ConfigurationLocation>
         <ConfigurationLocation id="23379f74-4f8e-42d6-8000-87c08f57e602" type="LOCAL_FILE" scope="All" description="Wangs">$PROJECT_DIR$/../../../Checkstyles/COMP-2522-Checkstyle.xml</ConfigurationLocation>
       </list>
     </option>

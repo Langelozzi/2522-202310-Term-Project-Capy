@@ -9,7 +9,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -44,13 +43,12 @@ public class GameMenuController implements Initializable, SceneController {
     @FXML
     private Text leaderboardText;
 
-
     /*
-    Default font of buttons
+     * Default font of buttons
      */
     private final Font btnFont = new Font("Trebuchet MS", 32);
     /*
-    Font of buttons when being hovered over
+     * Font of buttons when being hovered over
      */
     private final Font btnFontHover = new Font("Trebuchet MS", 38);
 
@@ -65,15 +63,9 @@ public class GameMenuController implements Initializable, SceneController {
         anchorPane.setMinHeight(Game.BACKGROUND_HEIGHT);
         anchorPane.setMinWidth(Game.BACKGROUND_WIDTH);
 
-        if (continueBtn != null) {
-            continueBtn.setVisible(Game.hasSavedGame());
-        }
-        if (upgradeWeaponBtn != null) {
-            upgradeWeaponBtn.setDisable(!Game.hasSavedGame());
-        }
-        if (upgradeArmourBtn != null) {
-            upgradeArmourBtn.setDisable(!Game.hasSavedGame());
-        }
+        continueBtn.setVisible(Game.hasSavedGame());
+        upgradeWeaponBtn.setDisable(!Game.hasSavedGame());
+        upgradeArmourBtn.setDisable(!Game.hasSavedGame());
 
         // Add this line to request focus for the AnchorPane
         Platform.runLater(() -> anchorPane.requestFocus());
@@ -87,14 +79,12 @@ public class GameMenuController implements Initializable, SceneController {
 
 
     /**
-     * Change the size, color and font of the button when mousing over for visual cue.
-     *
      * @param event the mouse event triggered when hovering over the button
      */
     public void onMouseEntered(final MouseEvent event) {
         Button button = (Button) event.getTarget();
-        
-        if(button.isDisabled())
+
+        if (button.isDisabled())
             return;
 
         final String btnBackgroundColorHover = "rgba(234, 249, 235, 0.85)";
@@ -115,8 +105,8 @@ public class GameMenuController implements Initializable, SceneController {
      */
     public void onMouseExited(final MouseEvent event) {
         Button button = (Button) event.getTarget();
-        
-        if(button.isDisabled())
+
+        if (button.isDisabled())
             return;
 
         final String btnBackgroundColor = "rgba(234, 249, 235, 0.6)";
@@ -132,7 +122,6 @@ public class GameMenuController implements Initializable, SceneController {
 
     /**
      * Start a new game when "New Game" button is clicked.
-     * @throws Exception
      */
     public void onNewGameClick() throws Exception {
         CapyApplication.setGame(new Game());
@@ -154,10 +143,13 @@ public class GameMenuController implements Initializable, SceneController {
      * Return back to the current level, and it's state when "Continue" button is clicked.
      */
     public void onContinueClick() {
-        Helpers.changeScene(CapyApplication.getGame().getCurrentLevel().getScene());
+        Helpers.changeScene(CapyApplication.getGame().getCurrentLevel().getScene();
         Game.setPaused(false);
     }
 
+    /**
+     * Open the leaderboard scene when leaderboard button clicked.
+     */
     public void onLeaderboardClick() {
         Helpers.showLeaderboard(true, null);
     }
@@ -168,18 +160,6 @@ public class GameMenuController implements Initializable, SceneController {
     public void onQuitClick() {
         Platform.exit();
     }
-
-    public void onKeyPressed(KeyEvent event) {
-        System.out.println("Key pressed: " + event.getCode()); // Add this line for debugging
-        if (event.getCode() == KeyCode.SPACE) {
-            Helpers.showLeaderboard(true, null);
-        }
-    }
-
-
-//    public void onUpgradesClick() {
-//        Helpers.changeScene();
-//    }
 
     /**
      * Return the parent AnchorPane as the scene for this page.

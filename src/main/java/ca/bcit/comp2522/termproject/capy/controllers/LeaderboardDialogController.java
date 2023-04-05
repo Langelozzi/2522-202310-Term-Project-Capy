@@ -15,6 +15,12 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.function.UnaryOperator;
 
+/**
+ * LeaderboardDialogController handles the functions of the new high score dialog for the leaderboard.
+ *
+ * @author COMP2522 Group 13
+ * @version 1.0.0
+ */
 public class LeaderboardDialogController implements SceneController, Initializable {
 
     @FXML
@@ -26,24 +32,44 @@ public class LeaderboardDialogController implements SceneController, Initializab
 
     private String nickname;
 
+    /**
+     * Initialize the limits on the nickname text field.
+     * @param url the url
+     * @param resourceBundle the resource bundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setNicknameLimits();
     }
 
+    /**
+     * Return the nickname entered by the user.
+     * @return the nickname entered by the user
+     */
     public String getNickname() {
         return this.nickname;
     }
 
+    /**
+     * Set the nickname.
+     * @param newNickname the new nickname
+     */
     public void setNickname(final String newNickname) {
         this.nickname = newNickname;
     }
 
+    /**
+     * Get the scene of the fxml file attached to this controller.
+     * @return the scene of this fxml file
+     */
     @Override
     public Scene getScene() {
         return new Scene(this.anchorPane);
     }
 
+    /*
+    Set limits on the nickname text field.
+     */
     private void setNicknameLimits() {
         UnaryOperator<TextFormatter.Change> filter = change -> {
             if (change.getControlNewText().length() <= 10) {
@@ -56,6 +82,10 @@ public class LeaderboardDialogController implements SceneController, Initializab
         nicknameInput.setTextFormatter(textFormatter);
     }
 
+    /*
+    Handle the submit button click event. Retrieve the data in the text field and set it as the nickname, then close the
+    dialog.
+     */
     @FXML
     private void onSubmitClick() {
         this.nickname = this.nicknameInput.getText();

@@ -39,40 +39,6 @@ public class MouseInputController {
         this.scene.setOnMouseClicked(this::handleMouseClick);
     }
 
-    /*
-    Set the rotation for both mouse move event and mouse drag event
-    so that user can click and rotate at the same time.
-     */
-    private void rotationSetup() {
-        this.scene.setOnMouseMoved(this::handleMouseRotation);
-        // need the drag event too so that the rotation occurs even when clicking mouse button (for shooting)
-        this.scene.setOnMouseDragged(this::handleMouseRotation);
-    }
-
-    /*
-    Logic for rotating character toward the mouse cursor.
-     */
-    private void handleMouseRotation(final MouseEvent mouseEvent) {
-        double mouseX = mouseEvent.getSceneX();
-        double mouseY = mouseEvent.getSceneY();
-
-        double playerX = this.character.getSprite().getLayoutX();
-        double playerY = this.character.getSprite().getLayoutY();
-
-        // subtract or add value to the atan2 return value to change which point of player follows cursor
-        // atan2 returns theta based on rectangular coordinates, aka the
-        // circular angle between two rectangular coords
-        double angle = Math.toDegrees(Math.atan2(mouseY - playerY, mouseX - playerX)); // - Math.PI / 2);
-
-        this.character.getSprite().setRotate(angle);
-    }
-
-    private void handleMouseClick(final MouseEvent event) {
-        if (event.getButton() == MouseButton.PRIMARY) {
-            ((Player) character).shoot(event.getSceneX(), event.getSceneY());
-        }
-    }
-
     /**
      * Handles shooting of the player by creating a new Bullet and adding itto the list of player's
      * bullets on mouse click.
@@ -101,6 +67,43 @@ public class MouseInputController {
                 Helpers.playGunshotSound(); // Add this line to play the gunshot sound
             }
         });
+    }
+
+    /*
+    Set the rotation for both mouse move event and mouse drag event
+    so that user can click and rotate at the same time.
+     */
+    private void rotationSetup() {
+        this.scene.setOnMouseMoved(this::handleMouseRotation);
+        // need the drag event too so that the rotation occurs even when clicking mouse button (for shooting)
+        this.scene.setOnMouseDragged(this::handleMouseRotation);
+    }
+
+    /*
+    Logic for rotating character toward the mouse cursor.
+     */
+    private void handleMouseRotation(final MouseEvent mouseEvent) {
+        double mouseX = mouseEvent.getSceneX();
+        double mouseY = mouseEvent.getSceneY();
+
+        double playerX = this.character.getSprite().getLayoutX();
+        double playerY = this.character.getSprite().getLayoutY();
+
+        // subtract or add value to the atan2 return value to change which point of player follows cursor
+        // atan2 returns theta based on rectangular coordinates, aka the
+        // circular angle between two rectangular coords
+        double angle = Math.toDegrees(Math.atan2(mouseY - playerY, mouseX - playerX)); // - Math.PI / 2);
+
+        this.character.getSprite().setRotate(angle);
+    }
+
+    /*
+    Handle the logic for mouse click event.
+     */
+    private void handleMouseClick(final MouseEvent event) {
+        if (event.getButton() == MouseButton.PRIMARY) {
+            ((Player) character).shoot(event.getSceneX(), event.getSceneY());
+        }
     }
 }
 

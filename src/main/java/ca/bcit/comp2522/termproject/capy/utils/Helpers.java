@@ -1,11 +1,8 @@
 package ca.bcit.comp2522.termproject.capy.utils;
 
 import ca.bcit.comp2522.termproject.capy.CapyApplication;
+import ca.bcit.comp2522.termproject.capy.controllers.*;
 import ca.bcit.comp2522.termproject.capy.models.Game;
-import ca.bcit.comp2522.termproject.capy.controllers.GameMenuController;
-import ca.bcit.comp2522.termproject.capy.controllers.LeaderboardController;
-import ca.bcit.comp2522.termproject.capy.controllers.UpgradesController;
-import ca.bcit.comp2522.termproject.capy.controllers.WinViewController;
 import ca.bcit.comp2522.termproject.capy.models.Player;
 import ca.bcit.comp2522.termproject.capy.models.SceneController;
 import javafx.concurrent.Task;
@@ -38,6 +35,8 @@ public final class Helpers {
 
     }
 
+    // HELPER METHODS  =================================================================================================
+
     /**
      * Return the controller class for a specific fxml file.
      *
@@ -57,8 +56,6 @@ public final class Helpers {
 
         return loader.getController();
     }
-
-    // HELPER METHODS  =================================================================================================
 
     /**
      * Change the scene on the stage.
@@ -97,6 +94,11 @@ public final class Helpers {
         Helpers.changeScene(winScene);
     }
 
+    /**
+     * Open the leaderboard scene. Check if the player has beat one of the high scores.
+     * @param fromMenu true if being navigated to from the menu
+     * @param player the player to check the score for
+     */
     public static void showLeaderboard(final boolean fromMenu, final Player player) {
         Game.setPaused(true);
 
@@ -129,6 +131,11 @@ public final class Helpers {
         Helpers.changeScene(upgradesController.getScene());
     }
 
+    /**
+     * Delay the game execution by a certain amount of milliseconds before executing the continuation method.
+     * @param millis number for milliseconds to delay by
+     * @param continuation a method reference or lambda containing the code to execute after the delay
+     */
     public static void delay(long millis, Runnable continuation) {
         Task<Void> sleeper = new Task<Void>() {
             @Override
@@ -136,6 +143,7 @@ public final class Helpers {
                 try {
                     Thread.sleep(millis);
                 } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
                 }
                 return null;
             }
@@ -152,10 +160,12 @@ public final class Helpers {
     public static void showGameOverScreen(final Player player) {
         Game.setPaused(true);
         Game.setHasSavedGame(false);
-        GameMenuController menuController = (GameMenuController) Helpers.getFxmlController(
+        GameOverController gameOverController = (GameOverController) Helpers.getFxmlController(
                 "game-over-view.fxml"
         );
-        Helpers.changeScene(menuController.getScene());
+        final Scene gameOverScene = gameOverController.getScene();
+        gameOverController.setListeners(gameOverScene, player);
+        Helpers.changeScene(gameOverScene);
     }
 
     public static void playBackgroundMusic() {

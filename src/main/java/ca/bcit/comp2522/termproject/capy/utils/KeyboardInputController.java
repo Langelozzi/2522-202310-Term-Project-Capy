@@ -1,9 +1,8 @@
 package ca.bcit.comp2522.termproject.capy.utils;
 
 
-import ca.bcit.comp2522.termproject.capy.utils.Helpers;
 import ca.bcit.comp2522.termproject.capy.models.Character;
-import ca.bcit.comp2522.termproject.capy.models.Direction;
+import ca.bcit.comp2522.termproject.capy.enums.Direction;
 
 import javafx.animation.AnimationTimer;
 
@@ -67,7 +66,10 @@ public class KeyboardInputController {
         }
     };
 
-    private ChangeListener<Boolean> changeListener = new ChangeListener<Boolean>() {
+    /**
+     * A change listener to start and stop the animation timer.
+     */
+    private final ChangeListener<Boolean> changeListener = new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean bool, Boolean t1) {
                 if (!bool) {
@@ -78,6 +80,9 @@ public class KeyboardInputController {
             }
         };
 
+    /**
+     * An event handler that handles the key press events for the player in the level.
+     */
     private final EventHandler<KeyEvent> keyPressEvent = new EventHandler<KeyEvent>() {
         @Override
         public void handle(KeyEvent e) {
@@ -102,6 +107,9 @@ public class KeyboardInputController {
         }
     };
 
+    /**
+     * An event handler that handles the key release events for the player in the level.
+     */
     private final EventHandler<KeyEvent> keyReleaseEvent = new EventHandler<KeyEvent>() {
         @Override
         public void handle(KeyEvent e) {
@@ -139,6 +147,9 @@ public class KeyboardInputController {
         keyPressed.addListener(changeListener);
     }
 
+    /**
+     * Remove the keyboard input listeners on the current scene.
+     */
     public void removeKeyboardInput() {
         resetControls();
         this.timer.stop();
@@ -153,12 +164,18 @@ public class KeyboardInputController {
         scene.setOnKeyReleased(keyReleaseEvent);
     }
 
+    /*
+    Remove listeners that were previously set.
+     */
     private void removeListeners() {
         keyPressed.removeListener(changeListener);
         scene.setOnKeyPressed(null);
         scene.setOnKeyReleased(null);
     }
 
+    /*
+    Move the given character in the indicated direction, while ensuring that it remains in the border.
+     */
     private void moveCharacter(final Character character, final Direction direction, final Ellipse border) {
         double currentX = character.getSprite().getLayoutX();
         double currentY = character.getSprite().getLayoutY();
@@ -181,6 +198,9 @@ public class KeyboardInputController {
         }
     }
 
+    /*
+    Reset the boolean properties of the controller.
+     */
     private void resetControls() {
         this.wPressed.set(false);
         this.aPressed.set(false);
