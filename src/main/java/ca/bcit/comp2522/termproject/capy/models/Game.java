@@ -59,18 +59,19 @@ public class Game {
     private Level currentLevel;
     private Player player;
     private int waveCount;
+    private AnimationTimer gameLoop;
 
     /**
      * Instantiate a new Game object starting current level at level 1.
      */
     public Game() {
-        // this.player = new Player(new Image("file:src/main/resources/ca/bcit/comp2522/termproject/"
-        //         + "capy/sprites/test_player.png"));
-        //
-        // this.levels = generateLevels();
-        // this.levelsIterator = this.levels.listIterator();
-        // this.currentLevel = this.levelsIterator.next();
-        // this.waveCount = 1;
+//         this.player = new Player(new Image("file:src/main/resources/ca/bcit/comp2522/termproject/"
+//                 + "capy/sprites/test_player.png"));
+//
+//         this.levels = generateLevels();
+//         this.levelsIterator = this.levels.listIterator();
+//         this.currentLevel = this.levelsIterator.next();
+//         this.waveCount = 1;
     }
 
     // GETTERS AND SETTERS =============================================================================================
@@ -164,7 +165,7 @@ public class Game {
     }
 
     private void startGameLoop() {
-        AnimationTimer gameLoop = new AnimationTimer() {
+        gameLoop = new AnimationTimer() {
             @Override
             public void handle(final long now) {
                 if (!Game.paused) {
@@ -172,15 +173,18 @@ public class Game {
 
                     if (levelComplete && !levelsIterator.hasNext()) {
                         onWinGame(this);
-                    }
-                    else if (levelComplete) {
+                    } else if (levelComplete) {
                         startNextWave(this);
+                    } else if (player.getHitPoints() <= 0) {
+                        handleGameOver();
                     }
                 }
             }
         };
         gameLoop.start();
     }
+
+
 
     private void onWinGame(AnimationTimer gameLoop) {
         gameLoop.stop();
@@ -201,7 +205,7 @@ public class Game {
 
         for (int difficulty = minDifficulty; difficulty <= maxDifficulty; difficulty++) {
             for (int numEnemies = minNumEnemies; numEnemies <= maxNumEnemies; numEnemies++) {
-                levels.add(new Level(this.player, numEnemies, difficulty));
+                levels.add(new Level(this, this.player, numEnemies, difficulty));
             }
         }
 
@@ -243,5 +247,14 @@ public class Game {
         }
         throw new Exception("No armour for level: " + level);
     }
+
+    /**
+     * Handles game over events.
+     */
+    public void handleGameOver() {
+        gameLoop.stop();
+        Helpers.showGameOverScreen(this.player);
+    }
+
 }
 
