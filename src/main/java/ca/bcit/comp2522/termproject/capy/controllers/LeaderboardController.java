@@ -211,7 +211,7 @@ public class LeaderboardController implements SceneController, Initializable {
 
         dialog.setScene(dialogScene);
         dialog.getIcons().add(
-                new Image("file:ca/bcit/comp2522/termproject/capy/imgs/medium_pixel_capy.png")
+                new Image("file:src/main/resources/ca/bcit/comp2522/termproject/capy/imgs/medium_pixel_capy.png")
         );
         dialog.setTitle("New high score!");
         dialog.show();

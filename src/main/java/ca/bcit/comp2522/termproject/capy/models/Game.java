@@ -194,8 +194,6 @@ public class Game {
         gameLoop.start();
     }
 
-
-
     private void onWinGame(AnimationTimer gameLoop) {
         gameLoop.stop();
         Helpers.showWinScreen(this.player);

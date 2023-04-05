@@ -1,11 +1,8 @@
 package ca.bcit.comp2522.termproject.capy.utils;
 
 import ca.bcit.comp2522.termproject.capy.CapyApplication;
+import ca.bcit.comp2522.termproject.capy.controllers.*;
 import ca.bcit.comp2522.termproject.capy.models.Game;
-import ca.bcit.comp2522.termproject.capy.controllers.GameMenuController;
-import ca.bcit.comp2522.termproject.capy.controllers.LeaderboardController;
-import ca.bcit.comp2522.termproject.capy.controllers.UpgradesController;
-import ca.bcit.comp2522.termproject.capy.controllers.WinViewController;
 import ca.bcit.comp2522.termproject.capy.models.Player;
 import ca.bcit.comp2522.termproject.capy.models.SceneController;
 import javafx.concurrent.Task;
@@ -143,10 +140,12 @@ public final class Helpers {
     public static void showGameOverScreen(final Player player) {
         Game.setPaused(true);
         Game.setHasSavedGame(false);
-        GameMenuController menuController = (GameMenuController) Helpers.getFxmlController(
+        GameOverController gameOverController = (GameOverController) Helpers.getFxmlController(
                 "game-over-view.fxml"
         );
-        Helpers.changeScene(menuController.getScene());
+        final Scene gameOverScene = gameOverController.getScene();
+        gameOverController.setListeners(gameOverScene, player);
+        Helpers.changeScene(gameOverScene);
     }
 }
 

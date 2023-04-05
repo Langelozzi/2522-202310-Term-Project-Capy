@@ -65,21 +65,12 @@ public class GameMenuController implements Initializable, SceneController {
         anchorPane.setMinHeight(Game.BACKGROUND_HEIGHT);
         anchorPane.setMinWidth(Game.BACKGROUND_WIDTH);
 
-        if (continueBtn != null) {
-            continueBtn.setVisible(Game.hasSavedGame());
-        }
-        if (upgradeWeaponBtn != null) {
-            upgradeWeaponBtn.setDisable(!Game.hasSavedGame());
-        }
-        if (upgradeArmourBtn != null) {
-            upgradeArmourBtn.setDisable(!Game.hasSavedGame());
-        }
+        continueBtn.setVisible(Game.hasSavedGame());
+        upgradeWeaponBtn.setDisable(!Game.hasSavedGame());
+        upgradeArmourBtn.setDisable(!Game.hasSavedGame());
 
         // Add this line to request focus for the AnchorPane
         Platform.runLater(() -> anchorPane.requestFocus());
-
-        // Change this line to add an event filter for key presses on the stage
-        CapyApplication.getStage().addEventFilter(KeyEvent.KEY_PRESSED, this::onKeyPressed);
     }
 
 
@@ -167,13 +158,6 @@ public class GameMenuController implements Initializable, SceneController {
      */
     public void onQuitClick() {
         Platform.exit();
-    }
-
-    public void onKeyPressed(KeyEvent event) {
-        System.out.println("Key pressed: " + event.getCode()); // Add this line for debugging
-        if (event.getCode() == KeyCode.SPACE) {
-            Helpers.showLeaderboard(true, null);
-        }
     }
 
 
