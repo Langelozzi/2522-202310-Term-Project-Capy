@@ -133,6 +133,7 @@ public class GameMenuController implements Initializable, SceneController {
         // Create a new game and start it
         CapyApplication.setGame(new Game());
         CapyApplication.getGame().start();
+        Helpers.playButtonClickSound();
     }
 
 
@@ -141,10 +142,14 @@ public class GameMenuController implements Initializable, SceneController {
      */
     public void onUpgradeWeaponClick() {
         Helpers.openUpgradesMenu("Weapon");
+        Helpers.playButtonClickSound();
+
     }
 
     public void onUpgradeArmourClick() {
         Helpers.openUpgradesMenu("Armour");
+        Helpers.playButtonClickSound();
+
     }
 
     /**
@@ -153,6 +158,8 @@ public class GameMenuController implements Initializable, SceneController {
     public void onContinueClick() {
         Helpers.changeScene(CapyApplication.getGame().getCurrentLevel().getScene());
         Game.setPaused(false);
+        Helpers.playButtonClickSound();
+
     }
 
     /**
@@ -160,6 +167,8 @@ public class GameMenuController implements Initializable, SceneController {
      */
     public void onLeaderboardClick() {
         Helpers.showLeaderboard(true, null);
+        Helpers.playButtonClickSound();
+
     }
 
     /**
@@ -167,6 +176,8 @@ public class GameMenuController implements Initializable, SceneController {
      */
     public void onQuitClick() {
         Platform.exit();
+        Helpers.playButtonClickSound();
+
     }
 
     public void onKeyPressed(KeyEvent event) {

@@ -280,6 +280,9 @@ public class Level {
         }
     }
 
+    /*
+     * Checks if a given point is too close to any other enemy in the game.
+     */
     private boolean isTooCloseToOtherEnemies(double x, double y, double minDistance) {
         for (Enemy enemy : this.enemies) {
             double deltaX = enemy.getSprite().getLayoutX() - x;

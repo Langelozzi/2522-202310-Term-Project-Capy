@@ -168,6 +168,10 @@ public final class Helpers {
         Helpers.changeScene(gameOverScene);
     }
 
+    /**
+     * Plays background music for the game.
+     * If the background music is already playing, does nothing.
+     */
     public static void playBackgroundMusic() {
         if (backgroundMusicPlayer != null && backgroundMusicPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
             return;
@@ -179,52 +183,39 @@ public final class Helpers {
         backgroundMusicPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         backgroundMusicPlayer.play();
     }
-//    public static void stopBackgroundMusic() {
-//        if (backgroundMusicPlayer != null && backgroundMusicPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
-//            backgroundMusicPlayer.stop();
-//        }
-//    }
 
-
-
+    /**
+     * Plays a gunshot sound effect.
+     */
     public static void playGunshotSound() {
-        String gunshotFile = "/ca/bcit/comp2522/termproject/capy/audio/bow-shot-mc.mp3"; // Replace with the path to your gunshot audio file
+        String gunshotFile = "/ca/bcit/comp2522/termproject/capy/audio/bow-shot-mc.mp3";
         Media gunshotMedia = new Media(Helpers.class.getResource(gunshotFile).toExternalForm());
         gunshotPlayer = new MediaPlayer(gunshotMedia);
 
         gunshotPlayer.play();
     }
 
+    /**
+     * Plays a sound effect when the player picks up an item.
+     */
     public static void playPickUpSound() {
-        String pickupFile = "/ca/bcit/comp2522/termproject/capy/audio/mc-pick-up.mp3"; // Replace with the path to your gunshot audio file
+        String pickupFile = "/ca/bcit/comp2522/termproject/capy/audio/mc-pick-up.mp3";
         Media pickupMedia = new Media(Helpers.class.getResource(pickupFile).toExternalForm());
         playPickUpSound = new MediaPlayer(pickupMedia);
 
         playPickUpSound.play();
     }
 
+    /**
+     * Plays a sound effect when a button is clicked.
+     */
+    public static void playButtonClickSound() {
+        String soundEffectPath = "/ca/bcit/comp2522/termproject/capy/audio/button-click-mc.mp3";
 
-//    public static void playVictoryMusic() {
-//        String musicFile = "/ca/bcit/comp2522/termproject/capy/audio/okay-i-pull-up.mp3"; // Replace with the path to your victory audio file
-//        Media media = new Media(Helpers.class.getResource(musicFile).toExternalForm());
-//        victoryMusicPlayer = new MediaPlayer(media);
-//
-//        victoryMusicPlayer.setCycleCount(MediaPlayer.INDEFINITE); // This will make the victory music loop indefinitely
-//        victoryMusicPlayer.play();
-//    }
-
-
-//    public static MediaPlayer playMainMenuMusic() {
-//        String musicFile = "/ca/bcit/comp2522/termproject/capy/audio/okay-i-pull-up.mp3";
-//        Media media = new Media(Helpers.class.getResource(musicFile).toExternalForm());
-//        MediaPlayer mediaPlayer = new MediaPlayer(media);
-//
-//        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE); // This will make the background music loop indefinitely
-//        mediaPlayer.play();
-//
-//        return mediaPlayer;
-//    }
-
+        Media soundEffectMedia = new Media(Helpers.class.getResource(soundEffectPath).toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(soundEffectMedia);
+        mediaPlayer.play();
+    }
 
 }
 
