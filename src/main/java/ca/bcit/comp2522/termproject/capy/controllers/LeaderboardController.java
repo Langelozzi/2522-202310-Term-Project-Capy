@@ -238,6 +238,9 @@ public class LeaderboardController implements SceneController, Initializable {
         return getSortedLeaderboard(jsonArray);
     }
 
+    /*
+    Create a json file for the leaderboard if none exists.
+     */
     private void createLeaderboardJsonFile() {
         JSONArray jsonArray = new JSONArray();
 

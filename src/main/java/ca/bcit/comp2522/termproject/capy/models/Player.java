@@ -72,18 +72,35 @@ public class Player extends Character {
         this.points = Math.max(newPoints, 0);
     }
 
+    /**
+     * Get the player's current weapon.
+     * @return the current weapon that the player has
+     */
     public Weapon getWeapon() {
         return this.weapon;
     }
-    public void setWeapon(Weapon weapon){
+
+    /**
+     * Set the weapon of the player to a new one.
+     * @param weapon the new weapon to give to the player
+     */
+    public void setWeapon(final Weapon weapon){
         this.weapon = weapon;
     }
 
-    
+    /**
+     * Get the player's current armour.
+     * @return the player' current armour
+     */
     public Armour getArmour() {
         return this.armour;
     }
-    public void setArmour(Armour armour){
+
+    /**
+     * Set the armour of the player, and update their hit points accordingly.
+     * @param armour the armour to set on the player
+     */
+    public void setArmour(final Armour armour){
         this.armour = armour;
         setHitPoints(getHitPoints() + armour.getHitpoints());
     }
@@ -140,6 +157,9 @@ public class Player extends Character {
         this.points += sugarCane.getValue();
     }
 
+    /**
+     * Reset the state of the player back to defaults.
+     */
     public void reset() {
         this.points = DEFAULT_SUGAR_CANE_POINTS;
         this.setHitPoints(Character.DEFAULT_HIT_POINTS);

@@ -146,6 +146,9 @@ public class Enemy extends Character {
         this.moveTowardsPlayer(player, enemies);
     }
 
+    /**
+     * Reset the enemy state.
+     */
     public void reset() {
         this.setHitsTaken(0);
         this.setHitPoints(DEFAULT_HIT_POINTS);

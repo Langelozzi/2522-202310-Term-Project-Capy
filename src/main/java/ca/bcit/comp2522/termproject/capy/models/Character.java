@@ -28,12 +28,21 @@ public abstract class Character {
     private double previousXCoordinate;
     private double previousYCoordinate;
 
+    /**
+     * Instantiate a character object with a sprite.
+     * @param spriteImage the image to use for the sprite (ImageView)
+     */
     Character(final Image spriteImage) {
         this.hitPoints = DEFAULT_HIT_POINTS;
         this.movementSpeed = DEFAULT_CHARACTER_SPEED;
         this.sprite = new ImageView(spriteImage);
     }
 
+    /**
+     * Instantiate a character object with a sprite and custom speed.
+     * @param spriteImage the image to use for the sprite (ImageView)
+     * @param movementSpeed the custom character movement speed
+     */
     Character(final Image spriteImage, final int movementSpeed) {
         if (movementSpeed < 0) {
             throw new IllegalArgumentException("Speed must be a positive integer");
@@ -44,6 +53,12 @@ public abstract class Character {
         this.sprite = new ImageView(spriteImage);
     }
 
+    /**
+     * Instantiate a character object with a sprite, custom speed, and custom hit points.
+     * @param spriteImage the image to use for the sprite (ImageView)
+     * @param movementSpeed the custom character movement speed
+     * @param hitPoints the custom hit point amount
+     */
     Character(final Image spriteImage, final int movementSpeed, final int hitPoints) {
         if (movementSpeed < 0) {
             throw new IllegalArgumentException("Speed must be a positive integer");

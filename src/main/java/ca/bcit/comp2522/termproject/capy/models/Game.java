@@ -135,8 +135,16 @@ public class Game {
     }
 
     /**
+     * Get the player object of this Game.
+     * @return the player of this Game
+     */
+    public Player getPlayer(){
+        return this.player;
+    }
+
+    /**
      * Start a new game at level 1.
-     * @throws Exception
+     * @throws Exception if the level 1 weapon is not available
      */
     public void start() throws Exception {
         Game.setHasSavedGame(false);
@@ -148,9 +156,6 @@ public class Game {
         );
 
         this.levels = generateLevels();
-        // this.levels = new ArrayList<Level>() {{
-        //     add(new Level(player, 3, 1));
-        // }};
         this.levelsIterator = this.levels.listIterator();
         this.currentLevel = this.levelsIterator.next();
         this.waveCount = 1;
@@ -163,10 +168,9 @@ public class Game {
         Helpers.delay(3000, this::startGameLoop);
     }
 
-    public Player getPlayer(){
-        return this.player;
-    }
-
+    /*
+    Start the game loop that facilitates the running of the game.
+     */
     private void startGameLoop() {
         gameLoop = new AnimationTimer() {
             @Override
@@ -187,15 +191,9 @@ public class Game {
         gameLoop.start();
     }
 
-    private void onWinGame(AnimationTimer gameLoop) {
-        gameLoop.stop();
-        Helpers.showWinScreen(this.player);
-    }
-
-    private boolean hasCollided(final Bullet bullet, final Enemy enemy) {
-        return bullet.getBullet().intersects(enemy.getSprite().getBoundsInLocal());
-    }
-
+    /*
+    Generate an array list of levels that must be completed to win the game.
+     */
     private ArrayList<Level> generateLevels() {
         ArrayList<Level> levels = new ArrayList<>();
 
@@ -213,7 +211,10 @@ public class Game {
         return levels;
     }
 
-    private void startNextWave(AnimationTimer gameLoop) {
+    /*
+    Change from the current level/wave to the next.
+     */
+    private void startNextWave(final AnimationTimer gameLoop) {
         gameLoop.stop();
 
         this.waveCount++;
@@ -225,6 +226,9 @@ public class Game {
         });
     }
 
+    /*
+    Display the WaveMessage scene on the stage to indicate that the next wave is starting
+     */
     private void showWaveMessage() {
         WaveMessageController waveMessageController = (WaveMessageController) Helpers.getFxmlController(
                 "wave-message-view.fxml"
@@ -233,7 +237,10 @@ public class Game {
         Helpers.changeScene(waveMessageController.getScene());
     }
 
-    private static Weapon getWeaponForLevel(int level) throws Exception{
+    /*
+    Get the weapon of a certain level.
+     */
+    private static Weapon getWeaponForLevel(final int level) throws Exception{
         for(Item item: availableItems){
             if(Weapon.class.isInstance(item) && item.getLevel() == level)
                 return (Weapon)item;
@@ -241,12 +248,23 @@ public class Game {
         throw new Exception("No weapon for level: " + level);
     }
 
-    private static Armour getArmourForLevel(int level) throws Exception{
+    /*
+    Get the armour of a certain level.
+     */
+    private static Armour getArmourForLevel(final int level) throws Exception{
         for(Item item: availableItems){
             if(Armour.class.isInstance(item) && item.getLevel() == level)
                 return (Armour)item;
         }
         throw new Exception("No armour for level: " + level);
+    }
+
+    /*
+    Handle the logic when the player wins the game.
+     */
+    private void onWinGame(final AnimationTimer gameLoop) {
+        gameLoop.stop();
+        Helpers.showWinScreen(this.player);
     }
 
     /**
