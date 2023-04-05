@@ -136,6 +136,9 @@ public class GameMenuController implements Initializable, SceneController {
         Game.setPaused(false);
     }
 
+    /**
+     * Open the leaderboard scene when leaderboard button clicked.
+     */
     public void onLeaderboardClick() {
         Helpers.showLeaderboard(true, null);
     }

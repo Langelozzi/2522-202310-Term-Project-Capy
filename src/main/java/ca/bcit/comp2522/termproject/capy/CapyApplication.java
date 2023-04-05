@@ -38,6 +38,10 @@ public class CapyApplication extends Application {
         return game;
     }
 
+    /**
+     * Set the Game object to be played.
+     * @param newGame the new Game object to be played
+     */
     public static void setGame(final Game newGame) {
         game = newGame;
     }
