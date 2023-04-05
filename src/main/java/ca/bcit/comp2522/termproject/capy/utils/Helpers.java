@@ -30,6 +30,8 @@ public final class Helpers {
     // INITIALIZATION  =================================================================================================
     private static MediaPlayer backgroundMusicPlayer;
     private static MediaPlayer gunshotPlayer;
+
+    private static MediaPlayer playPickUpSound;
 //    private static MediaPlayer victoryMusicPlayer;
 
     private Helpers() {
@@ -181,6 +183,14 @@ public final class Helpers {
         gunshotPlayer = new MediaPlayer(gunshotMedia);
 
         gunshotPlayer.play();
+    }
+
+    public static void playPickUpSound() {
+        String pickupFile = "/ca/bcit/comp2522/termproject/capy/audio/mc-pick-up.mp3"; // Replace with the path to your gunshot audio file
+        Media pickupMedia = new Media(Helpers.class.getResource(pickupFile).toExternalForm());
+        playPickUpSound = new MediaPlayer(pickupMedia);
+
+        playPickUpSound.play();
     }
 
 

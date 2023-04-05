@@ -17,6 +17,8 @@ import javafx.scene.shape.Ellipse;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import static ca.bcit.comp2522.termproject.capy.utils.Helpers.playPickUpSound;
+
 /**
  * Level class stores data related to a level of the game, including control over the LevelController.
  *
@@ -213,6 +215,7 @@ public class Level {
         this.controller.renderSprite(sugarCane.getSprite(), sugarCaneX, sugarCaneY);
         sugarCane.setDropped(true);
         this.droppedSugarCane.add(sugarCane);
+
     }
 
     /**
@@ -224,6 +227,8 @@ public class Level {
                 sugarCane.setCollected(true);
                 this.player.collectSugarCane(sugarCane);
                 this.controller.getGameLayer().getChildren().remove(sugarCane.getSprite());
+                playPickUpSound();
+
             }
         }
     }
