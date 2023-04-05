@@ -22,7 +22,7 @@ public abstract class Character {
      * The speed of the object.
      */
     protected double speed;
-    private final ImageView sprite;
+    private ImageView sprite;
     private int hitPoints;
     private int movementSpeed;
     private double previousXCoordinate;
@@ -60,6 +60,10 @@ public abstract class Character {
      */
     public ImageView getSprite() {
         return sprite;
+    }
+
+    public void setSprite(ImageView sprite){
+        this.sprite = sprite;
     }
 
     /**

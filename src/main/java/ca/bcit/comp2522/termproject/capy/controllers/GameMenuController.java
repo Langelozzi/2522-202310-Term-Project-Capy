@@ -9,9 +9,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -38,6 +41,9 @@ public class GameMenuController implements Initializable, SceneController {
     private Button upgradeArmourBtn;
     @FXML
     private Button quitBtn;
+    @FXML
+    private Text leaderboardText;
+
 
     /*
     Default font of buttons
@@ -59,10 +65,23 @@ public class GameMenuController implements Initializable, SceneController {
         anchorPane.setMinHeight(Game.BACKGROUND_HEIGHT);
         anchorPane.setMinWidth(Game.BACKGROUND_WIDTH);
 
-        continueBtn.setVisible(Game.hasSavedGame());
-        upgradeWeaponBtn.setDisable(!Game.hasSavedGame());
-        upgradeArmourBtn.setDisable(!Game.hasSavedGame());
+        if (continueBtn != null) {
+            continueBtn.setVisible(Game.hasSavedGame());
+        }
+        if (upgradeWeaponBtn != null) {
+            upgradeWeaponBtn.setDisable(!Game.hasSavedGame());
+        }
+        if (upgradeArmourBtn != null) {
+            upgradeArmourBtn.setDisable(!Game.hasSavedGame());
+        }
+
+        // Add this line to request focus for the AnchorPane
+        Platform.runLater(() -> anchorPane.requestFocus());
+
+        // Change this line to add an event filter for key presses on the stage
+        CapyApplication.getStage().addEventFilter(KeyEvent.KEY_PRESSED, this::onKeyPressed);
     }
+
 
     /**
      * Change the size, color and font of the button when mousing over for visual cue.
@@ -149,6 +168,14 @@ public class GameMenuController implements Initializable, SceneController {
     public void onQuitClick() {
         Platform.exit();
     }
+
+    public void onKeyPressed(KeyEvent event) {
+        System.out.println("Key pressed: " + event.getCode()); // Add this line for debugging
+        if (event.getCode() == KeyCode.SPACE) {
+            Helpers.showLeaderboard(true, null);
+        }
+    }
+
 
 //    public void onUpgradesClick() {
 //        Helpers.changeScene();

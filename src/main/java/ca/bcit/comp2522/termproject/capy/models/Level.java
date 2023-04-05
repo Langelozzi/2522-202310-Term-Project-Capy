@@ -1,10 +1,10 @@
 package ca.bcit.comp2522.termproject.capy.models;
-
-import ca.bcit.comp2522.termproject.capy.CapyApplication;
 import ca.bcit.comp2522.termproject.capy.utils.Helpers;
+import ca.bcit.comp2522.termproject.capy.CapyApplication;
 import ca.bcit.comp2522.termproject.capy.utils.KeyboardInputController;
 import ca.bcit.comp2522.termproject.capy.controllers.LevelController;
 import ca.bcit.comp2522.termproject.capy.utils.MouseInputController;
+import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
 
 import java.time.Duration;
@@ -38,6 +38,9 @@ public class Level {
     private final double playerStartingYPosition = (Game.BACKGROUND_HEIGHT / 2.0) - 20;
     private boolean started;
     private final KeyboardInputController keyboardInputController;
+    private final Game game;
+
+
 
     /**
      * Instantiate a new Level.
@@ -45,7 +48,7 @@ public class Level {
      * @param player     the Player object that will be playing in the level
      * @param numEnemies the amount of enemies that will be rendered in the level
      */
-    public Level(final Player player, final int numEnemies, final int enemyDifficulty) {
+    public Level(final Game game, final Player player, final int numEnemies, final int enemyDifficulty) {
         this.lastDamageTimes = new ArrayList<>();
         this.droppedSugarCane = new ArrayList<>();
         for (int i = 0; i < numEnemies; i++) {
@@ -58,6 +61,7 @@ public class Level {
         this.swampBoundary = controller.getSwampBorder();
         this.started = false;
         this.keyboardInputController = new KeyboardInputController();
+        this.game = game;
     }
 
     public void initializeGameObjects() {
@@ -306,7 +310,8 @@ public class Level {
             if (player.isCollidingWithEnemy(enemy)) {
                 // Check if the player's hit points are already 0 or below
                 if (player.getHitPoints() <= 0) {
-                    // TODO: Game over logic
+                    // Game over logic
+                    game.handleGameOver();
                 } else if (Duration.between(this.getLastDamageTimes().get(i), currentTime).getSeconds() >= 1) {
                     int damage = 20; // Player takes 20 damage per collision
                     player.setHitPoints(player.getHitPoints() - damage);
@@ -316,12 +321,16 @@ public class Level {
                     this.getLastDamageTimes().set(i, currentTime);
                     // Check if the player's hit points have reached 0 or below after taking damage
                     if (player.getHitPoints() <= 0) {
-                        // TODO: Game over logic
+                        // Game over logic
+                        game.handleGameOver();
+
                     }
                 }
             }
         }
     }
+
+
 
     private void updateBullets() {
         // Update bullets
@@ -377,4 +386,11 @@ public class Level {
 
         return x < 0 || x > Game.BACKGROUND_WIDTH || y < 0 || y > Game.BACKGROUND_HEIGHT;
     }
+
+    // Level.java
+    public boolean isPlayerDead() {
+        return player.getHitPoints() <= 0;
+    }
+
+
 }

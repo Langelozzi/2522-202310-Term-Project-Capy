@@ -38,14 +38,24 @@ public class Game {
     static {
         final String spritesPath = "file:src/main/resources/ca/bcit/comp2522/termproject/capy/sprites/";
         final int imageHeigh = 100;
-        availableItems.add(new Weapon(new ImageView(new Image(spritesPath + "level-1-weapon.png",
-                0, imageHeigh, true, true)), 100, 1, "handgun", 3));
-        availableItems.add(new Weapon(new ImageView(new Image(spritesPath + "level-2-weapon.png",
-                0, imageHeigh, true, true)), 0 /*stub to test menu */, 2, "rifle", 15));
-        availableItems.add(new Weapon(new ImageView(new Image(spritesPath + "level-3-weapon.png",
-                0, imageHeigh, true, true)), 0 /*stub to test menu */, 3, "automatic rifle", 25));
-        availableItems.add(new Weapon(new ImageView(new Image(spritesPath + "level-4-weapon.png",
-                0, imageHeigh, true, true)), 600, 4, "blaster", 35));
+
+        availableItems.add(new Weapon(
+            new ImageView(new Image(spritesPath + "level-1-weapon.png", 0, imageHeigh, true, true)), 
+            100, 1, "handgun", 3,
+            new ImageView(new Image(spritesPath + "player_weapon_1.png"))));
+        availableItems.add(new Weapon(
+            new ImageView(new Image(spritesPath + "level-2-weapon.png", 0, imageHeigh, true, true)), 
+            0 /*stub to test menu */, 2, "rifle", 15,
+            new ImageView(new Image(spritesPath + "player_weapon_2.png"))));
+        availableItems.add(new Weapon(
+            new ImageView(new Image(spritesPath + "level-3-weapon.png", 0, imageHeigh, true, true)), 
+            0 /*stub to test menu */, 3, "automatic rifle", 25,
+            new ImageView(new Image(spritesPath + "player_weapon_3.png"))));
+        availableItems.add(new Weapon(
+            new ImageView(new Image(spritesPath + "level-4-weapon.png", 0, imageHeigh, true, true)), 
+            600, 4, "blaster", 35,
+            new ImageView(new Image(spritesPath + "player_weapon_4.png"))));
+
         availableItems.add(new Armour(new ImageView(new Image(spritesPath + "level-1-armor.png",
                 0, imageHeigh, true, true)), 600, 1, "armor_1", 35));
         availableItems.add(new Armour(new ImageView(new Image(spritesPath + "level-1-armor.png",
@@ -59,18 +69,19 @@ public class Game {
     private Level currentLevel;
     private Player player;
     private int waveCount;
+    private AnimationTimer gameLoop;
 
     /**
      * Instantiate a new Game object starting current level at level 1.
      */
     public Game() {
-        // this.player = new Player(new Image("file:src/main/resources/ca/bcit/comp2522/termproject/"
-        //         + "capy/sprites/test_player.png"));
-        //
-        // this.levels = generateLevels();
-        // this.levelsIterator = this.levels.listIterator();
-        // this.currentLevel = this.levelsIterator.next();
-        // this.waveCount = 1;
+//         this.player = new Player(new Image("file:src/main/resources/ca/bcit/comp2522/termproject/"
+//                 + "capy/sprites/test_player.png"));
+//
+//         this.levels = generateLevels();
+//         this.levelsIterator = this.levels.listIterator();
+//         this.currentLevel = this.levelsIterator.next();
+//         this.waveCount = 1;
     }
 
     // GETTERS AND SETTERS =============================================================================================
@@ -138,7 +149,7 @@ public class Game {
         Game.setHasSavedGame(false);
 
         this.player = new Player(
-                new Image("file:src/main/resources/ca/bcit/comp2522/termproject/capy/sprites/test_player.png"),
+                new Image("file:src/main/resources/ca/bcit/comp2522/termproject/capy/sprites/player_weapon_1.png"),
                 getWeaponForLevel(1),
                 getArmourForLevel(1)
         );
@@ -164,7 +175,7 @@ public class Game {
     }
 
     private void startGameLoop() {
-        AnimationTimer gameLoop = new AnimationTimer() {
+        gameLoop = new AnimationTimer() {
             @Override
             public void handle(final long now) {
                 if (!Game.paused) {
@@ -172,15 +183,18 @@ public class Game {
 
                     if (levelComplete && !levelsIterator.hasNext()) {
                         onWinGame(this);
-                    }
-                    else if (levelComplete) {
+                    } else if (levelComplete) {
                         startNextWave(this);
+                    } else if (player.getHitPoints() <= 0) {
+                        handleGameOver();
                     }
                 }
             }
         };
         gameLoop.start();
     }
+
+
 
     private void onWinGame(AnimationTimer gameLoop) {
         gameLoop.stop();
@@ -201,7 +215,7 @@ public class Game {
 
         for (int difficulty = minDifficulty; difficulty <= maxDifficulty; difficulty++) {
             for (int numEnemies = minNumEnemies; numEnemies <= maxNumEnemies; numEnemies++) {
-                levels.add(new Level(this.player, numEnemies, difficulty));
+                levels.add(new Level(this, this.player, numEnemies, difficulty));
             }
         }
 
@@ -243,5 +257,14 @@ public class Game {
         }
         throw new Exception("No armour for level: " + level);
     }
+
+    /**
+     * Handles game over events.
+     */
+    public void handleGameOver() {
+        gameLoop.stop();
+        Helpers.showGameOverScreen(this.player);
+    }
+
 }
 

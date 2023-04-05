@@ -13,7 +13,8 @@ public class Weapon extends Item {
 
     // INITIALIZATION  =================================================================================================
 
-    private int damagepoints;
+    private final int damagepoints;
+    private final ImageView spritePlayerWithWeapon;
 
     /**
      * Instantiate a new Weapon object.
@@ -29,9 +30,11 @@ public class Weapon extends Item {
             final int cost,
             final int level,
             final String name,
-            final int damagepoints) {
+            final int damagepoints,
+            final ImageView spritePlayerWithWeapon) {
         super(sprite, cost, level, name);
         this.damagepoints = damagepoints;
+        this.spritePlayerWithWeapon = spritePlayerWithWeapon;
     }
 
     // GETTERS AND SETTERS =============================================================================================
@@ -43,5 +46,9 @@ public class Weapon extends Item {
      */
     public int getDamagepoints() {
         return this.damagepoints;
+    }
+
+    public ImageView getSpritePlayerWithWeapon(){
+        return this.spritePlayerWithWeapon;
     }
 }

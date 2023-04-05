@@ -121,15 +121,32 @@ public final class Helpers {
     }
 
     public static void delay(long millis, Runnable continuation) {
-      Task<Void> sleeper = new Task<Void>() {
-          @Override
-          protected Void call() throws Exception {
-              try { Thread.sleep(millis); }
-              catch (InterruptedException e) { }
-              return null;
-          }
-      };
-      sleeper.setOnSucceeded(event -> continuation.run());
-      new Thread(sleeper).start();
+        Task<Void> sleeper = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                try {
+                    Thread.sleep(millis);
+                } catch (InterruptedException e) {
+                }
+                return null;
+            }
+        };
+        sleeper.setOnSucceeded(event -> continuation.run());
+        new Thread(sleeper).start();
+    }
+
+    /**
+     * Open the Game Over screen.
+     *
+     * @param player the player object to display score and other relevant information
+     */
+    public static void showGameOverScreen(final Player player) {
+        Game.setPaused(true);
+        Game.setHasSavedGame(false);
+        GameMenuController menuController = (GameMenuController) Helpers.getFxmlController(
+                "game-over-view.fxml"
+        );
+        Helpers.changeScene(menuController.getScene());
     }
 }
+

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.effect.Blend?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
@@ -11,7 +10,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="864.0" maxWidth="1160.0" minHeight="864.0" minWidth="1160.0" prefHeight="864.0" prefWidth="1160.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.bcit.comp2522.termproject.capy.controllers.GameMenuController">
+<AnchorPane fx:id="anchorPane" maxHeight="864.0" maxWidth="1160.0" minHeight="864.0" minWidth="1160.0" prefHeight="864.0" prefWidth="1160.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.bcit.comp2522.termproject.capy.controllers.GameMenuController" onKeyPressed="#onKeyPressed">
+
+
    <ImageView fitHeight="951.0" fitWidth="1329.0" layoutX="-92.0" layoutY="-14.0" opacity="0.93" pickOnBounds="true" preserveRatio="true">
       <image>
          <Image url="@imgs/game-over-bg.png" />
@@ -38,14 +39,9 @@
          </DropShadow>
       </effect>
    </Text>
-   <Button fx:id="quitBtn" layoutX="632.0" layoutY="649.0" minHeight="100.0" minWidth="280.0" mnemonicParsing="false" onAction="#onQuitClick" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" prefHeight="82.0" prefWidth="234.0" style="-fx-background-color: rgba(234, 249, 235, 0.6);" text="Quit Game">
+   <Text fx:id="leaderboardText" fill="RED" layoutX="285.0" layoutY="664.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Press SPACE to check your leaderboard" textAlignment="CENTER">
       <font>
-         <Font name="Trebuchet MS" size="32.0" />
+         <Font name="Trebuchet MS" size="36.0" />
       </font>
-   </Button>
-   <Button fx:id="newGameBtn" layoutX="283.0" layoutY="650.0" minHeight="100.0" minWidth="280.0" mnemonicParsing="false" onAction="#onNewGameClick" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" prefHeight="82.0" prefWidth="234.0" style="-fx-background-color: rgba(234, 249, 235, 0.6);" text="Try Again">
-      <font>
-         <Font name="Trebuchet MS" size="32.0" />
-      </font>
-   </Button>
+   </Text>
 </AnchorPane>
