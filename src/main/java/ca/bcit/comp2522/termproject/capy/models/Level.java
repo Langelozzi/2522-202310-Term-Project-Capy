@@ -280,6 +280,20 @@ public class Level {
         }
     }
 
+    private boolean isTooCloseToOtherEnemies(double x, double y, double minDistance) {
+        for (Enemy enemy : this.enemies) {
+            double deltaX = enemy.getSprite().getLayoutX() - x;
+            double deltaY = enemy.getSprite().getLayoutY() - y;
+            double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+            if (distance < minDistance) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     /*
      * Choose a random location to spawn the enemies, based on certain restrictions.
      */

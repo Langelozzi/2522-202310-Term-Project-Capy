@@ -178,7 +178,7 @@ public class Game {
     /*
      * Start the game loop that facilitates the running of the game.
      */
-    private void startGameLoop() {
+    private void startGameLoop()    {
         gameLoop = new AnimationTimer() {
             @Override
             public void handle(final long now) {
@@ -194,6 +194,7 @@ public class Game {
                     }
                 }
             }
+
         };
         gameLoop.start();
     }
@@ -215,6 +216,7 @@ public class Game {
 
         return levels;
     }
+
 
     /*
      * Change from the current level/wave to the next.
@@ -276,8 +278,12 @@ public class Game {
      * Handles game over events.
      */
     public void handleGameOver() {
-        gameLoop.stop();
+        // Check if gameLoop is not null before calling stop()
+        if (gameLoop != null) {
+            gameLoop.stop();
+        }
         Helpers.showGameOverScreen(this.player);
     }
+
 
 }

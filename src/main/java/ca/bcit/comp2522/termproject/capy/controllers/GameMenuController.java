@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -124,9 +125,16 @@ public class GameMenuController implements Initializable, SceneController {
      * Start a new game when "New Game" button is clicked.
      */
     public void onNewGameClick() throws Exception {
+        // If a game is in progress, stop the game loop and handle the cleanup
+        if (CapyApplication.getGame() != null) {
+            CapyApplication.getGame().handleGameOver();
+        }
+
+        // Create a new game and start it
         CapyApplication.setGame(new Game());
         CapyApplication.getGame().start();
     }
+
 
     /**
      * Handles the action when the "Upgrades" button is clicked.
@@ -143,7 +151,7 @@ public class GameMenuController implements Initializable, SceneController {
      * Return back to the current level, and it's state when "Continue" button is clicked.
      */
     public void onContinueClick() {
-        Helpers.changeScene(CapyApplication.getGame().getCurrentLevel().getScene();
+        Helpers.changeScene(CapyApplication.getGame().getCurrentLevel().getScene());
         Game.setPaused(false);
     }
 
@@ -159,6 +167,13 @@ public class GameMenuController implements Initializable, SceneController {
      */
     public void onQuitClick() {
         Platform.exit();
+    }
+
+    public void onKeyPressed(KeyEvent event) {
+        System.out.println("Key pressed: " + event.getCode()); // Add this line for debugging
+        if (event.getCode() == KeyCode.SPACE) {
+            Helpers.showLeaderboard(true, null);
+        }
     }
 
     /**
