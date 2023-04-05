@@ -98,6 +98,7 @@ public class MouseInputController {
                 Bullet bullet = new Bullet(centerX, centerY, directionX, directionY);
                 player.getBullets().add(bullet);
                 bulletConsumer.accept(bullet);
+                Helpers.playGunshotSound(); // Add this line to play the gunshot sound
             }
         });
     }

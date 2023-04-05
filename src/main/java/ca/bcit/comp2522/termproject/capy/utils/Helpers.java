@@ -29,7 +29,8 @@ public final class Helpers {
 
     // INITIALIZATION  =================================================================================================
     private static MediaPlayer backgroundMusicPlayer;
-    private static MediaPlayer victoryMusicPlayer;
+    private static MediaPlayer gunshotPlayer;
+//    private static MediaPlayer victoryMusicPlayer;
 
     private Helpers() {
 
@@ -166,10 +167,20 @@ public final class Helpers {
         backgroundMusicPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         backgroundMusicPlayer.play();
     }
-    public static void stopBackgroundMusic() {
-        if (backgroundMusicPlayer != null && backgroundMusicPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
-            backgroundMusicPlayer.stop();
-        }
+//    public static void stopBackgroundMusic() {
+//        if (backgroundMusicPlayer != null && backgroundMusicPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
+//            backgroundMusicPlayer.stop();
+//        }
+//    }
+
+
+
+    public static void playGunshotSound() {
+        String gunshotFile = "/ca/bcit/comp2522/termproject/capy/audio/bow-shot-mc.mp3"; // Replace with the path to your gunshot audio file
+        Media gunshotMedia = new Media(Helpers.class.getResource(gunshotFile).toExternalForm());
+        gunshotPlayer = new MediaPlayer(gunshotMedia);
+
+        gunshotPlayer.play();
     }
 
 
