@@ -19,6 +19,8 @@ public class WinViewController implements SceneController, Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+//        Helpers.stopBackgroundMusic();
+//        Helpers.playVictoryMusic();
     }
 
     public void setListeners(final Scene scene, final Player player) {
@@ -35,4 +37,7 @@ public class WinViewController implements SceneController, Initializable {
     }
 
 
+//    public void playVictoryMusic() {
+//        Helpers.playVictoryMusic();
+//    }
 }

@@ -80,6 +80,9 @@ public class GameMenuController implements Initializable, SceneController {
 
         // Change this line to add an event filter for key presses on the stage
         CapyApplication.getStage().addEventFilter(KeyEvent.KEY_PRESSED, this::onKeyPressed);
+
+        Helpers.playBackgroundMusic();
+
     }
 
 

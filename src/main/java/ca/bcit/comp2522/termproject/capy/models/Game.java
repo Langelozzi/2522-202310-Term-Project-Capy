@@ -75,6 +75,7 @@ public class Game {
     }
 
     // GETTERS AND SETTERS =============================================================================================
+
     /**
      * Set the value of savedGame.
      *
@@ -133,6 +134,7 @@ public class Game {
 
     /**
      * Start a new game at level 1.
+     *
      * @throws Exception
      */
     public void start() throws Exception {
@@ -158,9 +160,11 @@ public class Game {
         showWaveMessage();
 
         Helpers.delay(3000, this::startGameLoop);
+//        Helpers.playBackgroundMusic();
+
     }
 
-    public Player getPlayer(){
+    public Player getPlayer() {
         return this.player;
     }
 
@@ -185,7 +189,6 @@ public class Game {
     }
 
 
-
     private void onWinGame(AnimationTimer gameLoop) {
         gameLoop.stop();
         Helpers.showWinScreen(this.player);
@@ -198,6 +201,12 @@ public class Game {
     private ArrayList<Level> generateLevels() {
         ArrayList<Level> levels = new ArrayList<>();
 
+//        To test wave 1:
+//        int difficulty = 1;
+//        int numEnemies = 3;
+//
+//        levels.add(new Level(this, this.player, numEnemies, difficulty));
+//
         int minDifficulty = 1;
         int maxDifficulty = 3;
         int minNumEnemies = 3;
@@ -232,18 +241,18 @@ public class Game {
         Helpers.changeScene(waveMessageController.getScene());
     }
 
-    private static Weapon getWeaponForLevel(int level) throws Exception{
-        for(Item item: availableItems){
-            if(Weapon.class.isInstance(item) && item.getLevel() == level)
-                return (Weapon)item;
+    private static Weapon getWeaponForLevel(int level) throws Exception {
+        for (Item item : availableItems) {
+            if (Weapon.class.isInstance(item) && item.getLevel() == level)
+                return (Weapon) item;
         }
         throw new Exception("No weapon for level: " + level);
     }
 
-    private static Armour getArmourForLevel(int level) throws Exception{
-        for(Item item: availableItems){
-            if(Armour.class.isInstance(item) && item.getLevel() == level)
-                return (Armour)item;
+    private static Armour getArmourForLevel(int level) throws Exception {
+        for (Item item : availableItems) {
+            if (Armour.class.isInstance(item) && item.getLevel() == level)
+                return (Armour) item;
         }
         throw new Exception("No armour for level: " + level);
     }

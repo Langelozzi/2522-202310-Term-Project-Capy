@@ -15,6 +15,10 @@ import javafx.scene.Scene;
 import java.io.IOException;
 import java.net.URL;
 
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+
+
 /**
  * Helpers class contains some generic helper methods for the game.
  *
@@ -24,6 +28,8 @@ import java.net.URL;
 public final class Helpers {
 
     // INITIALIZATION  =================================================================================================
+    private static MediaPlayer backgroundMusicPlayer;
+    private static MediaPlayer victoryMusicPlayer;
 
     private Helpers() {
 
@@ -148,5 +154,48 @@ public final class Helpers {
         );
         Helpers.changeScene(menuController.getScene());
     }
+
+    public static void playBackgroundMusic() {
+        if (backgroundMusicPlayer != null && backgroundMusicPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
+            return;
+        }
+        String musicFile = "/ca/bcit/comp2522/termproject/capy/audio/okay-i-pull-up.mp3";
+        Media media = new Media(Helpers.class.getResource(musicFile).toExternalForm());
+        backgroundMusicPlayer = new MediaPlayer(media);
+
+        backgroundMusicPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        backgroundMusicPlayer.play();
+    }
+    public static void stopBackgroundMusic() {
+        if (backgroundMusicPlayer != null && backgroundMusicPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
+            backgroundMusicPlayer.stop();
+        }
+    }
+
+
+//    public static void playVictoryMusic() {
+//        String musicFile = "/ca/bcit/comp2522/termproject/capy/audio/okay-i-pull-up.mp3"; // Replace with the path to your victory audio file
+//        Media media = new Media(Helpers.class.getResource(musicFile).toExternalForm());
+//        victoryMusicPlayer = new MediaPlayer(media);
+//
+//        victoryMusicPlayer.setCycleCount(MediaPlayer.INDEFINITE); // This will make the victory music loop indefinitely
+//        victoryMusicPlayer.play();
+//    }
+
+
+//    public static MediaPlayer playMainMenuMusic() {
+//        String musicFile = "/ca/bcit/comp2522/termproject/capy/audio/okay-i-pull-up.mp3";
+//        Media media = new Media(Helpers.class.getResource(musicFile).toExternalForm());
+//        MediaPlayer mediaPlayer = new MediaPlayer(media);
+//
+//        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE); // This will make the background music loop indefinitely
+//        mediaPlayer.play();
+//
+//        return mediaPlayer;
+//    }
+
+
 }
+
+
 
