@@ -6,6 +6,7 @@ module ca.bcit.comp2522.termproject.capy {
     requires org.kordamp.bootstrapfx.core;
     requires com.almasb.fxgl.all;
     requires json.simple;
+    requires javafx.media;
 
     opens ca.bcit.comp2522.termproject.capy to javafx.fxml;
     exports ca.bcit.comp2522.termproject.capy;
@@ -15,4 +16,6 @@ module ca.bcit.comp2522.termproject.capy {
     exports ca.bcit.comp2522.termproject.capy.controllers;
     exports ca.bcit.comp2522.termproject.capy.utils;
     opens ca.bcit.comp2522.termproject.capy.utils to javafx.fxml;
+    exports ca.bcit.comp2522.termproject.capy.enums;
+    opens ca.bcit.comp2522.termproject.capy.enums to javafx.fxml;
 }

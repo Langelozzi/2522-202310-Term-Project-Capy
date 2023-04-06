@@ -2,6 +2,7 @@ package ca.bcit.comp2522.termproject.capy.models;
 
 import ca.bcit.comp2522.termproject.capy.controllers.WaveMessageController;
 
+import ca.bcit.comp2522.termproject.capy.enums.EnemyDifficulty;
 import ca.bcit.comp2522.termproject.capy.utils.Helpers;
 import javafx.animation.AnimationTimer;
 
@@ -12,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
-
 /**
  * Game class manages the entire game, including the player, levels and scenes.
  *
@@ -21,7 +21,8 @@ import java.util.ListIterator;
  */
 public class Game {
 
-    // INITIALIZATION  =================================================================================================
+    // INITIALIZATION
+    // =================================================================================================
 
     /**
      * The background/window width of the game.
@@ -40,28 +41,28 @@ public class Game {
         final int imageHeigh = 100;
 
         availableItems.add(new Weapon(
-            new ImageView(new Image(spritesPath + "level-1-weapon.png", 0, imageHeigh, true, true)), 
-            0, 1, "handgun", 3,
-            new Image(spritesPath + "player_weapon_1.png")));
+                new ImageView(new Image(spritesPath + "level-1-weapon.png", 0, imageHeigh, true, true)),
+                0, 1, "handgun", 3,
+                new Image(spritesPath + "player_weapon_1.png")));
         availableItems.add(new Weapon(
-            new ImageView(new Image(spritesPath + "level-2-weapon.png", 0, imageHeigh, true, true)), 
-            10, 2, "rifle", 15,
-            new Image(spritesPath + "player_weapon_2.png")));
+                new ImageView(new Image(spritesPath + "level-2-weapon.png", 0, imageHeigh, true, true)),
+                10, 2, "rifle", 15,
+                new Image(spritesPath + "player_weapon_2.png")));
         availableItems.add(new Weapon(
-            new ImageView(new Image(spritesPath + "level-3-weapon.png", 0, imageHeigh, true, true)), 
-           20, 3, "automatic rifle", 25,
-            new Image(spritesPath + "player_weapon_3.png")));
+                new ImageView(new Image(spritesPath + "level-3-weapon.png", 0, imageHeigh, true, true)),
+                20, 3, "automatic rifle", 25,
+                new Image(spritesPath + "player_weapon_3.png")));
         availableItems.add(new Weapon(
-            new ImageView(new Image(spritesPath + "level-4-weapon.png", 0, imageHeigh, true, true)), 
-            50, 4, "blaster", 35,
-            new Image(spritesPath + "player_weapon_4.png")));
+                new ImageView(new Image(spritesPath + "level-4-weapon.png", 0, imageHeigh, true, true)),
+                50, 4, "blaster", 35,
+                new Image(spritesPath + "player_weapon_4.png")));
 
         availableItems.add(new Armour(new ImageView(new Image(spritesPath + "level-1-armor.png",
                 200, imageHeigh, true, true)), 10, 1, "armor 1", 15));
         availableItems.add(new Armour(new ImageView(new Image(spritesPath + "level-2-armor.png",
-                200, imageHeigh, true, true)), 15 /*stub to test menu */, 2, "armor 2", 30));
+                200, imageHeigh, true, true)), 15, 2, "armor 2", 30));
         availableItems.add(new Armour(new ImageView(new Image(spritesPath + "level-3-armor.png",
-                200, imageHeigh, true, true)), 30 /*stub to test menu */, 3, "armor 3", 70));
+                200, imageHeigh, true, true)), 30, 3, "armor 3", 70));
     }
 
     private ArrayList<Level> levels;
@@ -77,7 +78,9 @@ public class Game {
     public Game() {
     }
 
-    // GETTERS AND SETTERS =============================================================================================
+    // GETTERS AND SETTERS
+    // =============================================================================================
+
     /**
      * Set the value of savedGame.
      *
@@ -123,7 +126,8 @@ public class Game {
         Game.paused = paused;
     }
 
-    // GAME LOGIC ======================================================================================================
+    // GAME LOGIC
+    // ======================================================================================================
 
     /**
      * Return if there is saved data in this game object.
@@ -135,8 +139,18 @@ public class Game {
     }
 
     /**
+     * Get the player object of this Game.
+     * 
+     * @return the player of this Game
+     */
+    public Player getPlayer() {
+        return this.player;
+    }
+
+    /**
      * Start a new game at level 1.
-     * @throws Exception
+     * 
+     * @throws Exception if the level 1 weapon is not available
      */
     public void start() throws Exception {
         Game.setHasSavedGame(false);
@@ -144,13 +158,9 @@ public class Game {
         this.player = new Player(
                 new Image("file:src/main/resources/ca/bcit/comp2522/termproject/capy/sprites/player_weapon_1.png"),
                 getWeaponForLevel(1),
-                null
-        );
+                null);
 
         this.levels = generateLevels();
-        // this.levels = new ArrayList<Level>() {{
-        //     add(new Level(player, 3, 1));
-        // }};
         this.levelsIterator = this.levels.listIterator();
         this.currentLevel = this.levelsIterator.next();
         this.waveCount = 1;
@@ -161,13 +171,14 @@ public class Game {
         showWaveMessage();
 
         Helpers.delay(3000, this::startGameLoop);
+        // Helpers.playBackgroundMusic();
+
     }
 
-    public Player getPlayer(){
-        return this.player;
-    }
-
-    private void startGameLoop() {
+    /*
+     * Start the game loop that facilitates the running of the game.
+     */
+    private void startGameLoop()    {
         gameLoop = new AnimationTimer() {
             @Override
             public void handle(final long now) {
@@ -183,28 +194,21 @@ public class Game {
                     }
                 }
             }
+
         };
         gameLoop.start();
     }
 
-    private void onWinGame(AnimationTimer gameLoop) {
-        gameLoop.stop();
-        Helpers.showWinScreen(this.player);
-    }
-
-    private boolean hasCollided(final Bullet bullet, final Enemy enemy) {
-        return bullet.getBullet().intersects(enemy.getSprite().getBoundsInLocal());
-    }
-
+    /*
+     * Generate an array list of levels that must be completed to win the game.
+     */
     private ArrayList<Level> generateLevels() {
         ArrayList<Level> levels = new ArrayList<>();
 
-        int minDifficulty = 1;
-        int maxDifficulty = 3;
         int minNumEnemies = 3;
         int maxNumEnemies = 6;
 
-        for (int difficulty = minDifficulty; difficulty <= maxDifficulty; difficulty++) {
+        for (EnemyDifficulty difficulty : EnemyDifficulty.values()) {
             for (int numEnemies = minNumEnemies; numEnemies <= maxNumEnemies; numEnemies++) {
                 levels.add(new Level(this, this.player, numEnemies, difficulty));
             }
@@ -213,7 +217,11 @@ public class Game {
         return levels;
     }
 
-    private void startNextWave(AnimationTimer gameLoop) {
+
+    /*
+     * Change from the current level/wave to the next.
+     */
+    private void startNextWave(final AnimationTimer gameLoop) {
         gameLoop.stop();
 
         this.waveCount++;
@@ -225,37 +233,57 @@ public class Game {
         });
     }
 
+    /*
+     * Display the WaveMessage scene on the stage to indicate that the next wave is
+     * starting
+     */
     private void showWaveMessage() {
         WaveMessageController waveMessageController = (WaveMessageController) Helpers.getFxmlController(
-                "wave-message-view.fxml"
-        );
+                "wave-message-view.fxml");
         waveMessageController.setWaveNumber(this.waveCount);
         Helpers.changeScene(waveMessageController.getScene());
     }
 
-    private static Weapon getWeaponForLevel(int level) throws Exception{
-        for(Item item: availableItems){
-            if(Weapon.class.isInstance(item) && item.getLevel() == level)
-                return (Weapon)item;
+    /*
+     * Get the weapon of a certain level.
+     */
+    private static Weapon getWeaponForLevel(final int level) throws Exception {
+        for (Item item : availableItems) {
+            if (Weapon.class.isInstance(item) && item.getLevel() == level)
+                return (Weapon) item;
         }
         throw new Exception("No weapon for level: " + level);
     }
 
-    private static Armour getArmourForLevel(int level) throws Exception{
-        for(Item item: availableItems){
-            if(Armour.class.isInstance(item) && item.getLevel() == level)
-                return (Armour)item;
+    /*
+     * Get the armour of a certain level.
+     */
+    private static Armour getArmourForLevel(final int level) throws Exception {
+        for (Item item : availableItems) {
+            if (Armour.class.isInstance(item) && item.getLevel() == level)
+                return (Armour) item;
         }
         throw new Exception("No armour for level: " + level);
+    }
+
+    /*
+     * Handle the logic when the player wins the game.
+     */
+    private void onWinGame(final AnimationTimer gameLoop) {
+        gameLoop.stop();
+        Helpers.showWinScreen(this.player);
     }
 
     /**
      * Handles game over events.
      */
     public void handleGameOver() {
-        gameLoop.stop();
+        // Check if gameLoop is not null before calling stop()
+        if (gameLoop != null) {
+            gameLoop.stop();
+        }
         Helpers.showGameOverScreen(this.player);
     }
 
-}
 
+}

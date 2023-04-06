@@ -1,5 +1,6 @@
 package ca.bcit.comp2522.termproject.capy.models;
 
+import ca.bcit.comp2522.termproject.capy.enums.EnemyDifficulty;
 import javafx.scene.image.Image;
 
 import java.util.List;
@@ -15,34 +16,63 @@ public class Enemy extends Character {
     // INITIALIZATION  =================================================================================================
 
     private static final double ENEMY_SPEED = 1.0;
-    private static final int ATTACK_MULTIPLIER = 3;
-    private static final String DEFAULT_SPRITE_PATH = "file:src/main/resources/ca/bcit/comp2522/termproject/"
-            + "capy/sprites/crocodile.png";
-    private static final String LEFT_FOOT_SPRITE_PATH = "file:src/main/resources/ca/bcit/comp2522/termproject/"
-            + "capy/sprites/crocodile-left-foot-forward.png";
-    private static final String RIGHT_FOOT_SPRITE_PATH = "file:src/main/resources/ca/bcit/comp2522/termproject/"
-            + "capy/sprites/crocodile-right-foot-forward.png";
+    private static final int ATTACK_MULTIPLIER = 5;
     private static final String DEAD_SPRITE_PATH = "file:src/main/resources/ca/bcit/comp2522/termproject/"
             + "capy/sprites/crocodile-rip.png";
 
-    private final int difficulty;
+    private final String normalSpritePath;
+    private final String leftFootSpritePath;
+    private final String rightFootSpritePath;
+
+    private final EnemyDifficulty difficulty;
     private final int attackDamage;
     private int animationCounter;
     private final SugarCane sugarCane;
-    private int hitsTaken;
 
     /**
      * Instantiate a new Enemy with a specific difficulty.
      *
-     * @param speed      The speed at which the enemy can move.
      * @param difficulty the difficulty of the enemy, decides its amount of attack damage
      */
-    public Enemy(final int speed, final int difficulty) {
-        super(new Image("file:src/main/resources/ca/bcit/comp2522/termproject/capy/sprites/crocodile.png"));
+    public Enemy(final EnemyDifficulty difficulty) {
+        super(
+                new Image("file:src/main/resources/ca/bcit/comp2522/termproject/capy/sprites/enemy/crocodile.png"),
+                (int) ENEMY_SPEED
+        );
         this.difficulty = difficulty;
-        this.attackDamage = ATTACK_MULTIPLIER * difficulty;
-        animationCounter = 0;
-        this.sugarCane = new SugarCane(this.difficulty);
+        this.animationCounter = 0;
+
+        switch (this.difficulty){
+            case MEDIUM -> {
+                final int mediumMultiplier = 2;
+                this.attackDamage = ATTACK_MULTIPLIER * mediumMultiplier;
+                this.sugarCane = new SugarCane(mediumMultiplier);
+                super.setHitPoints(150);
+
+                this.normalSpritePath = "file:src/main/resources/ca/bcit/comp2522/termproject/capy/sprites/enemy/crocodile-medium.png";
+                this.leftFootSpritePath = "file:src/main/resources/ca/bcit/comp2522/termproject/capy/sprites/enemy/crocodile-medium-left-foot-forward.png";
+                this.rightFootSpritePath = "file:src/main/resources/ca/bcit/comp2522/termproject/capy/sprites/enemy/crocodile-medium-right-foot-forward.png";
+            }
+            case HARD -> {
+                final int hardMultiplier = 3;
+                this.attackDamage = ATTACK_MULTIPLIER * hardMultiplier;
+                this.sugarCane = new SugarCane(hardMultiplier);
+                super.setHitPoints(250);
+
+                this.normalSpritePath = "file:src/main/resources/ca/bcit/comp2522/termproject/capy/sprites/enemy/crocodile-hard.png";
+                this.leftFootSpritePath = "file:src/main/resources/ca/bcit/comp2522/termproject/capy/sprites/enemy/crocodile-hard-left-foot-forward.png";
+                this.rightFootSpritePath = "file:src/main/resources/ca/bcit/comp2522/termproject/capy/sprites/enemy/crocodile-hard-right-foot-forward.png";
+            }
+            default -> {
+                this.attackDamage = ATTACK_MULTIPLIER;
+                this.sugarCane = new SugarCane(1);
+                super.setHitPoints(30);
+
+                this.normalSpritePath = "file:src/main/resources/ca/bcit/comp2522/termproject/capy/sprites/enemy/crocodile.png";
+                this.leftFootSpritePath = "file:src/main/resources/ca/bcit/comp2522/termproject/capy/sprites/enemy/crocodile-left-foot-forward.png";
+                this.rightFootSpritePath = "file:src/main/resources/ca/bcit/comp2522/termproject/capy/sprites/enemy/crocodile-right-foot-forward.png";
+            }
+        }
     }
 
     // GETTERS AND SETTERS =============================================================================================
@@ -52,7 +82,7 @@ public class Enemy extends Character {
      *
      * @return the enemy's difficulty
      */
-    public int getDifficulty() {
+    public EnemyDifficulty getDifficulty() {
         return difficulty;
     }
 
@@ -63,24 +93,6 @@ public class Enemy extends Character {
      */
     public int getAttackDamage() {
         return attackDamage;
-    }
-
-    /**
-     * Get the number of hits that the enemy has taken.
-     *
-     * @return the number of hits that the enemy has taken
-     */
-    public int getHitsTaken() {
-        return hitsTaken;
-    }
-
-    /**
-     * Set the number of hits that the enemy has taken.
-     *
-     * @param hitsTaken the number of hits that the enemy has taken
-     */
-    public void setHitsTaken(final int hitsTaken) {
-        this.hitsTaken = hitsTaken;
     }
 
     /**
@@ -118,11 +130,11 @@ public class Enemy extends Character {
         animationCounter++;
         Image updatedImage;
         if (animationCounter % 30 < 10) {
-            updatedImage = new Image(LEFT_FOOT_SPRITE_PATH);
+            updatedImage = new Image(this.leftFootSpritePath);
         } else if (animationCounter % 30 < 20) {
-            updatedImage = new Image(DEFAULT_SPRITE_PATH);
+            updatedImage = new Image(this.normalSpritePath);
         } else {
-            updatedImage = new Image(RIGHT_FOOT_SPRITE_PATH);
+            updatedImage = new Image(this.rightFootSpritePath);
         }
         this.getSprite().setImage(updatedImage);
     }
@@ -146,8 +158,10 @@ public class Enemy extends Character {
         this.moveTowardsPlayer(player, enemies);
     }
 
+    /**
+     * Reset the enemy state.
+     */
     public void reset() {
-        this.setHitsTaken(0);
         this.setHitPoints(DEFAULT_HIT_POINTS);
     }
 

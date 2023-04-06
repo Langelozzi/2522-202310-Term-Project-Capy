@@ -93,7 +93,7 @@ public class LeaderboardController implements SceneController, Initializable {
         try {
             this.leaderboard = getLeaderboardFromJson();
         } catch (IOException | ParseException e) {
-            throw new RuntimeException(e);
+            createLeaderboardJsonFile();
         }
 
         this.newLeaderSpot = 0;
@@ -137,9 +137,9 @@ public class LeaderboardController implements SceneController, Initializable {
         for (int index = 0; index < this.leaderboard.size(); index++) {
             final long currentScore = (long) ((JSONObject) this.leaderboard.get(index)).get("score");
 
-            if (player.getPoints() > currentScore) {
+            if (player.getScore() > currentScore) {
                 this.newLeaderSpot = index + 1;
-                this.newScore = player.getPoints();
+                this.newScore = player.getScore();
                 return true;
             }
         }
@@ -236,6 +236,27 @@ public class LeaderboardController implements SceneController, Initializable {
         JSONArray jsonArray = (JSONArray) new JSONParser().parse(new FileReader(leaderboardJsonFile));
 
         return getSortedLeaderboard(jsonArray);
+    }
+
+    /*
+    Create a json file for the leaderboard if none exists.
+     */
+    private void createLeaderboardJsonFile() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (int count = 0; count < 5; count++) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("name", "");
+            jsonObject.put("score", 0);
+
+            jsonArray.add(jsonObject);
+        }
+
+        try (FileWriter fileWriter = new FileWriter(leaderboardJsonFile)) {
+            fileWriter.write(jsonArray.toJSONString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /*

@@ -23,7 +23,8 @@ public class Player extends Character {
      */
     public static final int DEFAULT_PLAYER_SPEED = 3;
     private ArrayList<Bullet> bullets = new ArrayList<>();
-    private int points;
+    private int sugarCanePoints;
+    private int score;
     private Weapon weapon;
     private Armour armour;
 
@@ -35,7 +36,8 @@ public class Player extends Character {
     public Player(final Image sprite, final Weapon initialWeapon, final Armour initialArmour) {
         super(sprite, DEFAULT_PLAYER_SPEED);
 
-        this.points = DEFAULT_SUGAR_CANE_POINTS;
+        this.sugarCanePoints = DEFAULT_SUGAR_CANE_POINTS;
+        this.score = 0;
         this.weapon = initialWeapon;
         this.armour = initialArmour;
     }
@@ -49,7 +51,7 @@ public class Player extends Character {
     public Player(final Image sprite, final int playerSpeed) {
         super(sprite, playerSpeed);
 
-        this.points = DEFAULT_SUGAR_CANE_POINTS;
+        this.sugarCanePoints = DEFAULT_SUGAR_CANE_POINTS;
     }
 
     // GETTERS AND SETTERS =============================================================================================
@@ -59,8 +61,8 @@ public class Player extends Character {
      *
      * @return the current amount of points that the player has
      */
-    public int getPoints() {
-        return points;
+    public int getSugarCanePoints() {
+        return sugarCanePoints;
     }
 
     /**
@@ -68,22 +70,55 @@ public class Player extends Character {
      *
      * @param newPoints the updated amount of points
      */
-    public void setPoints(final int newPoints) {
-        this.points = Math.max(newPoints, 0);
+    public void setSugarCanePoints(final int newPoints) {
+        this.sugarCanePoints = Math.max(newPoints, 0);
     }
 
+    /**
+     * Get the player score
+     * @return the player score
+     */
+    public int getScore() {
+        return score;
+    }
+
+    /**
+     * Set the player score.
+     * @param newScore the new score
+     */
+    public void setScore(final int newScore) {
+        this.score = Math.max(newScore, 0);
+    }
+
+    /**
+     * Get the player's current weapon.
+     * @return the current weapon that the player has
+     */
     public Weapon getWeapon() {
         return this.weapon;
     }
-    public void setWeapon(Weapon weapon){
+
+    /**
+     * Set the weapon of the player to a new one.
+     * @param weapon the new weapon to give to the player
+     */
+    public void setWeapon(final Weapon weapon){
         this.weapon = weapon;
     }
 
-    
+    /**
+     * Get the player's current armour.
+     * @return the player' current armour
+     */
     public Armour getArmour() {
         return this.armour;
     }
-    public void setArmour(Armour armour){
+
+    /**
+     * Set the armour of the player, and update their hit points accordingly.
+     * @param armour the armour to set on the player
+     */
+    public void setArmour(final Armour armour){
         this.armour = armour;
         setHitPoints(getHitPoints() + armour.getHitpoints());
     }
@@ -137,11 +172,14 @@ public class Player extends Character {
     public void collectSugarCane(final SugarCane sugarCane) {
         sugarCane.setCollected(true);
 
-        this.points += sugarCane.getValue();
+        this.sugarCanePoints += sugarCane.getValue();
     }
 
+    /**
+     * Reset the state of the player back to defaults.
+     */
     public void reset() {
-        this.points = DEFAULT_SUGAR_CANE_POINTS;
+        this.sugarCanePoints = DEFAULT_SUGAR_CANE_POINTS;
         this.setHitPoints(Character.DEFAULT_HIT_POINTS);
     }
 }

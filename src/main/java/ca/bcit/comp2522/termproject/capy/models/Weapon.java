@@ -49,6 +49,10 @@ public class Weapon extends Item {
         return this.damagepoints;
     }
 
+    /**
+     * Get the image of the player holding this weapon.
+     * @return the image of the player holding this weapon
+     */
     public Image getImagePlayerWithWeapon(){
         return this.imagePlayerWithWeapon;
     }

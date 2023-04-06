@@ -9,6 +9,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
@@ -42,13 +44,12 @@ public class GameMenuController implements Initializable, SceneController {
     @FXML
     private Text leaderboardText;
 
-
     /*
-    Default font of buttons
+     * Default font of buttons
      */
     private final Font btnFont = new Font("Trebuchet MS", 32);
     /*
-    Font of buttons when being hovered over
+     * Font of buttons when being hovered over
      */
     private final Font btnFontHover = new Font("Trebuchet MS", 38);
 
@@ -69,18 +70,22 @@ public class GameMenuController implements Initializable, SceneController {
 
         // Add this line to request focus for the AnchorPane
         Platform.runLater(() -> anchorPane.requestFocus());
+
+        // Change this line to add an event filter for key presses on the stage
+        CapyApplication.getStage().addEventFilter(KeyEvent.KEY_PRESSED, this::onKeyPressed);
+
+        Helpers.playBackgroundMusic();
+
     }
 
 
     /**
-     * Change the size, color and font of the button when mousing over for visual cue.
-     *
      * @param event the mouse event triggered when hovering over the button
      */
     public void onMouseEntered(final MouseEvent event) {
         Button button = (Button) event.getTarget();
-        
-        if(button.isDisabled())
+
+        if (button.isDisabled())
             return;
 
         final String btnBackgroundColorHover = "rgba(234, 249, 235, 0.85)";
@@ -101,8 +106,8 @@ public class GameMenuController implements Initializable, SceneController {
      */
     public void onMouseExited(final MouseEvent event) {
         Button button = (Button) event.getTarget();
-        
-        if(button.isDisabled())
+
+        if (button.isDisabled())
             return;
 
         final String btnBackgroundColor = "rgba(234, 249, 235, 0.6)";
@@ -118,22 +123,33 @@ public class GameMenuController implements Initializable, SceneController {
 
     /**
      * Start a new game when "New Game" button is clicked.
-     * @throws Exception
      */
     public void onNewGameClick() throws Exception {
+        // If a game is in progress, stop the game loop and handle the cleanup
+        if (CapyApplication.getGame() != null) {
+            CapyApplication.getGame().handleGameOver();
+        }
+
+        // Create a new game and start it
         CapyApplication.setGame(new Game());
         CapyApplication.getGame().start();
+        Helpers.playButtonClickSound();
     }
+
 
     /**
      * Handles the action when the "Upgrades" button is clicked.
      */
     public void onUpgradeWeaponClick() {
         Helpers.openUpgradesMenu("Weapon");
+        Helpers.playButtonClickSound();
+
     }
 
     public void onUpgradeArmourClick() {
         Helpers.openUpgradesMenu("Armour");
+        Helpers.playButtonClickSound();
+
     }
 
     /**
@@ -142,6 +158,8 @@ public class GameMenuController implements Initializable, SceneController {
     public void onContinueClick() {
         Helpers.changeScene(CapyApplication.getGame().getCurrentLevel().getScene());
         Game.setPaused(false);
+        Helpers.playButtonClickSound();
+
     }
 
     /**
@@ -149,6 +167,8 @@ public class GameMenuController implements Initializable, SceneController {
      */
     public void onLeaderboardClick() {
         Helpers.showLeaderboard(true, null);
+        Helpers.playButtonClickSound();
+
     }
 
     /**
@@ -156,12 +176,16 @@ public class GameMenuController implements Initializable, SceneController {
      */
     public void onQuitClick() {
         Platform.exit();
+        Helpers.playButtonClickSound();
+
     }
 
-
-//    public void onUpgradesClick() {
-//        Helpers.changeScene();
-//    }
+    public void onKeyPressed(KeyEvent event) {
+//        System.out.println("Key pressed: " + event.getCode()); // Add this line for debugging
+        if (event.getCode() == KeyCode.SPACE) {
+            Helpers.showLeaderboard(true, null);
+        }
+    }
 
     /**
      * Return the parent AnchorPane as the scene for this page.

@@ -29,6 +29,8 @@ public class LevelController implements Initializable, SceneController {
     @FXML
     private Text sugarCanePoints;
     @FXML
+    private Text score;
+    @FXML
     private Ellipse swampBorder;
 
     /**
@@ -60,6 +62,14 @@ public class LevelController implements Initializable, SceneController {
      */
     public Text getSugarCanePoints() {
         return this.sugarCanePoints;
+    }
+
+    /**
+     * Get the text object that shows the player score.
+     * @return the text object that shows the player score
+     */
+    public Text getScore() {
+        return this.score;
     }
 
     /**

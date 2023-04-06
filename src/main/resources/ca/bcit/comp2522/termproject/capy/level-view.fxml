@@ -38,19 +38,18 @@
       </BorderPane>
       <BorderPane layoutX="113.0" layoutY="-81.0" prefHeight="217.0" prefWidth="103.0" style="-fx-background-color: rgba(234, 249, 235, 0.5); -fx-background-radius: 20;">
          <center>
-            <ImageView fitHeight="77.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
-               <image>
-                  <Image url="@sprites/sugar_cane.png" />
-               </image>
+            <ImageView fitHeight="77.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true"
+                       BorderPane.alignment="CENTER">
                <BorderPane.margin>
-                  <Insets top="90.0" />
+                  <Insets top="90.0"/>
                </BorderPane.margin>
+               <Image url="@sprites/sugar_cane.png"/>
             </ImageView>
          </center>
          <bottom>
             <Text fx:id="sugarCanePoints" strokeType="OUTSIDE" strokeWidth="0.0" text="0" BorderPane.alignment="CENTER">
                <font>
-                  <Font name="Trebuchet MS" size="38.0" />
+                  <Font name="Trebuchet MS Italic" size="38.0" />
                </font>
                <BorderPane.margin>
                   <Insets bottom="5.0" />
@@ -59,5 +58,27 @@
          </bottom>
       </BorderPane>
       <Ellipse fx:id="swampBorder" fill="#1f93ff00" layoutX="550.0" layoutY="396.0" radiusX="394.0" radiusY="269.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="0.0" />
+      <BorderPane layoutX="875.0" layoutY="-16.0" prefHeight="151.0" prefWidth="214.0" style="-fx-background-color: rgba(234, 249, 235, 0.5); -fx-background-radius: 20;">
+         <bottom>
+            <Text fx:id="score" strokeType="OUTSIDE" strokeWidth="0.0" text="0" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets bottom="20.0" />
+               </BorderPane.margin>
+               <font>
+                  <Font name="Trebuchet MS Italic" size="40.0" />
+               </font>
+            </Text>
+         </bottom>
+         <top>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Score" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets top="30.0" />
+               </BorderPane.margin>
+               <font>
+                  <Font name="Trebuchet MS Bold" size="42.0" />
+               </font>
+            </Text>
+         </top>
+      </BorderPane>
    </children>
 </Pane>

@@ -1,10 +1,11 @@
 package ca.bcit.comp2522.termproject.capy.models;
+
+import ca.bcit.comp2522.termproject.capy.enums.EnemyDifficulty;
 import ca.bcit.comp2522.termproject.capy.utils.Helpers;
 import ca.bcit.comp2522.termproject.capy.CapyApplication;
 import ca.bcit.comp2522.termproject.capy.utils.KeyboardInputController;
 import ca.bcit.comp2522.termproject.capy.controllers.LevelController;
 import ca.bcit.comp2522.termproject.capy.utils.MouseInputController;
-import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
 
 import java.time.Duration;
@@ -17,15 +18,19 @@ import javafx.scene.shape.Ellipse;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import static ca.bcit.comp2522.termproject.capy.utils.Helpers.playPickUpSound;
+
 /**
- * Level class stores data related to a level of the game, including control over the LevelController.
+ * Level class stores data related to a level of the game, including control
+ * over the LevelController.
  *
  * @author COMP2522 Group 13
  * @version 1.0.0
  */
 public class Level {
 
-    // INITIALIZATION  =================================================================================================
+    // INITIALIZATION
+    // =================================================================================================
 
     private final Scene scene;
     private final LevelController controller;
@@ -40,15 +45,13 @@ public class Level {
     private final KeyboardInputController keyboardInputController;
     private final Game game;
 
-
-
     /**
      * Instantiate a new Level.
      *
      * @param player     the Player object that will be playing in the level
      * @param numEnemies the amount of enemies that will be rendered in the level
      */
-    public Level(final Game game, final Player player, final int numEnemies, final int enemyDifficulty) {
+    public Level(final Game game, final Player player, final int numEnemies, final EnemyDifficulty enemyDifficulty) {
         this.lastDamageTimes = new ArrayList<>();
         this.droppedSugarCane = new ArrayList<>();
         for (int i = 0; i < numEnemies; i++) {
@@ -64,26 +67,8 @@ public class Level {
         this.game = game;
     }
 
-    public void initializeGameObjects() {
-        setUpPlayer();
-        spawnEnemies();
-    }
-
-    public void bindUserControls() {
-        keyboardInputController.assignKeyboardInput(
-                this.player, this.scene, this.getSwampBoundary()
-        );
-
-        MouseInputController rotationController = new MouseInputController();
-        rotationController.makeCursorRotatable(this.player, this.getScene());
-        rotationController.handleShooting(this.player, this.getScene(), bullet -> {
-            this.getGameLayer().getChildren().add(bullet.getBullet());
-            bullet.getBullet().toBack();
-            this.player.getSprite().toFront();
-        });
-    }
-
-    // GETTERS AND SETTERS =============================================================================================
+    // GETTERS AND SETTERS
+    // =============================================================================================
 
     /**
      * Return the scene object of the level.
@@ -121,8 +106,6 @@ public class Level {
         return lastDamageTimes;
     }
 
-    // LEVEL RELATED ===================================================================================================
-
     /**
      * Returns the game layer of the game.
      *
@@ -132,8 +115,18 @@ public class Level {
         return this.controller.getGameLayer();
     }
 
+    // LEVEL RELATED
+    // ===================================================================================================
+
+    /**
+     * Start the logic for the level. This method runs once per frame as it is in
+     * the game loop.
+     * 
+     * @return true if the level is completed, false if it is not
+     */
     public boolean play() {
-        // everything that we want to happen only once at the beginning of the level goes in this if statement
+        // everything that we want to happen only once at the beginning of the level
+        // goes in this if statement
         if (!this.started) {
             this.started = true;
             this.initializeGameObjects();
@@ -155,38 +148,38 @@ public class Level {
     }
 
     /**
-     * Reset the state of the level back to default (beginning).
+     * Initialize the game objects on the level scene.
      */
-    public void resetLevel() {
-        this.started = false;
-        this.resetPlayer();
-        this.resetEnemies();
-        this.updatePlayerOverlayInformation();
+    public void initializeGameObjects() {
+        setUpPlayer();
+        spawnEnemies();
     }
 
-    // PLAYER ACTIONS ==================================================================================================
-
-    /*
-     * Initialize the position and properties of the player on the Level.
+    /**
+     * Set event listeners for user controls.
      */
-    private void setUpPlayer() {
-        controller.renderSprite(this.player.getSprite(), this.playerStartingXPosition, this.playerStartingYPosition);
+    public void bindUserControls() {
+        keyboardInputController.assignKeyboardInput(
+                this.player, this.scene, this.getSwampBoundary());
+
+        MouseInputController rotationController = new MouseInputController();
+        rotationController.makeCursorRotatable(this.player, this.getScene());
+        rotationController.handleShooting(this.player, this.getScene(), bullet -> {
+            this.getGameLayer().getChildren().add(bullet.getBullet());
+            bullet.getBullet().toBack();
+            this.player.getSprite().toFront();
+        });
     }
 
-    /*
-     * Reset the player back to its default state and position.
-     */
-    private void resetPlayer() {
-        this.player.getSprite().setLayoutX(this.playerStartingXPosition);
-        this.player.getSprite().setLayoutY(this.playerStartingYPosition);
-        this.player.reset();
-    }
+    // PLAYER ACTIONS
+    // ==================================================================================================
 
     /**
      * Set the player health bar and sugar can information for the level overlay.
      */
     public void updatePlayerOverlayInformation() {
-        this.controller.getSugarCanePoints().setText(String.valueOf(this.player.getPoints()));
+        this.controller.getSugarCanePoints().setText(String.valueOf(this.player.getSugarCanePoints()));
+        this.controller.getScore().setText(String.valueOf(this.player.getScore()));
 
         if (this.player.getHitPoints() <= 20) {
             this.controller.getHealthBar().setStyle("-fx-accent: red");
@@ -198,7 +191,8 @@ public class Level {
         this.controller.getHealthBar().setProgress(progressAmount);
     }
 
-    // SUGARCANE ACTIONS ===============================================================================================
+    // SUGARCANE ACTIONS
+    // ===============================================================================================
 
     /**
      * Drops the sugar cane carried by the enemy.
@@ -213,6 +207,7 @@ public class Level {
         this.controller.renderSprite(sugarCane.getSprite(), sugarCaneX, sugarCaneY);
         sugarCane.setDropped(true);
         this.droppedSugarCane.add(sugarCane);
+
     }
 
     /**
@@ -224,10 +219,15 @@ public class Level {
                 sugarCane.setCollected(true);
                 this.player.collectSugarCane(sugarCane);
                 this.controller.getGameLayer().getChildren().remove(sugarCane.getSprite());
+                playPickUpSound();
+
             }
         }
     }
 
+    /*
+     * Check if all the sugar cane has been collected.
+     */
     private boolean allSugarCaneCollected() {
         for (SugarCane sugarCane : this.droppedSugarCane) {
             if (!sugarCane.isCollected()) {
@@ -237,38 +237,69 @@ public class Level {
         return true;
     }
 
-    // ENEMY ACTIONS ===================================================================================================
+    // ENEMY ACTIONS
+    // ===================================================================================================
 
     /*
-    Reset all the enemies back to their default spawn locations and states.
+     * Generate an ArrayList of enemies and populate it with amount number of
+     * enemies.
      */
-    private void resetEnemies() {
-        // TODO: Logic to reset the enemies to default state
-    }
-
-    /*
-    Generate an ArrayList of enemies and populate it with amount number of enemies.
-     */
-    private ArrayList<Enemy> generateEnemies(final int amount, final int difficulty) {
+    private ArrayList<Enemy> generateEnemies(final int amount, final EnemyDifficulty difficulty) {
         ArrayList<Enemy> newEnemies = new ArrayList<>();
 
-        final int enemySpeed = 1;
         for (int count = 0; count < amount; count++) {
-            newEnemies.add(new Enemy(enemySpeed, difficulty));
+            newEnemies.add(new Enemy(difficulty));
         }
 
         return newEnemies;
     }
 
+    /*
+     * Spawn the enemies on the scene.
+     */
     private void spawnEnemies() {
         for (Enemy enemy : this.enemies) {
-            double[] spawnCoords = this.chooseSpawnLocation();
-            double spawnX = spawnCoords[0];
-            double spawnY = spawnCoords[1];
-            this.controller.renderSprite(enemy.getSprite(), spawnX, spawnY);
+            double[] spawnCoords;
+            boolean locationFound = false;
+            int maxAttempts = 100; // Maximum attempts to find a suitable spawn location
+            int attemptCount = 0;
+
+            while (!locationFound && attemptCount < maxAttempts) {
+                spawnCoords = this.chooseSpawnLocation();
+                double spawnX = spawnCoords[0];
+                double spawnY = spawnCoords[1];
+
+                if (isSpawnLocationSafe(spawnX, spawnY, this.player, 100.0)
+                        && !isTooCloseToOtherEnemies(spawnX, spawnY, 50.0)) {
+                    this.controller.renderSprite(enemy.getSprite(), spawnX, spawnY);
+                    locationFound = true;
+                }
+
+                attemptCount++;
+            }
         }
     }
 
+    /*
+     * Checks if a given point is too close to any other enemy in the game.
+     */
+    private boolean isTooCloseToOtherEnemies(final double x, final double y, final double minDistance) {
+        for (Enemy enemy : this.enemies) {
+            double deltaX = enemy.getSprite().getLayoutX() - x;
+            double deltaY = enemy.getSprite().getLayoutY() - y;
+            double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+            if (distance < minDistance) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /*
+     * Choose a random location to spawn the enemies, based on certain restrictions.
+     */
     private double[] chooseSpawnLocation() {
         double centerX = Game.BACKGROUND_WIDTH / 2.0;
         double centerY = Game.BACKGROUND_HEIGHT / 2.0;
@@ -282,11 +313,8 @@ public class Level {
         return new double[] { enemyX, enemyY };
     }
 
-
-
-
     /*
-    Checks if a spawn location is safe.
+     * Checks if a spawn location is safe.
      */
     private boolean isSpawnLocationSafe(
             final double x,
@@ -300,8 +328,11 @@ public class Level {
         return distance >= safeDistance;
     }
 
-    // ENEMY LOGIC =====================================================================================================
-
+    // ENEMY & BULLET LOGIC
+    // ============================================================================================
+    /*
+     * Update the enemies position, health and check for collisions with player.
+     */
     private void updateEnemies() {
         LocalDateTime currentTime = LocalDateTime.now();
         for (int i = 0; i < this.getEnemies().size(); i++) {
@@ -313,8 +344,10 @@ public class Level {
                     // Game over logic
                     game.handleGameOver();
                 } else if (Duration.between(this.getLastDamageTimes().get(i), currentTime).getSeconds() >= 1) {
-                    int damage = 20; // Player takes 20 damage per collision
-                    player.setHitPoints(player.getHitPoints() - damage);
+                    // update player hit points
+                    player.setHitPoints(player.getHitPoints() - enemy.getAttackDamage());
+                    // subtract score when player is hit
+                    player.setScore(player.getScore() - Math.floorDiv(enemy.getAttackDamage(), 2));
 
                     // Update the player's health bar and other overlay information
                     this.updatePlayerOverlayInformation();
@@ -330,8 +363,9 @@ public class Level {
         }
     }
 
-
-
+    /*
+     * Update the bullets position and check for collisions.
+     */
     private void updateBullets() {
         // Update bullets
         for (Bullet bullet : player.getBullets()) {
@@ -350,11 +384,11 @@ public class Level {
                 if (enemy.isHitByBullet(bullet)) {
                     collided = true;
 
-                    // Increment the enemy's hits taken and remove it if it has taken 5 hits
-//                  // TODO: figure out how to implement enemy.setHitsTaken(enemy.getHitsTaken() + player.getWeapon().getDamagepoints());
-                    enemy.setHitsTaken(enemy.getHitsTaken() + 1);
-                    if (enemy.getHitsTaken() >= 5) {
-                         enemyIterator.remove(); // Remove the enemy from the list
+                    // update enemy hit points
+                    enemy.setHitPoints(enemy.getHitPoints() - player.getWeapon().getDamagepoints());
+
+                    if (enemy.getHitPoints() <= 0) {
+                        enemyIterator.remove(); // Remove the enemy from the list
 
                         // Remove the enemy from the game layer
                         this.getGameLayer().getChildren().remove(enemy.getSprite());
@@ -362,7 +396,8 @@ public class Level {
 
                         this.dropSugarCane(enemy);
 
-                        // TODO: Add points system
+                        // add the enemy's attackDamage to the player score
+                        this.player.setScore(this.player.getScore() + enemy.getAttackDamage());
                     }
                     bulletIterator.remove(); // Remove the bullet from the list
 
@@ -381,6 +416,9 @@ public class Level {
         }
     }
 
+    /*
+     * Check if the bullet has gone beyond the size of the stage.
+     */
     private boolean isOffScreen(final Circle bullet) {
         double x = bullet.getCenterX();
         double y = bullet.getCenterY();
@@ -388,10 +426,13 @@ public class Level {
         return x < 0 || x > Game.BACKGROUND_WIDTH || y < 0 || y > Game.BACKGROUND_HEIGHT;
     }
 
-    // Level.java
-    public boolean isPlayerDead() {
-        return player.getHitPoints() <= 0;
+    // SET UP
+    // ==========================================================================================================
+
+    /*
+     * Initialize the position and properties of the player on the Level.
+     */
+    private void setUpPlayer() {
+        controller.renderSprite(this.player.getSprite(), this.playerStartingXPosition, this.playerStartingYPosition);
     }
-
-
 }

@@ -25,7 +25,8 @@ public class WinViewController implements SceneController {
 
     /**
      * Set the event listeners for this screen.
-     * @param scene the scene to set the listeners on
+     * 
+     * @param scene  the scene to set the listeners on
      * @param player the player to check for new high score on
      */
     public void setListeners(final Scene scene, final Player player) {
@@ -38,6 +39,7 @@ public class WinViewController implements SceneController {
 
     /**
      * Return the scene of this controller.
+     * 
      * @return the scene of this controller
      */
     @Override
