@@ -185,7 +185,7 @@ public class UpgradesController implements Initializable, SceneController {
             return createStandardLabel("Equipped");
             
         if(item.getLevel() == currentItemLevel + 1){
-            if(item.getCost() > player.getPoints()){
+            if(item.getCost() > player.getSugarCanePoints()){
                 return createStandardLabel("Not enough points");
             }
             else {
@@ -236,7 +236,7 @@ public class UpgradesController implements Initializable, SceneController {
                 break;
                 //throw new Exception("Unknown item type to purchase: " + item.getClass().getSimpleName());
         }
-        player.setPoints(player.getPoints() - item.getCost());
+        player.setSugarCanePoints(player.getSugarCanePoints() - item.getCost());
         
         initItemsList();
     }

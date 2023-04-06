@@ -178,7 +178,8 @@ public class Level {
      * Set the player health bar and sugar can information for the level overlay.
      */
     public void updatePlayerOverlayInformation() {
-        this.controller.getSugarCanePoints().setText(String.valueOf(this.player.getPoints()));
+        this.controller.getSugarCanePoints().setText(String.valueOf(this.player.getSugarCanePoints()));
+        this.controller.getScore().setText(String.valueOf(this.player.getScore()));
 
         if (this.player.getHitPoints() <= 20) {
             this.controller.getHealthBar().setStyle("-fx-accent: red");
@@ -380,11 +381,9 @@ public class Level {
                 if (enemy.isHitByBullet(bullet)) {
                     collided = true;
 
-                    // Increment the enemy's hits taken and remove it if it has taken 5 hits
-                    // // TODO: figure out how to implement enemy.setHitsTaken(enemy.getHitsTaken()
-                    // + player.getWeapon().getDamagepoints());
-//                    enemy.setHitsTaken(enemy.getHitsTaken() + 1);
+                    // update enemy hit points
                     enemy.setHitPoints(enemy.getHitPoints() - player.getWeapon().getDamagepoints());
+
                     if (enemy.getHitPoints() <= 0) {
                         enemyIterator.remove(); // Remove the enemy from the list
 
@@ -394,7 +393,8 @@ public class Level {
 
                         this.dropSugarCane(enemy);
 
-                        // TODO: Add points system
+                        // add the enemy's attackDamage to the player score
+                        this.player.setScore(this.player.getScore() + enemy.getAttackDamage());
                     }
                     bulletIterator.remove(); // Remove the bullet from the list
 
