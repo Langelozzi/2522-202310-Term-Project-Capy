@@ -181,7 +181,7 @@ public class GameMenuController implements Initializable, SceneController {
     }
 
     public void onKeyPressed(KeyEvent event) {
-        System.out.println("Key pressed: " + event.getCode()); // Add this line for debugging
+//        System.out.println("Key pressed: " + event.getCode()); // Add this line for debugging
         if (event.getCode() == KeyCode.SPACE) {
             Helpers.showLeaderboard(true, null);
         }

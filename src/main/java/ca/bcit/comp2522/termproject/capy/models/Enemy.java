@@ -16,7 +16,7 @@ public class Enemy extends Character {
     // INITIALIZATION  =================================================================================================
 
     private static final double ENEMY_SPEED = 1.0;
-    private static final int ATTACK_MULTIPLIER = 3;
+    private static final int ATTACK_MULTIPLIER = 5;
     private static final String DEAD_SPRITE_PATH = "file:src/main/resources/ca/bcit/comp2522/termproject/"
             + "capy/sprites/crocodile-rip.png";
 
@@ -28,16 +28,17 @@ public class Enemy extends Character {
     private final int attackDamage;
     private int animationCounter;
     private final SugarCane sugarCane;
-    private int hitsTaken;
 
     /**
      * Instantiate a new Enemy with a specific difficulty.
      *
-     * @param speed      The speed at which the enemy can move.
      * @param difficulty the difficulty of the enemy, decides its amount of attack damage
      */
-    public Enemy(final int speed, final EnemyDifficulty difficulty) {
-        super(new Image("file:src/main/resources/ca/bcit/comp2522/termproject/capy/sprites/enemy/crocodile.png"));
+    public Enemy(final EnemyDifficulty difficulty) {
+        super(
+                new Image("file:src/main/resources/ca/bcit/comp2522/termproject/capy/sprites/enemy/crocodile.png"),
+                (int) ENEMY_SPEED
+        );
         this.difficulty = difficulty;
         this.animationCounter = 0;
 
@@ -46,6 +47,7 @@ public class Enemy extends Character {
                 final int mediumMultiplier = 2;
                 this.attackDamage = ATTACK_MULTIPLIER * mediumMultiplier;
                 this.sugarCane = new SugarCane(mediumMultiplier);
+                super.setHitPoints(150);
 
                 this.normalSpritePath = "file:src/main/resources/ca/bcit/comp2522/termproject/capy/sprites/enemy/crocodile-medium.png";
                 this.leftFootSpritePath = "file:src/main/resources/ca/bcit/comp2522/termproject/capy/sprites/enemy/crocodile-medium-left-foot-forward.png";
@@ -55,6 +57,7 @@ public class Enemy extends Character {
                 final int hardMultiplier = 3;
                 this.attackDamage = ATTACK_MULTIPLIER * hardMultiplier;
                 this.sugarCane = new SugarCane(hardMultiplier);
+                super.setHitPoints(250);
 
                 this.normalSpritePath = "file:src/main/resources/ca/bcit/comp2522/termproject/capy/sprites/enemy/crocodile-hard.png";
                 this.leftFootSpritePath = "file:src/main/resources/ca/bcit/comp2522/termproject/capy/sprites/enemy/crocodile-hard-left-foot-forward.png";
@@ -63,6 +66,7 @@ public class Enemy extends Character {
             default -> {
                 this.attackDamage = ATTACK_MULTIPLIER;
                 this.sugarCane = new SugarCane(1);
+                super.setHitPoints(30);
 
                 this.normalSpritePath = "file:src/main/resources/ca/bcit/comp2522/termproject/capy/sprites/enemy/crocodile.png";
                 this.leftFootSpritePath = "file:src/main/resources/ca/bcit/comp2522/termproject/capy/sprites/enemy/crocodile-left-foot-forward.png";
@@ -89,24 +93,6 @@ public class Enemy extends Character {
      */
     public int getAttackDamage() {
         return attackDamage;
-    }
-
-    /**
-     * Get the number of hits that the enemy has taken.
-     *
-     * @return the number of hits that the enemy has taken
-     */
-    public int getHitsTaken() {
-        return hitsTaken;
-    }
-
-    /**
-     * Set the number of hits that the enemy has taken.
-     *
-     * @param hitsTaken the number of hits that the enemy has taken
-     */
-    public void setHitsTaken(final int hitsTaken) {
-        this.hitsTaken = hitsTaken;
     }
 
     /**
@@ -176,7 +162,6 @@ public class Enemy extends Character {
      * Reset the enemy state.
      */
     public void reset() {
-        this.setHitsTaken(0);
         this.setHitPoints(DEFAULT_HIT_POINTS);
     }
 

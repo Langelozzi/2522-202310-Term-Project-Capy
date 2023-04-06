@@ -246,9 +246,8 @@ public class Level {
     private ArrayList<Enemy> generateEnemies(final int amount, final EnemyDifficulty difficulty) {
         ArrayList<Enemy> newEnemies = new ArrayList<>();
 
-        final int enemySpeed = 1;
         for (int count = 0; count < amount; count++) {
-            newEnemies.add(new Enemy(enemySpeed, difficulty));
+            newEnemies.add(new Enemy(difficulty));
         }
 
         return newEnemies;
@@ -283,7 +282,7 @@ public class Level {
     /*
      * Checks if a given point is too close to any other enemy in the game.
      */
-    private boolean isTooCloseToOtherEnemies(double x, double y, double minDistance) {
+    private boolean isTooCloseToOtherEnemies(final double x, final double y, final double minDistance) {
         for (Enemy enemy : this.enemies) {
             double deltaX = enemy.getSprite().getLayoutX() - x;
             double deltaY = enemy.getSprite().getLayoutY() - y;
@@ -320,7 +319,8 @@ public class Level {
             final double x,
             final double y,
             final Player playerSprite,
-            final double safeDistance) {
+            final double safeDistance
+    ) {
         double deltaX = playerSprite.getSprite().getLayoutX() - x;
         double deltaY = playerSprite.getSprite().getLayoutY() - y;
         double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
@@ -343,8 +343,7 @@ public class Level {
                     // Game over logic
                     game.handleGameOver();
                 } else if (Duration.between(this.getLastDamageTimes().get(i), currentTime).getSeconds() >= 1) {
-                    int damage = 20; // Player takes 20 damage per collision
-                    player.setHitPoints(player.getHitPoints() - damage);
+                    player.setHitPoints(player.getHitPoints() - enemy.getAttackDamage());
 
                     // Update the player's health bar and other overlay information
                     this.updatePlayerOverlayInformation();
@@ -384,8 +383,9 @@ public class Level {
                     // Increment the enemy's hits taken and remove it if it has taken 5 hits
                     // // TODO: figure out how to implement enemy.setHitsTaken(enemy.getHitsTaken()
                     // + player.getWeapon().getDamagepoints());
-                    enemy.setHitsTaken(enemy.getHitsTaken() + 1);
-                    if (enemy.getHitsTaken() >= 5) {
+//                    enemy.setHitsTaken(enemy.getHitsTaken() + 1);
+                    enemy.setHitPoints(enemy.getHitPoints() - player.getWeapon().getDamagepoints());
+                    if (enemy.getHitPoints() <= 0) {
                         enemyIterator.remove(); // Remove the enemy from the list
 
                         // Remove the enemy from the game layer
