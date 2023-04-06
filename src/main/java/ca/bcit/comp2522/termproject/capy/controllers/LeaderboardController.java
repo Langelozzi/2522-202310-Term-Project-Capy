@@ -137,9 +137,9 @@ public class LeaderboardController implements SceneController, Initializable {
         for (int index = 0; index < this.leaderboard.size(); index++) {
             final long currentScore = (long) ((JSONObject) this.leaderboard.get(index)).get("score");
 
-            if (player.getSugarCanePoints() > currentScore) {
+            if (player.getScore() > currentScore) {
                 this.newLeaderSpot = index + 1;
-                this.newScore = player.getSugarCanePoints();
+                this.newScore = player.getScore();
                 return true;
             }
         }
