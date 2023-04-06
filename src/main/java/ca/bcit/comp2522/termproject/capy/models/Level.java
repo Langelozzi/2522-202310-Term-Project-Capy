@@ -344,7 +344,10 @@ public class Level {
                     // Game over logic
                     game.handleGameOver();
                 } else if (Duration.between(this.getLastDamageTimes().get(i), currentTime).getSeconds() >= 1) {
+                    // update player hit points
                     player.setHitPoints(player.getHitPoints() - enemy.getAttackDamage());
+                    // subtract score when player is hit
+                    player.setScore(player.getScore() - Math.floorDiv(enemy.getAttackDamage(), 2));
 
                     // Update the player's health bar and other overlay information
                     this.updatePlayerOverlayInformation();

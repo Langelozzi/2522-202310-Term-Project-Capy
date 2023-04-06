@@ -84,10 +84,10 @@ public class Player extends Character {
 
     /**
      * Set the player score.
-     * @param score the new score
+     * @param newScore the new score
      */
-    public void setScore(final int score) {
-        this.score = score;
+    public void setScore(final int newScore) {
+        this.score = Math.max(newScore, 0);
     }
 
     /**
