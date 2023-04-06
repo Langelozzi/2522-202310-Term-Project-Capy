@@ -57,11 +57,11 @@ public class Game {
             new Image(spritesPath + "player_weapon_4.png")));
 
         availableItems.add(new Armour(new ImageView(new Image(spritesPath + "level-1-armor.png",
-                200, imageHeigh, true, true)), 10, 1, "armor_1", 15));
+                200, imageHeigh, true, true)), 10, 1, "armor 1", 15));
         availableItems.add(new Armour(new ImageView(new Image(spritesPath + "level-2-armor.png",
-                200, imageHeigh, true, true)), 15 /*stub to test menu */, 2, "armor_2", 30));
+                200, imageHeigh, true, true)), 15 /*stub to test menu */, 2, "armor 2", 30));
         availableItems.add(new Armour(new ImageView(new Image(spritesPath + "level-3-armor.png",
-                200, imageHeigh, true, true)), 30 /*stub to test menu */, 3, "armor_3", 70));
+                200, imageHeigh, true, true)), 30 /*stub to test menu */, 3, "armor 3", 70));
     }
 
     private ArrayList<Level> levels;
